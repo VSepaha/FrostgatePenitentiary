@@ -1,0 +1,8 @@
+Name formatting for sprites png:
+- name_direction_#.png
+
+Formatting for variable:
+- variable_name
+
+Formatting for const variables:
+- CONST_VARIABLE
