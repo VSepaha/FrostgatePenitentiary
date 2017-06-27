@@ -127,5 +127,6 @@ while True:
     GUI_display.healthy()
     GUI_display.staminad()
     GUI_display.ramened()
+    
     pygame.display.flip()
 

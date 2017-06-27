@@ -40,8 +40,6 @@ class Map:
 			'W' :  pygame.image.load('../Resources/water.png'), 
 			'D' :  pygame.image.load('../Resources/dirt.png')
 		}
-		# open the map file
-		self.file = open('map.txt', 'r')
 
 		# set the display size of window
 		self.WIDTH = TILESIZE * MAPWIDTH
@@ -49,13 +47,16 @@ class Map:
 
 
 	def createMap(self, DISPLAYSURF):
+		# open the map file
+		file = open('map.txt', 'r')
 
 		for i in range (0, MAPHEIGHT):
 			for j in range (0, MAPWIDTH):
-				return_char = self.file.read(1)
+				return_char = file.read(1)
 				if return_char == '\n' or return_char == '':
-					return_char = self.file.read(1)
+					return_char = file.read(1)
 				DISPLAYSURF.blit(game_map.textures[return_char],(j*TILESIZE,i*TILESIZE))
+		file.close()
 
 # Instantiate Map
 game_map = Map()
@@ -67,12 +68,11 @@ fps_clock = pygame.time.Clock()
 DISPLAYSURF = pygame.display.set_mode((game_map.WIDTH, game_map.HEIGHT), 0, 32)
 DISPLAYSURF.fill(WHITE)
 
-game_map.createMap(DISPLAYSURF)
-
 
 # Main game loop
 while True:
 
+	game_map.createMap(DISPLAYSURF)
 
 	for event in pygame.event.get():
 		if event.type == QUIT:
