@@ -35,44 +35,46 @@ HEALTH = 1
 RAMEN = 2
 
 class Map:
-	def __init__(self):
+    def __init__(self):
 
-		# Textures on the map 
-		self.textures = {
-			'R' :  pygame.image.load('../Resources/ground.png'),
-			'G' :  pygame.image.load('../Resources/grass.png'),
-			'W' :  pygame.image.load('../Resources/water.png'), 
-			'D' :  pygame.image.load('../Resources/dirt.png')
-		}
+        # Textures on the map 
+        self.textures = {
+            'R' :  pygame.image.load('../Resources/ground.png'),
+            'G' :  pygame.image.load('../Resources/grass.png'),
+            'W' :  pygame.image.load('../Resources/water.png'), 
+            'D' :  pygame.image.load('../Resources/dirt.png')
+        }
 
-		# set the display size of window
-		self.WIDTH = TILESIZE * MAPWIDTH
-		self.HEIGHT = TILESIZE * MAPHEIGHT
+        # set the display size of window
+        self.WIDTH = TILESIZE * MAPWIDTH
+        self.HEIGHT = TILESIZE * MAPHEIGHT
 
-		self.tile_list = [None]*MAPHEIGHT*MAPWIDTH
+        self.tile_list = [None]*MAPHEIGHT*MAPWIDTH
 
-		file = open('map.txt', 'r')
-		for i in range (0, MAPHEIGHT*MAPWIDTH):
-			return_char = file.read(1)
-			if return_char == '\n' or return_char == '':
-				return_char = file.read(1)
-			self.tile_list[i] = return_char
-		file.close()
+        file = open('map.txt', 'r')
+        for i in range (0, MAPHEIGHT*MAPWIDTH):
+            return_char = file.read(1)
+            if return_char == '\n' or return_char == '':
+                return_char = file.read(1)
+            self.tile_list[i] = return_char
+        file.close()
 
 
-	def createMap(self, DISPLAYSURF):
-		index = 0
-		for i in range (0, MAPHEIGHT):
-			for j in range (0, MAPWIDTH):
-				DISPLAYSURF.blit(game_map.textures[self.tile_list[index]],(j*TILESIZE,i*TILESIZE))
-				index += 1
+    def createMap(self, DISPLAYSURF):
+        index = 0
+        for i in range (0, MAPHEIGHT):
+            for j in range (0, MAPWIDTH):
+                DISPLAYSURF.blit(game_map.textures[self.tile_list[index]],(j*TILESIZE,i*TILESIZE))
+                index += 1
 
 class GUI:
     def __init__(self):
         self.health = 100
         self.stamina = 100
         self.ramen = 100
+        self.money = 100
         self.ramen_image = pygame.image.load('ramen.png')
+        self.money_image = pygame.image.load('../Resources/moneybags.png')
 
     def decrease_stat(self, stat):
         if stat == HEALTH:
@@ -122,7 +124,7 @@ class GUI:
     def display_stamina(self):
         #displays 'stamina'
         Font2 = pygame.font.SysFont('monaco', 24)
-        stamSurface = Font2.render('Stamina: {0}%'.format(self.stamina), True, GREEN)
+        stamSurface = Font2.render('Stamina: {0}'.format(self.stamina), True, GREEN)
         stamRect = stamSurface.get_rect()
         stamRect.midtop = (192, 45)
         DISPLAYSURF.blit(stamSurface,stamRect)
@@ -134,12 +136,23 @@ class GUI:
         Font3 = pygame.font.SysFont('monaco', 44)
         ramSurface = Font3.render(': {0}'.format(self.ramen), True, BLACK)
         ramRect = ramSurface.get_rect()
-        ramRect.midtop = (940, 23)
+        ramRect.midtop = (930, 23)
         DISPLAYSURF.blit(ramSurface,ramRect)
-        DISPLAYSURF.blit(self.ramen_image, (830,13))
+        DISPLAYSURF.blit(self.ramen_image, (830,23))
+    def display_money(self):
+        #displays ': (ramen amount)'
+        Font4 = pygame.font.SysFont('monaco', 44)
+        monSurface = Font4.render(': {0}$'.format(self.money), True, BLACK)
+        monRect = monSurface.get_rect()
+        monRect.midtop = (940, 103)
+        DISPLAYSURF.blit(monSurface,monRect)
+        DISPLAYSURF.blit(self.money_image, (830,93))
 
-tester = pygame.image.load('../Resources/player_back_0.png')
+tester = pygame.image.load('../Resources/player/player_back_0.png')
+inventory = pygame.image.load('../Resources/inventory.png')
+
 game_map = Map()
+
 GUI_display = GUI()
 
 # Used to ensure a maximum fps setting
@@ -150,20 +163,39 @@ DISPLAYSURF = pygame.display.set_mode((game_map.WIDTH, game_map.HEIGHT), 0, 32)
 
 # Main game loop
 while True:
-	game_map.createMap(DISPLAYSURF)
-	DISPLAYSURF.blit(tester, (320, 320))
+    game_map.createMap(DISPLAYSURF)
+    DISPLAYSURF.blit(tester, (320, 320))
+    DISPLAYSURF.blit(inventory, (400, 500))
+    for event in pygame.event.get():
+        if event.type == QUIT:
+            pygame.quit()
+            sys.exit()
 
-	for event in pygame.event.get():
-		if event.type == QUIT:
-			pygame.quit()
-			sys.exit()
+    key_pressed = pygame.key.get_pressed()
+
+    if key_pressed[pygame.K_x]:
+            GUI_display.decrease_stat(HEALTH)
+    if key_pressed[pygame.K_z]:
+            GUI_display.increase_stat(HEALTH)
+
+    #checks what key is pressed to change heat-- which then decides the size of the rectangle and color
+    if key_pressed[pygame.K_v]:
+        GUI_display.decrease_stat(STAMINA)
+    if key_pressed[pygame.K_c]:
+        GUI_display.increase_stat(STAMINA)
+
+    if key_pressed[pygame.K_n]:
+        GUI_display.decrease_stat(RAMEN)
+    if key_pressed[pygame.K_b]:
+        GUI_display.increase_stat(RAMEN)
 
 
-	key_pressed = pygame.key.get_pressed()
+    key_pressed = pygame.key.get_pressed()
 
-	GUI_display.display_health()
-	GUI_display.display_stamina()
-	GUI_display.display_ramen()
+    GUI_display.display_health()
+    GUI_display.display_stamina()
+    GUI_display.display_ramen()
+    GUI_display.display_money()
 
-	pygame.display.update()
-	fps_clock.tick(FPS)
+    pygame.display.update()
+    fps_clock.tick(FPS)
