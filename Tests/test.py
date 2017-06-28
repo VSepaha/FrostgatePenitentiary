@@ -49,18 +49,23 @@ class Map:
 		self.WIDTH = TILESIZE * MAPWIDTH
 		self.HEIGHT = TILESIZE * MAPHEIGHT
 
+		self.tile_list = [None]*MAPHEIGHT*MAPWIDTH
+
+		file = open('map.txt', 'r')
+		for i in range (0, MAPHEIGHT*MAPWIDTH):
+			return_char = file.read(1)
+			if return_char == '\n' or return_char == '':
+				return_char = file.read(1)
+			self.tile_list[i] = return_char
+		file.close()
+
 
 	def createMap(self, DISPLAYSURF):
-		# open the map file
-		file = open('map.txt', 'r')
-
+		index = 0
 		for i in range (0, MAPHEIGHT):
 			for j in range (0, MAPWIDTH):
-				return_char = file.read(1)
-				if return_char == '\n' or return_char == '':
-					return_char = file.read(1)
-				DISPLAYSURF.blit(game_map.textures[return_char],(j*TILESIZE,i*TILESIZE))
-		file.close()
+				DISPLAYSURF.blit(game_map.textures[self.tile_list[index]],(j*TILESIZE,i*TILESIZE))
+				index += 1
 
 class GUI:
     def __init__(self):
@@ -85,7 +90,6 @@ class GUI:
 
 
     def increase_stat(self, stat):
-
         if stat == HEALTH:
             if self.health >= 100:
                 return
@@ -105,29 +109,34 @@ class GUI:
         if stat == STAMINA:
             return self.stamina
 
-    def healthy(self):
+    def display_health(self):
         #displays 'health'
         Font1 = pygame.font.SysFont('monaco', 24)
         healthSurface = Font1.render('Health: {0}%'.format(self.health), True, GREEN)
         healthRect = healthSurface.get_rect()
         healthRect.midtop = (200, 20)
         DISPLAYSURF.blit(healthSurface,healthRect)
+        tint = 255 - (self.health * 2.55)
+        pygame.draw.rect(DISPLAYSURF, (tint, 255 - tint, 0), pygame.Rect(20, 20, self.health, 20))
 
-    def staminad(self):
+    def display_stamina(self):
         #displays 'stamina'
         Font2 = pygame.font.SysFont('monaco', 24)
         stamSurface = Font2.render('Stamina: {0}%'.format(self.stamina), True, GREEN)
         stamRect = stamSurface.get_rect()
         stamRect.midtop = (192, 45)
         DISPLAYSURF.blit(stamSurface,stamRect)
+        tint1 = 255 - (self.stamina * 2.55)
+        pygame.draw.rect(DISPLAYSURF, (tint1, 0, 255 - tint1), pygame.Rect(20, 45, self.stamina, 20))
 
-    def ramened(self):
+    def display_ramen(self):
         #displays ': (ramen amount)'
         Font3 = pygame.font.SysFont('monaco', 44)
         ramSurface = Font3.render(': {0}'.format(self.ramen), True, BLACK)
         ramRect = ramSurface.get_rect()
         ramRect.midtop = (940, 23)
         DISPLAYSURF.blit(ramSurface,ramRect)
+        DISPLAYSURF.blit(self.ramen_image, (830,13))
 
 
 game_map = Map()
@@ -138,12 +147,10 @@ fps_clock = pygame.time.Clock()
 
 # Set up the window and caption
 DISPLAYSURF = pygame.display.set_mode((game_map.WIDTH, game_map.HEIGHT), 0, 32)
-DISPLAYSURF.fill(WHITE)
 
 # Main game loop
 while True:
 	game_map.createMap(DISPLAYSURF)
-	DISPLAYSURF.blit(GUI_display.ramen_image, (830,13))
 
 	for event in pygame.event.get():
 		if event.type == QUIT:
@@ -152,32 +159,9 @@ while True:
 
 	key_pressed = pygame.key.get_pressed()
 
-	if key_pressed[pygame.K_x]:
-		GUI_display.decrease_stat(HEALTH)
-	if key_pressed[pygame.K_z]:
-		GUI_display.increase_stat(HEALTH)
-
-	if key_pressed[pygame.K_v]:
-		GUI_display.decrease_stat(STAMINA)
-	if key_pressed[pygame.K_c]:
-		GUI_display.increase_stat(STAMINA)
-
-	if key_pressed[pygame.K_n]:
-		GUI_display.decrease_stat(RAMEN)
-	if key_pressed[pygame.K_b]:
-		GUI_display.increase_stat(RAMEN)
-
-	health = GUI_display.get_stat(HEALTH)
-	tint = 255 - (health * 2.55)
-	pygame.draw.rect(DISPLAYSURF, (tint, 255 - tint, 0), pygame.Rect(20, 20, health, 20))
-
-	stamina = GUI_display.get_stat(STAMINA)
-	tint1 = 255 - (stamina * 2.55)
-	pygame.draw.rect(DISPLAYSURF, (tint1, 0, 255 - tint1), pygame.Rect(20, 45, stamina, 20))
-
-	GUI_display.healthy()
-	GUI_display.staminad()
-	GUI_display.ramened()
+	GUI_display.display_health()
+	GUI_display.display_stamina()
+	GUI_display.display_ramen()
 
 	pygame.display.update()
 	fps_clock.tick(FPS)

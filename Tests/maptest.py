@@ -45,18 +45,23 @@ class Map:
 		self.WIDTH = TILESIZE * MAPWIDTH
 		self.HEIGHT = TILESIZE * MAPHEIGHT
 
+		self.tile_list = [None]*MAPHEIGHT*MAPWIDTH
+
+		file = open('map.txt', 'r')
+		for i in range (0, MAPHEIGHT*MAPWIDTH):
+			return_char = file.read(1)
+			if return_char == '\n' or return_char == '':
+				return_char = file.read(1)
+			self.tile_list[i] = return_char
+		file.close()
+
 
 	def createMap(self, DISPLAYSURF):
-		# open the map file
-		file = open('map.txt', 'r')
-
+		index = 0
 		for i in range (0, MAPHEIGHT):
 			for j in range (0, MAPWIDTH):
-				return_char = file.read(1)
-				if return_char == '\n' or return_char == '':
-					return_char = file.read(1)
-				DISPLAYSURF.blit(game_map.textures[return_char],(j*TILESIZE,i*TILESIZE))
-		file.close()
+				DISPLAYSURF.blit(game_map.textures[self.tile_list[index]],(j*TILESIZE,i*TILESIZE))
+				index += 1
 
 # Instantiate Map
 game_map = Map()
