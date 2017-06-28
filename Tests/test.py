@@ -60,7 +60,7 @@ class Map:
 		file.close()
 
 
-	def createMap(self, DISPLAYSURF):
+	def display_map(self, DISPLAYSURF):
 		index = 0
 		for i in range (0, MAPHEIGHT):
 			for j in range (0, MAPWIDTH):
@@ -150,14 +150,12 @@ DISPLAYSURF = pygame.display.set_mode((game_map.WIDTH, game_map.HEIGHT), 0, 32)
 
 # Main game loop
 while True:
-	game_map.createMap(DISPLAYSURF)
+	game_map.display_map(DISPLAYSURF)
 
 	for event in pygame.event.get():
 		if event.type == QUIT:
 			pygame.quit()
 			sys.exit()
-
-	key_pressed = pygame.key.get_pressed()
 
 	GUI_display.display_health()
 	GUI_display.display_stamina()
