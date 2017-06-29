@@ -1,5 +1,6 @@
 import pygame, sys, time
 from pygame.locals import *
+from PrisonMap import *
 
 pygame.init()
 
@@ -37,9 +38,14 @@ RIGHT = 3
 PLAYER = "player"
 PRISON_GUARD = "guard"
 
+# States that the guard can be in 
+PATROL = 0 
+STAND = 1
+CHASE = 2
+
 #######################
 
-# Ready for AI use
+# This is the actor class that all people will inherit from
 class Actor(pygame.sprite.Sprite):
 	def __init__(self, offset_x, offset_y, actor_type):
 		# Call the parent class (Sprite) constructor
@@ -76,7 +82,7 @@ class Actor(pygame.sprite.Sprite):
 			RIGHT : self.images_right
 		}
 
-		# Set the speed of the player
+		# Set the speed of the player (change in distance)
 		self.speed = 4
 
 		# Set the current image
@@ -126,40 +132,58 @@ class Actor(pygame.sprite.Sprite):
   		self.rect.x += dx
   		self.rect.y += dy
 
-class Map:
-	def __init__(self):
 
-		# Textures on the map 
-		self.textures = {
-			'R' :  pygame.image.load('../Resources/Tiles/ground.png'),
-			'G' :  pygame.image.load('../Resources/Tiles/grass.png'),
-			'W' :  pygame.image.load('../Resources/Tiles/water.png'), 
-			'D' :  pygame.image.load('../Resources/Tiles/dirt.png')
-		}
+# This is the class that will be used by the NPCs
+class Guard(Actor):
+	def __init__(self, offset_x, offset_y, actor_type):
+		# Don't forget to call the parent class!
+		Actor.__init__(self, offset_x, offset_y, actor_type)
 
-		# set the display size of window
-		self.WIDTH = TILESIZE * MAPWIDTH
-		self.HEIGHT = TILESIZE * MAPHEIGHT
+		# Route set for the NPC
+		self.route = [
+			(offset_x, offset_y + 300),
+			(offset_x-500, offset_y + 300),
+			(offset_x-500, offset_y),
+			(offset_x, offset_y) 
+		]
+		self.route_index = 0
 
-		# Create a list for the tiles
-		self.tile_list = [None]*MAPHEIGHT*MAPWIDTH
+		# To keep track of whether the NPC is moving
+		self.moving = False
 
-		# Assign the tiles from the file to the list
-		file = open('map.txt', 'r')
-		for i in range (0, MAPHEIGHT*MAPWIDTH):
-			return_char = file.read(1)
-			if return_char == '\n' or return_char == '':
-				return_char = file.read(1)
-			self.tile_list[i] = return_char
-		file.close()
+		# slowing down the speed for patrol
+		self.speed = 2
+		self.change_timer = 8
 
 
-	def display_map(self, DISPLAYSURF):
-		index = 0
-		for i in range (0, MAPHEIGHT):
-			for j in range (0, MAPWIDTH):
-				DISPLAYSURF.blit(game_map.textures[self.tile_list[index]],(j*TILESIZE,i*TILESIZE))
-				index += 1
+	# Guard patrol route implementation
+	def start_patrol(self, state):
+		route_len = len(self.route)
+		if state == PATROL:
+			if self.rect.x != self.route[self.route_index][0] or self.rect.y != self.route[self.route_index][1]:
+				self.moving = True
+				if self.rect.x > self.route[self.route_index][0]:
+					self.update(True, LEFT)
+					print "moving left"
+				elif self.rect.x < self.route[self.route_index][0]:
+					self.update(True, RIGHT)
+					print "moving right"
+				if self.rect.y > self.route[self.route_index][1]:
+					self.update(True, UP)
+					print "moving up"
+				elif self.rect.y < self.route[self.route_index][1]:
+					self.update(True, DOWN)
+					print "moving down"
+				self.moving == True
+			else:
+				self.moving = False
+
+			if self.route_index < route_len-1 and self.moving == False:
+				self.route_index += 1
+				self.update(False, DOWN)
+			elif self.route_index >= route_len-1 and self.moving == False:
+				self.route_index = 0
+				self.update(False, DOWN)
 
 
 def key_down_events(event):
@@ -177,8 +201,9 @@ def key_up_events(event):
 		player.update(False, RIGHT)
 
 # Instantiate Map
-game_map = Map()
+game_map = PrisonMap()
 player = Actor(200,200, PLAYER)
+guard = Guard(800, 20, PRISON_GUARD)
 
 # Used to ensure a maximum fps setting
 fps_clock = pygame.time.Clock()
@@ -210,8 +235,11 @@ while True:
 	elif key_pressed[K_d]:
 		player.update(True, RIGHT)
 
+	guard.start_patrol(PATROL)
+
 
 	DISPLAYSURF.blit(player.current_image, (player.rect.x, player.rect.y))
+	DISPLAYSURF.blit(guard.current_image, (guard.rect.x, guard.rect.y))
 
 	pygame.display.update()
 	fps_clock.tick(FPS)
