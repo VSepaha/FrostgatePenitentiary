@@ -33,34 +33,39 @@ DOWN = 1
 LEFT = 2
 RIGHT = 3
 
+# Actor types
+PLAYER = "player"
+PRISON_GUARD = "guard"
+
 #######################
 
-# Total movement execution in the main game loop could be made to be better
 class Player(pygame.sprite.Sprite):
-	def __init__(self, offset_x, offset_y):
+	def __init__(self, offset_x, offset_y, actor):
 		# Call the parent class (Sprite) constructor
 		pygame.sprite.Sprite.__init__(self)
 
-		# Set up all of the images for the player
+		directory = '../Resources/' + actor + '/' + actor
+
+		# Set up all of the images for any actor
 		self.images_front = []
-		self.images_front.append(pygame.image.load('../Resources/Player/player_front_0.png'))
-		self.images_front.append(pygame.image.load('../Resources/Player/player_front_1.png'))
-		self.images_front.append(pygame.image.load('../Resources/Player/player_front_2.png'))
+		self.images_front.append(pygame.image.load(directory + '_front_0.png'))
+		self.images_front.append(pygame.image.load(directory + '_front_1.png'))
+		self.images_front.append(pygame.image.load(directory + '_front_2.png'))
 
 		self.images_back = []
-		self.images_back.append(pygame.image.load('../Resources/Player/player_back_0.png'))
-		self.images_back.append(pygame.image.load('../Resources/Player/player_back_1.png'))
-		self.images_back.append(pygame.image.load('../Resources/Player/player_back_2.png'))
+		self.images_back.append(pygame.image.load(directory + '_back_0.png'))
+		self.images_back.append(pygame.image.load(directory + '_back_1.png'))
+		self.images_back.append(pygame.image.load(directory + '_back_2.png'))
 
 		self.images_left = []
-		self.images_left.append(pygame.image.load('../Resources/Player/player_left_0.png'))
-		self.images_left.append(pygame.image.load('../Resources/Player/player_left_1.png'))
-		self.images_left.append(pygame.image.load('../Resources/Player/player_left_2.png'))
+		self.images_left.append(pygame.image.load(directory + '_left_0.png'))
+		self.images_left.append(pygame.image.load(directory + '_left_1.png'))
+		self.images_left.append(pygame.image.load(directory + '_left_2.png'))
 
 		self.images_right = []
-		self.images_right.append(pygame.image.load('../Resources/Player/player_right_0.png'))
-		self.images_right.append(pygame.image.load('../Resources/Player/player_right_1.png'))
-		self.images_right.append(pygame.image.load('../Resources/Player/player_right_2.png'))
+		self.images_right.append(pygame.image.load(directory + '_right_0.png'))
+		self.images_right.append(pygame.image.load(directory + '_right_1.png'))
+		self.images_right.append(pygame.image.load(directory + '_right_2.png'))
 
 		# Mapping the direction with the variable
 		self.direction_map = {
@@ -169,7 +174,7 @@ def key_up_events(event):
 
 # Instantiate Map
 game_map = Map()
-player = Player(100,100)
+player = Player(200,200, PLAYER)
 
 # Used to ensure a maximum fps setting
 fps_clock = pygame.time.Clock()
