@@ -33,9 +33,6 @@ DOWN = 1
 LEFT = 2
 RIGHT = 3
 
-# Move delta
-DELTA_MOVE = 4
-
 #######################
 
 # Total movement execution in the main game loop could be made to be better
@@ -73,10 +70,13 @@ class Player(pygame.sprite.Sprite):
 			RIGHT : self.images_right
 		}
 
+		# Speed of the player
+		self.speed = 4
+
 		self.current_image = self.images_front[0]
+		self.change_timer = 6
 		self.index = 1
 		self.count = 0
-		self.player_move = False
 
 		# Fetch the rectangle object that has the dimensions of the image
 		# Update the position of this object by setting the values of rect.x and rect.y
@@ -88,11 +88,19 @@ class Player(pygame.sprite.Sprite):
 	def update(self, move, direction):
 		if move == True:
 			self.count += 1
-			if self.count%6 == 0:
+			if self.count % self.change_timer == 0:
 				self.index += 1
 			if self.index >= len(self.direction_map[direction]):
 				self.index = 1
 			self.current_image = self.direction_map[direction][self.index]
+			if direction == UP:
+				self.move(0, -self.speed)
+			if direction == DOWN:
+				self.move(0, self.speed)
+			if direction == LEFT:
+				self.move(-self.speed, 0)
+			if direction == RIGHT:
+				self.move(self.speed, 0)
   		else:
   			self.index = 0
   			self.count = 0
@@ -114,10 +122,10 @@ class Map:
 
 		# Textures on the map 
 		self.textures = {
-			'R' :  pygame.image.load('../Resources/ground.png'),
-			'G' :  pygame.image.load('../Resources/grass.png'),
-			'W' :  pygame.image.load('../Resources/water.png'), 
-			'D' :  pygame.image.load('../Resources/dirt.png')
+			'R' :  pygame.image.load('../Resources/Tiles/ground.png'),
+			'G' :  pygame.image.load('../Resources/Tiles/grass.png'),
+			'W' :  pygame.image.load('../Resources/Tiles/water.png'), 
+			'D' :  pygame.image.load('../Resources/Tiles/dirt.png')
 		}
 
 		# set the display size of window
@@ -186,17 +194,12 @@ while True:
 
 	if key_pressed[K_w]: 
 		player.update(True, UP)
-		player.move(0, -DELTA_MOVE)
 	elif key_pressed[K_s]:
 		player.update(True, DOWN)
-		player.move(0, DELTA_MOVE)
 	elif key_pressed[K_a]:
 		player.update(True, LEFT)
-		player.move(-DELTA_MOVE, 0)
 	elif key_pressed[K_d]:
 		player.update(True, RIGHT)
-		player.move(DELTA_MOVE, 0)
-
 
 
 	DISPLAYSURF.blit(player.current_image, (player.rect.x, player.rect.y))

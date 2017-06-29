@@ -39,10 +39,10 @@ class Map:
 
 		# Textures on the map 
 		self.textures = {
-			'R' :  pygame.image.load('../Resources/ground.png'),
-			'G' :  pygame.image.load('../Resources/grass.png'),
-			'W' :  pygame.image.load('../Resources/water.png'), 
-			'D' :  pygame.image.load('../Resources/dirt.png')
+			'R' :  pygame.image.load('../Resources/Tiles/ground.png'),
+			'G' :  pygame.image.load('../Resources/Tiles/grass.png'),
+			'W' :  pygame.image.load('../Resources/Tiles/water.png'), 
+			'D' :  pygame.image.load('../Resources/Tiles/dirt.png')
 		}
 
 		# set the display size of window
