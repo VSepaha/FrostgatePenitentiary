@@ -39,6 +39,7 @@ PRISON_GUARD = "guard"
 
 #######################
 
+# Ready for AI use
 class Player(pygame.sprite.Sprite):
 	def __init__(self, offset_x, offset_y, actor):
 		# Call the parent class (Sprite) constructor
