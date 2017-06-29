@@ -40,12 +40,12 @@ PRISON_GUARD = "guard"
 #######################
 
 # Ready for AI use
-class Player(pygame.sprite.Sprite):
-	def __init__(self, offset_x, offset_y, actor):
+class Actor(pygame.sprite.Sprite):
+	def __init__(self, offset_x, offset_y, actor_type):
 		# Call the parent class (Sprite) constructor
 		pygame.sprite.Sprite.__init__(self)
 
-		directory = '../Resources/' + actor + '/' + actor
+		directory = '../Resources/' + actor_type + '/' + actor_type
 
 		# Set up all of the images for any actor
 		self.images_front = []
@@ -76,10 +76,13 @@ class Player(pygame.sprite.Sprite):
 			RIGHT : self.images_right
 		}
 
-		# Speed of the player
+		# Set the speed of the player
 		self.speed = 4
 
+		# Set the current image
 		self.current_image = self.images_front[0]
+
+		# Setting for the update function
 		self.change_timer = 6
 		self.index = 1
 		self.count = 0
@@ -175,7 +178,7 @@ def key_up_events(event):
 
 # Instantiate Map
 game_map = Map()
-player = Player(200,200, PLAYER)
+player = Actor(200,200, PLAYER)
 
 # Used to ensure a maximum fps setting
 fps_clock = pygame.time.Clock()
