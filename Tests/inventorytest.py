@@ -9,7 +9,7 @@ key = 4
 pos0 = 0
 pos1 = 0
 pos2 = 0
-pos3 = 0
+pos3 = 1
 pos4 = 0
 
 inv = [None, None, None, 'an_item', None]
@@ -18,12 +18,30 @@ w, h = 1000, 600
 inventory = pygame.image.load('../Resources/inventory.png')
 DISPLAYSURF = pygame.display.set_mode((w, h))
 DISPLAYSURF.fill((255, 255, 255))
+DISPLAYSURF.blit(inventory, (402, 502))
 
 while True:
         if pos0 == 0:
                 pos0image = pygame.image.load('../Resources/nothing.png')
         if pos0 == 1:
                 pos0image = pygame.image.load('../Resources/an_item.png')
+        if pos1 == 0:
+                pos1image = pygame.image.load('../Resources/nothing.png')
+        if pos1 == 1:
+                pos1image = pygame.image.load('../Resources/an_item.png')
+        if pos2 == 0:
+                pos2image = pygame.image.load('../Resources/nothing.png')
+        if pos2 == 1:
+                pos2image = pygame.image.load('../Resources/an_item.png')
+        if pos3 == 0:
+                pos3image = pygame.image.load('../Resources/nothing.png')
+        if pos3 == 1:
+                pos3image = pygame.image.load('../Resources/an_item.png')
+        if pos4 == 0:
+                pos4image = pygame.image.load('../Resources/nothing.png')
+        if pos4 == 1:
+                pos4image = pygame.image.load('../Resources/an_item.png')
+
         for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                         pygame.quit()
@@ -77,6 +95,10 @@ while True:
         key_pressed = pygame.key.get_pressed()
         if key_pressed[pygame.K_f]:
                         DISPLAYSURF.blit(pos0image, (410, 510))
+                        DISPLAYSURF.blit(pos1image, (450, 510))
+                        DISPLAYSURF.blit(pos2image, (490, 510))
+                        DISPLAYSURF.blit(pos3image, (528, 510))
+                        DISPLAYSURF.blit(pos4image, (568, 510))
         pygame.display.flip()
 
 
