@@ -1,4 +1,5 @@
 # Frostgate Penitentiary
+The game will be created in python using the pygame library.
 
 ## Concept
 - This will be a 2D pixelated game
@@ -21,11 +22,18 @@
 - Tile Textures
 - SFX
 
-The game will be created in python using the pygame library.
+### Phase I
+- Create a basic playable character - Done 
+- Create a basic tiled prison map - Done
+- Create a basic working UI
+- Create a basic AI for guards - Done
+- Create basic prison objects - Done
 
-## Phase I
-- Create a playable character
-- Create a tiled prison map
-- Create a working UI
-- Create a basic AI for guards
-- Create basic prison objects
+### Phase II
+- Playable character will be able to interact with objects and some NPCs
+- Create camera movement to move with the player with the player in the center
+- Expand the tiled map to get desired map size and design it for the prison
+- UI will be able to move with the camera and make changes based on interactions
+- Objects will be placed efficiently on the map
+- AI will be much better with better algorithms implemented
+- New NPC characters

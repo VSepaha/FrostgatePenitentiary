@@ -154,13 +154,6 @@ class Actor(pygame.sprite.Sprite):
 			if dy < 0: # Moving up; Hit the bottom side of the wall
 				self.rect.top = self.other_actor.rect.bottom
 
-  	# def collision(self, actor):
-  	# 	if self.rect.colliderect(actor):
-  	# 		print "collision"
-  	# 		return True
-  	# 	else:
-  	# 		return False
-
 
 # This is the class that will be used by the NPCs
 class Guard(Actor):

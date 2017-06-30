@@ -43,11 +43,15 @@ PATROL = 0
 STAND = 1
 CHASE = 2
 
+# Collision Type
+BLOCKING = 0
+OVERLAPPING = 1
+
 #######################
 
 # This is the actor class that all people will inherit from
 class Actor(pygame.sprite.Sprite):
-	def __init__(self, offset_x, offset_y, actor_type):
+	def __init__(self, offset_x, offset_y, actor_type, collision_type):
 		# Call the parent class (Sprite) constructor
 		pygame.sprite.Sprite.__init__(self)
 
@@ -100,7 +104,8 @@ class Actor(pygame.sprite.Sprite):
 		self.rect.y = offset_y
 
 		# actor that will be colliding
-		self.other_actor = None
+		self.collision_list = []
+		self.collision_type = collision_type
 
 
 	# Works Nicely
@@ -139,29 +144,22 @@ class Actor(pygame.sprite.Sprite):
 
 		# Using only for testing purposes
 		# TODO: Remove and replace
-		if self.rect.colliderect(self.other_actor):
-			if dx > 0: # Moving right; Hit the left side of the wall
-				self.rect.right = self.other_actor.rect.left
-			if dx < 0: # Moving left; Hit the right side of the wall
-				self.rect.left = self.other_actor.rect.right
-			if dy > 0: # Moving down; Hit the top side of the wall
-				self.rect.bottom = self.other_actor.rect.top
-			if dy < 0: # Moving up; Hit the bottom side of the wall
-				self.rect.top = self.other_actor.rect.bottom
-
-  	# def collision(self, actor):
-  	# 	if self.rect.colliderect(actor):
-  	# 		print "collision"
-  	# 		return True
-  	# 	else:
-  	# 		return False
-
+		for other_object in self.collision_list:
+			if self.rect.colliderect(other_object) and other_object.collision_type == BLOCKING:
+				if dx > 0: # Moving right; Hit the left side of the wall
+					self.rect.right = other_object.rect.left
+				if dx < 0: # Moving left; Hit the right side of the wall
+					self.rect.left = other_object.rect.right
+				if dy > 0: # Moving down; Hit the top side of the wall
+					self.rect.bottom = other_object.rect.top
+				if dy < 0: # Moving up; Hit the bottom side of the wall
+					self.rect.top = other_object.rect.bottom
 
 # This is the class that will be used by the NPCs
 class Guard(Actor):
-	def __init__(self, offset_x, offset_y, actor_type):
+	def __init__(self, offset_x, offset_y, actor_type, collision_type):
 		# Don't forget to call the parent class!
-		Actor.__init__(self, offset_x, offset_y, actor_type)
+		Actor.__init__(self, offset_x, offset_y, actor_type, collision_type)
 
 		# Route set for the NPC
 		self.route = [
@@ -206,6 +204,22 @@ class Guard(Actor):
 				self.route_index = 0
 				self.update(False, DOWN)
 
+class Object(pygame.sprite.Sprite):
+   def __init__(self, offset_x, offset_y, collision_type):
+       pygame.sprite.Sprite.__init__(self)
+
+       # layer priority so that the player "steps over" the object
+       # Unused # self.layer = 1
+
+       self.image = pygame.image.load('../Resources/an_item.png')
+
+       # Position of the image
+       self.rect = self.image.get_rect()
+       self.rect.x = offset_x
+       self.rect.y = offset_y
+
+       self.collision_type = collision_type
+
 
 def key_down_events(event):
 	# Nothing for now
@@ -223,10 +237,17 @@ def key_up_events(event):
 
 # Instantiate Map
 game_map = PrisonMap()
-player = Actor(200,200, PLAYER)
-guard = Guard(800, 20, PRISON_GUARD)
-player.other_actor = guard
-guard.other_actor = player
+player = Actor(200,200, PLAYER, BLOCKING)
+guard = Guard(800, 20, PRISON_GUARD, BLOCKING)
+ball = Object(400, 200, OVERLAPPING)
+
+
+# initialize the collision objects
+# Only add the collisions for blocking objects
+player.collision_list.append(guard)
+player.collision_list.append(ball)
+guard.collision_list.append(player)
+guard.collision_list.append(ball)
 
 # Used to ensure a maximum fps setting
 fps_clock = pygame.time.Clock()
@@ -260,7 +281,7 @@ while True:
 
 	guard.start_patrol(PATROL)
 
-
+	DISPLAYSURF.blit(ball.image, (ball.rect.x, ball.rect.y))
 	DISPLAYSURF.blit(player.current_image, (player.rect.x, player.rect.y))
 	DISPLAYSURF.blit(guard.current_image, (guard.rect.x, guard.rect.y))
 
