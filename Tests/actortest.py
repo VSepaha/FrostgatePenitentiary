@@ -99,8 +99,13 @@ class Actor(pygame.sprite.Sprite):
 		self.rect.x = offset_x
 		self.rect.y = offset_y
 
+		# actor that will be colliding
+		self.other_actor = None
+
+
 	# Works Nicely
 	def update(self, move, direction):
+
 		if move == True:
 			self.count += 1
 			if self.count % self.change_timer == 0:
@@ -132,6 +137,25 @@ class Actor(pygame.sprite.Sprite):
   		self.rect.x += dx
   		self.rect.y += dy
 
+		# Using only for testing purposes
+		# TODO: Remove and replace
+		if self.rect.colliderect(self.other_actor):
+			if dx > 0: # Moving right; Hit the left side of the wall
+				self.rect.right = self.other_actor.rect.left
+			if dx < 0: # Moving left; Hit the right side of the wall
+				self.rect.left = self.other_actor.rect.right
+			if dy > 0: # Moving down; Hit the top side of the wall
+				self.rect.bottom = self.other_actor.rect.top
+			if dy < 0: # Moving up; Hit the bottom side of the wall
+				self.rect.top = self.other_actor.rect.bottom
+
+  	# def collision(self, actor):
+  	# 	if self.rect.colliderect(actor):
+  	# 		print "collision"
+  	# 		return True
+  	# 	else:
+  	# 		return False
+
 
 # This is the class that will be used by the NPCs
 class Guard(Actor):
@@ -157,6 +181,7 @@ class Guard(Actor):
 
 
 	# Guard patrol route implementation
+	# AI pathfinding algorithm can be improved
 	def start_patrol(self, state):
 		route_len = len(self.route)
 		if state == PATROL:
@@ -164,16 +189,12 @@ class Guard(Actor):
 				self.moving = True
 				if self.rect.x > self.route[self.route_index][0]:
 					self.update(True, LEFT)
-					print "moving left"
 				elif self.rect.x < self.route[self.route_index][0]:
 					self.update(True, RIGHT)
-					print "moving right"
 				if self.rect.y > self.route[self.route_index][1]:
 					self.update(True, UP)
-					print "moving up"
 				elif self.rect.y < self.route[self.route_index][1]:
 					self.update(True, DOWN)
-					print "moving down"
 				self.moving == True
 			else:
 				self.moving = False
@@ -204,6 +225,8 @@ def key_up_events(event):
 game_map = PrisonMap()
 player = Actor(200,200, PLAYER)
 guard = Guard(800, 20, PRISON_GUARD)
+player.other_actor = guard
+guard.other_actor = player
 
 # Used to ensure a maximum fps setting
 fps_clock = pygame.time.Clock()

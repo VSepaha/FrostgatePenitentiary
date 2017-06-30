@@ -50,8 +50,6 @@ PATROL = 0
 STAND = 1
 CHASE = 2
 
-#######################
-
 # This is the actor class that all people will inherit from
 class Actor(pygame.sprite.Sprite):
 	def __init__(self, offset_x, offset_y, actor_type):
@@ -106,8 +104,13 @@ class Actor(pygame.sprite.Sprite):
 		self.rect.x = offset_x
 		self.rect.y = offset_y
 
+		# actor that will be colliding
+		self.other_actor = None
+
+
 	# Works Nicely
 	def update(self, move, direction):
+
 		if move == True:
 			self.count += 1
 			if self.count % self.change_timer == 0:
@@ -139,6 +142,25 @@ class Actor(pygame.sprite.Sprite):
   		self.rect.x += dx
   		self.rect.y += dy
 
+		# Using only for testing purposes
+		# TODO: Remove and replace
+		if self.rect.colliderect(self.other_actor):
+			if dx > 0: # Moving right; Hit the left side of the wall
+				self.rect.right = self.other_actor.rect.left
+			if dx < 0: # Moving left; Hit the right side of the wall
+				self.rect.left = self.other_actor.rect.right
+			if dy > 0: # Moving down; Hit the top side of the wall
+				self.rect.bottom = self.other_actor.rect.top
+			if dy < 0: # Moving up; Hit the bottom side of the wall
+				self.rect.top = self.other_actor.rect.bottom
+
+  	# def collision(self, actor):
+  	# 	if self.rect.colliderect(actor):
+  	# 		print "collision"
+  	# 		return True
+  	# 	else:
+  	# 		return False
+
 
 # This is the class that will be used by the NPCs
 class Guard(Actor):
@@ -164,6 +186,7 @@ class Guard(Actor):
 
 
 	# Guard patrol route implementation
+	# AI pathfinding algorithm can be improved
 	def start_patrol(self, state):
 		route_len = len(self.route)
 		if state == PATROL:
@@ -279,6 +302,8 @@ game_map = PrisonMap()
 GUI_display = GUI()
 player = Actor(100, 100, PLAYER)
 guard = Guard(800, 20, PRISON_GUARD)
+player.other_actor = guard
+guard.other_actor = player
 
 # Used to ensure a maximum fps setting
 fps_clock = pygame.time.Clock()
