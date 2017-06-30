@@ -37,3 +37,4 @@ The game will be created in python using the pygame library.
 - Objects will be placed efficiently on the map
 - AI will be much better with better algorithms implemented
 - New NPC characters
+- Add the skill system with its own UI
