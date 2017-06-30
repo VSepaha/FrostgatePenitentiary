@@ -44,7 +44,7 @@ while True:
                                         pos3 = 1
                                 elif inv[4] == None:
                                         inv[4] = 'an_item'
-                                        pos4 = 1n
+                                        pos4 = 1
                                 else:
                                         print("No inventory space")
                         if event.key == pygame.K_z:
@@ -68,5 +68,6 @@ while True:
                                 print(inv)
                         if event.key == pygame.K_f:
                                 DISPLAYSURF.blit(pos0image, (400, 500))
+        pygame.display.update()
 
 
