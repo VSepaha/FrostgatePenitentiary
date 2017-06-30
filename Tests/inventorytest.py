@@ -20,7 +20,8 @@ DISPLAYSURF = pygame.display.set_mode((w, h))
 DISPLAYSURF.fill((255, 255, 255))
 
 while True:
-        DISPLAYSURF.blit(inventory, (400, 500))
+        if pos0 == 0:
+                pos0image = pygame.image.load('../Resources/nothing.png')
         if pos0 == 1:
                 pos0image = pygame.image.load('../Resources/an_item.png')
         for event in pygame.event.get():
@@ -54,20 +55,28 @@ while True:
                                                         if inv[1] == None:
                                                                 if inv[0] == None:
                                                                         print('Nothing to drop!')
-                                                                else: inv[0] = None
+                                                                else: 
+                                                                        inv[0] = None
+                                                                        pos0 = 0
 
                                                         else:
                                                                 inv[1] = None
+                                                                pos1 = 0
                                                 else:
                                                         inv[2] = None
+                                                        pos2 = 0
                                         else:
                                                 inv[3] = None
+                                                pos3 = 0
                                 else:
                                         inv[4] = None
+                                        pos4 = 0
                         if event.key == pygame.K_c:
                                 print(inv)
-                        if event.key == pygame.K_f:
-                                DISPLAYSURF.blit(pos0image, (400, 500))
-        pygame.display.update()
+
+        key_pressed = pygame.key.get_pressed()
+        if key_pressed[pygame.K_f]:
+                        DISPLAYSURF.blit(pos0image, (410, 510))
+        pygame.display.flip()
 
 
