@@ -25,17 +25,12 @@ OVERLAPPING = 1
 
 # This is the class that will be used by the NPCs
 class Guard(Actor):
-	def __init__(self, offset_x, offset_y, actor_type, collision_type):
+	def __init__(self, offset_x, offset_y, actor_type, collision_type, patrol_route):
 		# Don't forget to call the parent class!
 		Actor.__init__(self, offset_x, offset_y, actor_type, collision_type)
 
 		# Route set for the NPC
-		self.route = [
-			(offset_x, offset_y + 300),
-			(offset_x-500, offset_y + 300),
-			(offset_x-500, offset_y),
-			(offset_x, offset_y) 
-		]
+		self.route = patrol_route
 		self.route_index = 0
 
 		# To keep track of whether the NPC is moving

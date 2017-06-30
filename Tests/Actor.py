@@ -77,6 +77,10 @@ class Actor(pygame.sprite.Sprite):
 		self.collision_list = []
 		self.collision_type = collision_type
 
+	def add_item(self, item, item_group):
+		if self.rect.colliderect(item):
+			if  item_group.has(item):
+				item_group.remove(item)
 
 	# Works Nicely
 	def update(self, move, direction):
