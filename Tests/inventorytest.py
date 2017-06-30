@@ -17,10 +17,10 @@ inv = [None, None, None, 'an_item', None]
 w, h = 1000, 600
 inventory = pygame.image.load('../Resources/inventory.png')
 DISPLAYSURF = pygame.display.set_mode((w, h))
-DISPLAYSURF.fill((255, 255, 255))
 DISPLAYSURF.blit(inventory, (402, 502))
 
 while True:
+        DISPLAYSURF.fill((255, 255, 255))
         if pos0 == 0:
                 pos0image = pygame.image.load('../Resources/nothing.png')
         if pos0 == 1:
