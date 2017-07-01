@@ -1,5 +1,4 @@
 import pygame, sys
-from pygame.locals import *
 
 pygame.init()
 
@@ -15,8 +14,8 @@ WIN_HEIGHT = 600
 
 # Map Values
 TILESIZE = 40
-MAPWIDTH = 25
-MAPHEIGHT = 15
+MAPWIDTH = 50
+MAPHEIGHT = 25
 
 #General Font
 general_font = pygame.font.SysFont(None,20)

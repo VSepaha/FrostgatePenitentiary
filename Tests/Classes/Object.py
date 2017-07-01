@@ -1,4 +1,4 @@
-import pygame, sys
+import pygame
 from settings import *
 
 class Object(pygame.sprite.Sprite):

@@ -1,5 +1,3 @@
-import pygame, sys, time
-from pygame.locals import *
 from Object import *
 from settings import *
 
@@ -14,7 +12,8 @@ class PrisonMap:
 			'G' :  pygame.image.load('../Resources/Tiles/grass.png'),
 			'W' :  pygame.image.load('../Resources/Tiles/water.png'), 
 			'D' :  pygame.image.load('../Resources/Tiles/dirt.png'),
-			'P' :  pygame.image.load('../Resources/Tiles/prisonwall.png')
+			'P' :  pygame.image.load('../Resources/Tiles/prisonwall.png'),
+			' ' :  pygame.image.load('../Resources/Tiles/base.png')
 		}
 
 		# set the display size of window
@@ -28,7 +27,7 @@ class PrisonMap:
 		file = open('map.txt', 'r')
 		for i in range (0, MAPHEIGHT*MAPWIDTH):
 			return_char = file.read(1)
-			if return_char == '\n' or return_char == '':
+			if return_char == '\n':
 				return_char = file.read(1)
 			self.tile_list[i] = return_char
 		file.close()
@@ -42,7 +41,7 @@ class PrisonMap:
 				index += 1
 
 
-	def render(self, DISPLAYSURF):
+	def draw(self, tilemap):
 		index = 0
 		for i in range (0, MAPHEIGHT):
 			for j in range (0, MAPWIDTH):

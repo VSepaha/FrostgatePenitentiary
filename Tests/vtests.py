@@ -4,6 +4,7 @@ from pygame.locals import *
 sys.path.insert(0, 'Classes') # This add the system path
 from PrisonMap import *
 from Actor import *
+from Player import *
 from Guard import *
 from Object import *
 from settings import *
@@ -34,18 +35,18 @@ route = [
 game_map = PrisonMap()
 game_map.add_objects()
 
-player = Actor(500,300, PLAYER, BLOCKING)
+player = Player(500,300, PLAYER, BLOCKING)
 guard = Guard(800, 20, PRISON_GUARD, BLOCKING, route)
 ball = Object("an_item", 400, 200, OVERLAPPING)
 
 # initialize the collision objects
 # Only add the collisions for blocking objects
 player.collision_list.append(guard)
+guard.collision_list.append(player)
+
 for item in objects_group: # add all items in collision list
 	player.collision_list.append(item)
-
-guard.collision_list.append(player)
-guard.collision_list.append(ball)
+	guard.collision_list.append(item)
 
 # Used to ensure a maximum fps setting
 fps_clock = pygame.time.Clock()

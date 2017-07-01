@@ -1,27 +1,4 @@
-import pygame, sys, time
-from pygame.locals import *
 from Actor import *
-
-# Directions
-UP = 0
-DOWN = 1
-LEFT = 2
-RIGHT = 3
-
-# Actor types
-PLAYER = "player"
-PRISON_GUARD = "guard"
-
-# States that the guard can be in 
-PATROL = 0 
-STAND = 1
-CHASE = 2
-
-# Collision Type
-BLOCKING = 0
-OVERLAPPING = 1
-
-#######################
 
 # This is the class that will be used by the NPCs
 class Guard(Actor):
