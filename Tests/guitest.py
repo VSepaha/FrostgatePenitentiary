@@ -81,12 +81,13 @@ class GUI:
         DISPLAYSURF.blit(ramSurface,ramRect)
 
 
-
+nothing_object = "nothing.png"
+item_object = "an_item.png"
 
 w, h = 1000, 600
 DISPLAYSURF = pygame.display.set_mode((w, h))
 GUI_display = GUI()
-inv = [None, None, None, 'an_item', None]
+inv = [nothing_object, nothing_object, nothing_object, item_object, nothing_object]
 ramen = pygame.image.load('ramen.png')
 inventory = pygame.image.load('../Resources/inventory.png')
 
@@ -94,8 +95,6 @@ inventory = pygame.image.load('../Resources/inventory.png')
 red = (255, 0, 0)
 green = (0, 255, 0)
 black = (0, 0, 0)
-
-item = "nothing.png"
 
 while True:
     DISPLAYSURF.fill((255, 255, 255))
@@ -106,49 +105,43 @@ while True:
             pygame.quit()
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_j:
-                if inv[0] == None:
+                if inv[0] == nothing_object:
                     #when I call this later while blitting the image, it is because the image is an_item.png
-                    inv[0] = 'an_item.png'
+                    inv[0] = item_object
                     item = inv[0]
-                elif inv[1] == None:
-                    inv[1] = 'an_item.png'
+                elif inv[1] == nothing_object:
+                    inv[1] = item_object
                     item = inv[1]
-                elif inv[2] == None:
-                    inv[2] = 'an_item.png'
+                elif inv[2] == nothing_object:
+                    inv[2] = item_object
                     item = inv[2]
-                elif inv[3] == None:
-                    inv[3] = 'an_item.png'
+                elif inv[3] == nothing_object:
+                    inv[3] = item_object
                     item = inv[3]
-                elif inv[4] == None:
-                    inv[4] = 'an_item.png'
+                elif inv[4] == nothing_object:
+                    inv[4] = item_object
                     item = inv[4]
 
                 else:
                         print('No inventory space')
             if event.key == pygame.K_k:
-                if inv[4] == None:
+                if inv[4] == nothing_object:
                     #the image is called None.png so it should work later
-                    if inv[3] == None:
-                        if inv[2] == None:
-                            if inv[1] == None:
-                                if inv[0] == None:
+                    if inv[3] == nothing_object:
+                        if inv[2] == nothing_object:
+                            if inv[1] == nothing_object:
+                                if inv[0] == nothing_object:
                                     print('Nothing to drop!')
                                 else: 
-                                    inv[0] = None
-                                    pos0 == 0 
-
+                                    inv[0] = nothing_object
                             else:
-                                inv[1] = None
-                                pos1 = 0
+                                inv[1] = nothing_object
                         else:
-                            inv[2] = None
-                            pos2 = 0
+                            inv[2] = nothing_object
                     else:
-                        inv[3] = None
-                        pos3 = 0
+                        inv[3] = nothing_object
                 else:
-                    inv[4] = None
-                    pos4 = 0
+                    inv[4] = nothing_object
             if event.key == pygame.K_l:
                 print(inv)
 
@@ -172,41 +165,13 @@ while True:
         GUI_display.decrease_stat(RAMEN)
     if key_pressed[pygame.K_b]:
         GUI_display.increase_stat(RAMEN)
-# This should work right, because it is, for example for none: ../Resources/None.png
-    # pos2image = pygame.image.load('../Resources/' + inv[2] + '.png')
-    # pos3image = pygame.image.load('../Resources/' + inv[3] + '.png')
-    # pos4image = pygame.image.load('../Resources/' + inv[4] + '.png')
 
 
-    if pos0 == 0:
-        pos0image = pygame.image.load('../Resources/None.png')
-    else:
-        pos0image = pygame.image.load('../Resources/' + inv[0])
-
-    if pos1 == 0:
-        pos1image = pygame.image.load('../Resources/None.png')
-    else:
-        pos1image = pygame.image.load('../Resources/' + inv[1])
-
-    if pos2 == 0:
-        pos2image = pygame.image.load('../Resources/None.png')
-    else:
-        pos2image = pygame.image.load('../Resources/' + inv[2])
-
-    if pos3 == 0:
-        pos3image = pygame.image.load('../Resources/None.png')
-    else:
-        pos3image = pygame.image.load('../Resources/' + inv[3])
-
-    if pos4 == 0:
-        pos4image = pygame.image.load('../Resources/None.png')
-    else:
-        pos4image = pygame.image.load('../Resources/' + inv[4])
-
-
-
-
-
+    pos0image = pygame.image.load('../Resources/' + inv[0])
+    pos1image = pygame.image.load('../Resources/' + inv[1])
+    pos2image = pygame.image.load('../Resources/' + inv[2])
+    pos3image = pygame.image.load('../Resources/' + inv[3])
+    pos4image = pygame.image.load('../Resources/' + inv[4])
 
   
     # *2.55 because it ranges from 0-100, and 255 is color max
