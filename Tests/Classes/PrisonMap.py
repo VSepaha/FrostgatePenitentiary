@@ -1,19 +1,9 @@
 import pygame, sys, time
 from pygame.locals import *
+from Object import *
+from settings import *
 
 pygame.init()
-
-# Values for the tiles
-GROUND = 'R'
-GRASS = 'G'
-WATER = 'W'
-DIRT = 'D'
-
-# Map Values
-TILESIZE = 40
-MAPWIDTH = 25
-MAPHEIGHT = 15
-
 
 class PrisonMap:
 	def __init__(self):
@@ -23,7 +13,8 @@ class PrisonMap:
 			'R' :  pygame.image.load('../Resources/Tiles/ground.png'),
 			'G' :  pygame.image.load('../Resources/Tiles/grass.png'),
 			'W' :  pygame.image.load('../Resources/Tiles/water.png'), 
-			'D' :  pygame.image.load('../Resources/Tiles/dirt.png')
+			'D' :  pygame.image.load('../Resources/Tiles/dirt.png'),
+			'P' :  pygame.image.load('../Resources/Tiles/prisonwall.png')
 		}
 
 		# set the display size of window
@@ -41,6 +32,14 @@ class PrisonMap:
 				return_char = file.read(1)
 			self.tile_list[i] = return_char
 		file.close()
+
+	def add_objects(self):
+		index = 0
+		for i in range (0, MAPHEIGHT):
+			for j in range (0, MAPWIDTH):
+				if self.tile_list[index] == PRISON_WALL:
+					wall = Object("prisonwall", j*TILESIZE, i*TILESIZE, BLOCKING)
+				index += 1
 
 
 	def render(self, DISPLAYSURF):

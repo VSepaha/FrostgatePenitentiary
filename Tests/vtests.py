@@ -6,53 +6,9 @@ from PrisonMap import *
 from Actor import *
 from Guard import *
 from Object import *
+from settings import *
 
 pygame.init()
-
-
-########## Settings
-# FPS 
-FPS = 30
-
-# Colors
-WHITE = (255,255,255)
-BLACK = (0,0,0)
-RED = (255,0,0)
-GREEN = (0,255,0)
-BLUE = (0,0,255)
-YELLOW =(255,255,0)
-
-# Window size
-WIN_WIDTH = 1000
-WIN_HEIGHT = 600
-
-# Directions
-UP = 0
-DOWN = 1
-LEFT = 2
-RIGHT = 3
-NA = 4
-
-# Actor types used to get the image from directory
-PLAYER = "player"
-PRISON_GUARD = "guard"
-WARDEN = "warden"
-
-# States that the guard can be in 
-PATROL = 0 
-STAND = 1
-CHASE = 2
-
-# Collision Type
-BLOCKING = 0
-OVERLAPPING = 1
-
-# actors that are in game
-actors = pygame.sprite.Group()
-
-#items that are in game
-items = pygame.sprite.Group()
-####################################
 
 def key_up_events(event):
 	if event.key == K_w:
@@ -76,19 +32,18 @@ route = [
 
 # Instantiate the classes
 game_map = PrisonMap()
+game_map.add_objects()
+
 player = Actor(500,300, PLAYER, BLOCKING)
 guard = Guard(800, 20, PRISON_GUARD, BLOCKING, route)
-ball = Object(400, 200, OVERLAPPING)
-
-# add the actors to their respective groups
-actors.add(player)
-actors.add(guard)
-items.add(ball)
+ball = Object("an_item", 400, 200, OVERLAPPING)
 
 # initialize the collision objects
 # Only add the collisions for blocking objects
 player.collision_list.append(guard)
-player.collision_list.append(ball)
+for item in objects_group: # add all items in collision list
+	player.collision_list.append(item)
+
 guard.collision_list.append(player)
 guard.collision_list.append(ball)
 
@@ -135,20 +90,22 @@ while True:
 	# Guard start its patrol
 	guard.run_patrol(PATROL)
 
+	# render the game map onto the world
 	game_map.render(world)
 
 	# Display every item in the game at its position
-	for item in items:
+	for item in objects_group:
 		item.render(world)
 		# if the player collides with the object and presses a key delete the object from group
 		if player.rect.colliderect(item) and interactPressed:
 			print "Picked up", item
-			items.remove(item)
+			objects_group.remove(item)
 
 	#display all the actors in the game
-	for actor in actors:
+	for actor in actors_group:
 		actor.render(world)
 
+	# Render everything onto the display surface
 	DISPLAYSURF.blit(world, player.camera_pos) # Render Map To The Display
 
 

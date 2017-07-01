@@ -1,5 +1,6 @@
 import pygame, sys, time
 from pygame.locals import *
+from settings import *
 
 pygame.init()
 
@@ -24,6 +25,9 @@ class Actor(pygame.sprite.Sprite):
     def __init__(self, offset_x, offset_y, actor_type, collision_type):
         # Call the parent class (Sprite) constructor
         pygame.sprite.Sprite.__init__(self)
+
+        # When an actor is spawned, we add it to the list
+        actors_group.add(self)
 
         directory = '../Resources/' + actor_type + '/' + actor_type
 
