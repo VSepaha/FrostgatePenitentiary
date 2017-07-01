@@ -43,7 +43,7 @@ class PrisonMap:
 		file.close()
 
 
-	def display_map(self, DISPLAYSURF):
+	def render(self, DISPLAYSURF):
 		index = 0
 		for i in range (0, MAPHEIGHT):
 			for j in range (0, MAPWIDTH):

@@ -1,8 +1,11 @@
 import pygame, sys, time
 from pygame.locals import *
+
+sys.path.insert(0, 'Classes') # This add the system path
 from PrisonMap import *
 from Actor import *
 from Guard import *
+from Object import *
 
 pygame.init()
 
@@ -19,21 +22,21 @@ GREEN = (0,255,0)
 BLUE = (0,0,255)
 YELLOW =(255,255,0)
 
-# Values for the tiles
-GROUND = 'R'
-GRASS = 'G'
-WATER = 'W'
-DIRT = 'D'
+# Window size
+WIN_WIDTH = 1000
+WIN_HEIGHT = 600
 
 # Directions
 UP = 0
 DOWN = 1
 LEFT = 2
 RIGHT = 3
+NA = 4
 
 # Actor types used to get the image from directory
 PLAYER = "player"
 PRISON_GUARD = "guard"
+WARDEN = "warden"
 
 # States that the guard can be in 
 PATROL = 0 
@@ -49,26 +52,7 @@ actors = pygame.sprite.Group()
 
 #items that are in game
 items = pygame.sprite.Group()
-
-####################### Class Definitions
-
-class Object(pygame.sprite.Sprite):
-   def __init__(self, offset_x, offset_y, collision_type):
-       pygame.sprite.Sprite.__init__(self)
-
-       # layer priority so that the player "steps over" the object
-       # Unused # self.layer = 1
-
-       self.image = pygame.image.load('../Resources/an_item.png')
-
-       # Position of the image
-       self.rect = self.image.get_rect()
-       self.rect.x = offset_x
-       self.rect.y = offset_y
-
-       self.collision_type = collision_type
-
-###################### Main code
+####################################
 
 def key_up_events(event):
 	if event.key == K_w:
@@ -84,15 +68,15 @@ def key_up_events(event):
 
 # Route set for the NPC
 route = [
-	(800, 20 + 300),
-	(800-500, 20 + 300),
-	(800-500, 20),
+	(800, 320),
+	(300, 320),
+	(300, 20),
 	(800, 20) 
 ]
 
 # Instantiate the classes
 game_map = PrisonMap()
-player = Actor(200,200, PLAYER, BLOCKING)
+player = Actor(500,300, PLAYER, BLOCKING)
 guard = Guard(800, 20, PRISON_GUARD, BLOCKING, route)
 ball = Object(400, 200, OVERLAPPING)
 
@@ -112,14 +96,19 @@ guard.collision_list.append(ball)
 fps_clock = pygame.time.Clock()
 
 # Set up the window and caption
-DISPLAYSURF = pygame.display.set_mode((game_map.WIDTH, game_map.HEIGHT), 0, 32)
+DISPLAYSURF = pygame.display.set_mode((WIN_WIDTH,WIN_HEIGHT), 0, 32)
+pygame.display.set_caption("Frostgate Penitentiary Test") 
+
+# how large the world map will be (Prison dimensions)
+world = pygame.Surface((game_map.WIDTH, game_map.HEIGHT)) # Create Map Surface
+world.fill(BLACK) # Fill Map Surface Black
 
 # pressed variables
 interactPressed = False
 
 # Main game loop
 while True:
-	game_map.display_map(DISPLAYSURF)
+	DISPLAYSURF.fill(BLACK)
 
 	for event in pygame.event.get():
 		if event.type == KEYUP:
@@ -146,9 +135,11 @@ while True:
 	# Guard start its patrol
 	guard.run_patrol(PATROL)
 
+	game_map.render(world)
+
 	# Display every item in the game at its position
 	for item in items:
-		DISPLAYSURF.blit(item.image, (item.rect.x, item.rect.y))
+		item.render(world)
 		# if the player collides with the object and presses a key delete the object from group
 		if player.rect.colliderect(item) and interactPressed:
 			print "Picked up", item
@@ -156,7 +147,9 @@ while True:
 
 	#display all the actors in the game
 	for actor in actors:
-		DISPLAYSURF.blit(actor.current_image, (actor.rect.x, actor.rect.y))
+		actor.render(world)
+
+	DISPLAYSURF.blit(world, player.camera_pos) # Render Map To The Display
 
 
 	pygame.display.update()

@@ -1,11 +1,6 @@
 import pygame, sys, time
 from pygame.locals import *
 
-sys.path.insert(0, 'Classes')
-from PrisonMap import *
-from Guard import *
-
-###
 pygame.init()
 
 # Directions
@@ -13,16 +8,6 @@ UP = 0
 DOWN = 1
 LEFT = 2
 RIGHT = 3
-NA = 4
-
-# Colors
-WHITE = (255,255,255)
-BLACK = (0,0,0)
-RED = (255,0,0)
-GREEN = (0,255,0)
-BLUE = (0,0,255)
-YELLOW =(255,255,0)
-
 
 # Actor types
 PLAYER = "player"
@@ -31,11 +16,6 @@ PRISON_GUARD = "guard"
 # Collision Type
 BLOCKING = 0
 OVERLAPPING = 1
-
-# States that the guard can be in 
-PATROL = 0 
-STAND = 1
-CHASE = 2
 
 #######################
 
@@ -201,80 +181,3 @@ class Actor(pygame.sprite.Sprite):
 
     def render(self, display):
         display.blit(self.current_image,(self.rect.x,self.rect.y))
-
-###
-def key_up_events(event):
-
-    if event.key == K_w:
-        camera_pos = player.update(False, UP)
-    if event.key == K_s:
-        camera_pos = player.update(False, DOWN)
-    if event.key == K_a:
-        camera_pos = player.update(False, LEFT)
-    if event.key == K_d:
-        camera_pos = player.update(False, RIGHT)
-
-
-# how large the display is (window size)
-display = pygame.display.set_mode((1000,600))
-
-pygame.display.set_caption("Frostgate")
-clock = pygame.time.Clock()
-
-# how large the world map will be
-world = pygame.Surface((1000,600)) # Create Map Surface
-world.fill(BLACK) # Fill Map Surface Black
-
-# Route set for the NPC
-route = [
-    (800, 20 + 300),
-    (800-500, 20 + 300),
-    (800-500, 20),
-    (800, 20) 
-]
-
-# create the map
-game_map = PrisonMap()
-
-
-player = Actor(500,300, PLAYER, BLOCKING)
-guard = Guard(800, 20, PRISON_GUARD, BLOCKING, route)
-
-player.collision_list.append(guard)
-guard.collision_list.append(player)
-
-#
-while True:
-    for event in pygame.event.get():
-        if event.type == KEYUP:
-            key_up_events(event)
-        elif event.type == QUIT:
-            pygame.quit()
-            sys.exit()
-
-    # The key pressed events
-    key_pressed = pygame.key.get_pressed()
-
-    if key_pressed[K_w]: 
-        player.update(True, UP)
-    elif key_pressed[K_s]:
-        player.update(True, DOWN)
-    elif key_pressed[K_a]:
-        player.update(True, LEFT)
-    elif key_pressed[K_d]:
-        player.update(True, RIGHT)
-
-    display.fill(BLACK) # Fill The Background White To Avoid Smearing
-
-    game_map.render(world)
-
-    guard.run_patrol(PATROL)
-
-    player.render(world) # Render The Player on the world
-    guard.render(world)
-
-    display.blit(world, player.camera_pos) # Render Map To The Display
-    #
-
-    clock.tick(30)
-    pygame.display.update()
