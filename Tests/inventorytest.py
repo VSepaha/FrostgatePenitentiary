@@ -21,23 +21,23 @@ DISPLAYSURF = pygame.display.set_mode((w, h))
 while True:
         DISPLAYSURF.fill((255, 255, 255))
         if pos0 == 0:
-                pos0image = pygame.image.load('../Resources/nothing.png')
+                pos0image = pygame.image.load('../Resources/None.png')
         if pos0 == 1:
                 pos0image = pygame.image.load('../Resources/an_item.png')
         if pos1 == 0:
-                pos1image = pygame.image.load('../Resources/nothing.png')
+                pos1image = pygame.image.load('../Resources/None.png')
         if pos1 == 1:
                 pos1image = pygame.image.load('../Resources/an_item.png')
         if pos2 == 0:
-                pos2image = pygame.image.load('../Resources/nothing.png')
+                pos2image = pygame.image.load('../Resources/None.png')
         if pos2 == 1:
                 pos2image = pygame.image.load('../Resources/an_item.png')
         if pos3 == 0:
-                pos3image = pygame.image.load('../Resources/nothing.png')
+                pos3image = pygame.image.load('../Resources/None.png')
         if pos3 == 1:
                 pos3image = pygame.image.load('../Resources/an_item.png')
         if pos4 == 0:
-                pos4image = pygame.image.load('../Resources/nothing.png')
+                pos4image = pygame.image.load('../Resources/None.png')
         if pos4 == 1:
                 pos4image = pygame.image.load('../Resources/an_item.png')
 

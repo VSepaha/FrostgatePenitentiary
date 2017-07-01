@@ -1,9 +1,19 @@
-import pygame
+import pygame, sys
 
 STAMINA = 0
 HEALTH = 1
 RAMEN = 2
 
+#inventory ids
+an_item = 1
+baton = 2
+bat = 3
+key = 4
+pos0 = 0
+pos1 = 0
+pos2 = 0
+pos3 = 1
+pos4 = 0
 pygame.init()
 
 class GUI:
@@ -71,18 +81,21 @@ class GUI:
         DISPLAYSURF.blit(ramSurface,ramRect)
 
 
+
+
 w, h = 1000, 600
 DISPLAYSURF = pygame.display.set_mode((w, h))
-
 GUI_display = GUI()
-
+inv = [None, None, None, 'an_item', None]
 ramen = pygame.image.load('ramen.png')
+inventory = pygame.image.load('../Resources/inventory.png')
 
 #colors
 red = (255, 0, 0)
 green = (0, 255, 0)
 black = (0, 0, 0)
 
+item = "nothing.png"
 
 while True:
     DISPLAYSURF.fill((255, 255, 255))
@@ -91,6 +104,51 @@ while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_j:
+                if inv[0] == None:
+                    inv[0] = 'an_item'
+                    item = inv[0]
+                elif inv[1] == None:
+                    inv[1] = 'an_item'
+                    item = inv[1]
+                elif inv[2] == None:
+                    inv[2] = 'an_item'
+                    item = inv[2]
+                elif inv[3] == None:
+                    inv[3] = 'an_item'
+                    item = inv[3]
+                elif inv[4] == None:
+                    inv[4] = 'an_item'
+                    item = inv[4]
+
+                else:
+                        print('No inventory space')
+            if event.key == pygame.K_k:
+                if inv[4] == None:
+                    if inv[3] == None:
+                        if inv[2] == None:
+                            if inv[1] == None:
+                                if inv[0] == None:
+                                    print('Nothing to drop!')
+                                else: 
+                                    inv[0] = None
+
+                            else:
+                                inv[1] = None
+                                item = "nothing.png"
+                        else:
+                            inv[2] = None
+                            item = "nothing.png"
+                    else:
+                        inv[3] = None
+                        item = "nothing.png"
+                else:
+                    inv[4] = None
+                    item = "nothing.png"
+            if event.key == pygame.K_l:
+                print(inv)
+
 
     # This relies on the previous line being called, or else it won't update,
     key_pressed = pygame.key.get_pressed()
@@ -112,7 +170,37 @@ while True:
     if key_pressed[pygame.K_b]:
         GUI_display.increase_stat(RAMEN)
 
+    pos0image = pygame.image.load('../Resources/' + inv[0] + '.png')
+    pos1image = pygame.image.load('../Resources/' + inv[1] + '.png')
+    pos2image = pygame.image.load('../Resources/' + inv[2] + '.png')
+    pos3image = pygame.image.load('../Resources/' + inv[3] + '.png')
+    pos4image = pygame.image.load('../Resources/' + inv[4] + '.png')
 
+
+    # if pos0 == 0:
+    #         pos0image = pygame.image.load('../Resources/' + item)
+    # if pos0 == 1:
+    #         pos0image = pygame.image.load('../Resources/an_item.png')
+    # if pos1 == 0:
+    #         pos1image = pygame.image.load('../Resources/nothing.png')
+    # if pos1 == 1:
+    #         pos1image = pygame.image.load('../Resources/an_item.png')
+    # if pos2 == 0:
+    #         pos2image = pygame.image.load('../Resources/nothing.png')
+    # if pos2 == 1:
+    #         pos2image = pygame.image.load('../Resources/an_item.png')
+    # if pos3 == 0:
+    #         pos3image = pygame.image.load('../Resources/nothing.png')
+    # if pos3 == 1:
+    #         pos3image = pygame.image.load('../Resources/an_item.png')
+    # if pos4 == 0:
+    #         pos4image = pygame.image.load('../Resources/nothing.png')
+    # if pos4 == 1:
+    #         pos4image = pygame.image.load('../Resources/an_item.png')
+
+
+
+  
     # *2.55 because it ranges from 0-100, and 255 is color max
     health = GUI_display.get_stat(HEALTH)
     tint = 255 - (health * 2.55)
@@ -127,6 +215,11 @@ while True:
     GUI_display.healthy()
     GUI_display.staminad()
     GUI_display.ramened()
-    
+    DISPLAYSURF.blit(pos0image, (410, 510))
+    DISPLAYSURF.blit(pos1image, (450, 510))
+    DISPLAYSURF.blit(pos2image, (490, 510))
+    DISPLAYSURF.blit(pos3image, (528, 510))
+    DISPLAYSURF.blit(pos4image, (568, 510))
+    DISPLAYSURF.blit(inventory, (402, 502))
     pygame.display.flip()
 
