@@ -41,7 +41,7 @@ class PrisonMap:
 				index += 1
 
 
-	def draw(self, tilemap):
+	def render(self, DISPLAYSURF):
 		index = 0
 		for i in range (0, MAPHEIGHT):
 			for j in range (0, MAPWIDTH):
