@@ -144,7 +144,7 @@ while True:
 		interactPressed = True
 
 	# Guard start its patrol
-	guard.start_patrol(PATROL)
+	guard.run_patrol(PATROL)
 
 	# Display every item in the game at its position
 	for item in items:

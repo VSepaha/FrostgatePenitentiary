@@ -43,7 +43,7 @@ class Guard(Actor):
 
 	# Guard patrol route implementation
 	# AI pathfinding algorithm can be improved
-	def start_patrol(self, state):
+	def run_patrol(self, state):
 		route_len = len(self.route)
 		if state == PATROL:
 			if self.rect.x != self.route[self.route_index][0] or self.rect.y != self.route[self.route_index][1]:
