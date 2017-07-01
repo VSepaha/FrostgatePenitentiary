@@ -107,6 +107,7 @@ while True:
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_j:
                 if inv[0] == None:
+                    #when I call this later while blitting the image, it is because the image is an_item.png
                     inv[0] = 'an_item'
                     item = inv[0]
                 elif inv[1] == None:
@@ -126,6 +127,7 @@ while True:
                         print('No inventory space')
             if event.key == pygame.K_k:
                 if inv[4] == None:
+                    #the image is called None.png so it should work later
                     if inv[3] == None:
                         if inv[2] == None:
                             if inv[1] == None:
@@ -169,7 +171,7 @@ while True:
         GUI_display.decrease_stat(RAMEN)
     if key_pressed[pygame.K_b]:
         GUI_display.increase_stat(RAMEN)
-
+# This should work right, because it is, for example for none: ../Resources/None.png
     pos0image = pygame.image.load('../Resources/' + inv[0] + '.png')
     pos1image = pygame.image.load('../Resources/' + inv[1] + '.png')
     pos2image = pygame.image.load('../Resources/' + inv[2] + '.png')
