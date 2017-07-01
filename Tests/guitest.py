@@ -9,11 +9,11 @@ an_item = 1
 baton = 2
 bat = 3
 key = 4
-pos0 = 0
-pos1 = 0
-pos2 = 0
+pos0 = 1
+pos1 = 1
+pos2 = 1
 pos3 = 1
-pos4 = 0
+pos4 = 1
 pygame.init()
 
 class GUI:
@@ -108,19 +108,19 @@ while True:
             if event.key == pygame.K_j:
                 if inv[0] == None:
                     #when I call this later while blitting the image, it is because the image is an_item.png
-                    inv[0] = 'an_item'
+                    inv[0] = 'an_item.png'
                     item = inv[0]
                 elif inv[1] == None:
-                    inv[1] = 'an_item'
+                    inv[1] = 'an_item.png'
                     item = inv[1]
                 elif inv[2] == None:
-                    inv[2] = 'an_item'
+                    inv[2] = 'an_item.png'
                     item = inv[2]
                 elif inv[3] == None:
-                    inv[3] = 'an_item'
+                    inv[3] = 'an_item.png'
                     item = inv[3]
                 elif inv[4] == None:
-                    inv[4] = 'an_item'
+                    inv[4] = 'an_item.png'
                     item = inv[4]
 
                 else:
@@ -135,19 +135,20 @@ while True:
                                     print('Nothing to drop!')
                                 else: 
                                     inv[0] = None
+                                    pos0 == 0 
 
                             else:
                                 inv[1] = None
-                                item = "nothing.png"
+                                pos1 = 0
                         else:
                             inv[2] = None
-                            item = "nothing.png"
+                            pos2 = 0
                     else:
                         inv[3] = None
-                        item = "nothing.png"
+                        pos3 = 0
                 else:
                     inv[4] = None
-                    item = "nothing.png"
+                    pos4 = 0
             if event.key == pygame.K_l:
                 print(inv)
 
@@ -172,33 +173,38 @@ while True:
     if key_pressed[pygame.K_b]:
         GUI_display.increase_stat(RAMEN)
 # This should work right, because it is, for example for none: ../Resources/None.png
-    pos0image = pygame.image.load('../Resources/' + inv[0] + '.png')
-    pos1image = pygame.image.load('../Resources/' + inv[1] + '.png')
-    pos2image = pygame.image.load('../Resources/' + inv[2] + '.png')
-    pos3image = pygame.image.load('../Resources/' + inv[3] + '.png')
-    pos4image = pygame.image.load('../Resources/' + inv[4] + '.png')
+    # pos2image = pygame.image.load('../Resources/' + inv[2] + '.png')
+    # pos3image = pygame.image.load('../Resources/' + inv[3] + '.png')
+    # pos4image = pygame.image.load('../Resources/' + inv[4] + '.png')
 
 
-    # if pos0 == 0:
-    #         pos0image = pygame.image.load('../Resources/' + item)
-    # if pos0 == 1:
-    #         pos0image = pygame.image.load('../Resources/an_item.png')
-    # if pos1 == 0:
-    #         pos1image = pygame.image.load('../Resources/nothing.png')
-    # if pos1 == 1:
-    #         pos1image = pygame.image.load('../Resources/an_item.png')
-    # if pos2 == 0:
-    #         pos2image = pygame.image.load('../Resources/nothing.png')
-    # if pos2 == 1:
-    #         pos2image = pygame.image.load('../Resources/an_item.png')
-    # if pos3 == 0:
-    #         pos3image = pygame.image.load('../Resources/nothing.png')
-    # if pos3 == 1:
-    #         pos3image = pygame.image.load('../Resources/an_item.png')
-    # if pos4 == 0:
-    #         pos4image = pygame.image.load('../Resources/nothing.png')
-    # if pos4 == 1:
-    #         pos4image = pygame.image.load('../Resources/an_item.png')
+    if pos0 == 0:
+        pos0image = pygame.image.load('../Resources/None.png')
+    else:
+        pos0image = pygame.image.load('../Resources/' + inv[0])
+
+    if pos1 == 0:
+        pos1image = pygame.image.load('../Resources/None.png')
+    else:
+        pos1image = pygame.image.load('../Resources/' + inv[1])
+
+    if pos2 == 0:
+        pos2image = pygame.image.load('../Resources/None.png')
+    else:
+        pos2image = pygame.image.load('../Resources/' + inv[2])
+
+    if pos3 == 0:
+        pos3image = pygame.image.load('../Resources/None.png')
+    else:
+        pos3image = pygame.image.load('../Resources/' + inv[3])
+
+    if pos4 == 0:
+        pos4image = pygame.image.load('../Resources/None.png')
+    else:
+        pos4image = pygame.image.load('../Resources/' + inv[4])
+
+
+
 
 
 
