@@ -11,6 +11,7 @@ UP = 0
 DOWN = 1
 LEFT = 2
 RIGHT = 3
+NA = 4
 
 # Colors
 WHITE = (255,255,255)
@@ -96,7 +97,6 @@ class Actor(pygame.sprite.Sprite):
 
         # camera
         self.camera_pos = (0,0) # Create Camara Starting Position
-        self.camera_mov_flag = True
 
     def add_item(self, item, item_group):
         if self.rect.colliderect(item):
@@ -140,35 +140,54 @@ class Actor(pygame.sprite.Sprite):
         self.rect.x += dx
         self.rect.y += dy
 
-        # Using only for testing purposes
-        # TODO: Remove and replace
         for other_object in self.collision_list:
             if self.rect.colliderect(other_object) and other_object.collision_type == BLOCKING:
-                self.camera_mov_flag = True
+                pos_x, pos_y = self.camera_pos
                 if dx > 0: # Moving right; Hit the left side of the wall
                     self.rect.right = other_object.rect.left
+                    # Code for the camera
+                    if other_object.get_direction() == RIGHT:
+                        pos_x += 4 - other_object.get_speed()
+                    else:
+                        pos_x += 4 
+                    ############################
                 if dx < 0: # Moving left; Hit the right side of the wall
                     self.rect.left = other_object.rect.right
+                    # Code for the camera
+                    if other_object.get_direction() == LEFT:
+                        pos_x -= 4 - other_object.get_speed()
+                    else:
+                        pos_x -= 4
+                    ############################
                 if dy > 0: # Moving down; Hit the top side of the wall
                     self.rect.bottom = other_object.rect.top
+                    # Code for the camera
+                    if other_object.get_direction() == DOWN:
+                        pos_y += 4 - other_object.get_speed()
+                    else:
+                        pos_y += 4
+                    ############################
                 if dy < 0: # Moving up; Hit the bottom side of the wall
                     self.rect.top = other_object.rect.bottom
-            else:
-                self.camera_mov_flag = False
+                    if other_object.get_direction() == UP:
+                        pos_y -= 4 - other_object.get_speed()
+                    else:
+                        pos_y -= 4
+                self.camera_pos = (pos_x, pos_y)
+
 
     def move_camera(self, direction):
 
         pos_x,pos_y = self.camera_pos # Split camara_pos
 
-        if self.camera_mov_flag == False:
-            if direction == UP: # Check Key
-                pos_y += 4 # Move Camara Coord Against Player Rect
-            if direction == RIGHT:
-                pos_x -= 4
-            if direction == DOWN:
-                pos_y -= 4
-            if direction == LEFT:
-                pos_x += 4
+        if direction == UP: # Check Key
+            pos_y += 4 # Move Camara Coord Against Player Rect
+        if direction == RIGHT:
+            pos_x -= 4
+        if direction == DOWN:
+            pos_y -= 4
+        if direction == LEFT:
+            pos_x += 4
 
         self.camera_pos = (pos_x,pos_y) # Return New Camera Pos
 

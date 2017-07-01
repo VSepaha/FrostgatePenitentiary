@@ -77,13 +77,19 @@ class Actor(pygame.sprite.Sprite):
 		self.collision_list = []
 		self.collision_type = collision_type
 
-	def add_item(self, item, item_group):
-		if self.rect.colliderect(item):
-			if  item_group.has(item):
-				item_group.remove(item)
+		# The character starts facing downwards
+		self.direction = DOWN
+
+	def get_speed(self):
+		return self.speed
+
+	def get_direction(self):
+		return self.direction
 
 	# Works Nicely
 	def update(self, move, direction):
+
+		self.direction = direction
 
 		if move == True:
 			self.count += 1
