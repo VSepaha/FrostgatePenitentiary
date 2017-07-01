@@ -17,7 +17,6 @@ inv = [None, None, None, 'an_item', None]
 w, h = 1000, 600
 inventory = pygame.image.load('../Resources/inventory.png')
 DISPLAYSURF = pygame.display.set_mode((w, h))
-DISPLAYSURF.blit(inventory, (402, 502))
 
 while True:
         DISPLAYSURF.fill((255, 255, 255))
@@ -65,7 +64,7 @@ while True:
                                         inv[4] = 'an_item'
                                         pos4 = 1
                                 else:
-                                        print("No inventory space")
+                                        print('No inventory space')
                         if event.key == pygame.K_z:
                                 if inv[4] == None:
                                         if inv[3] == None:
@@ -92,13 +91,12 @@ while True:
                         if event.key == pygame.K_c:
                                 print(inv)
 
-        key_pressed = pygame.key.get_pressed()
-        if key_pressed[pygame.K_f]:
-                        DISPLAYSURF.blit(pos0image, (410, 510))
-                        DISPLAYSURF.blit(pos1image, (450, 510))
-                        DISPLAYSURF.blit(pos2image, (490, 510))
-                        DISPLAYSURF.blit(pos3image, (528, 510))
-                        DISPLAYSURF.blit(pos4image, (568, 510))
+        DISPLAYSURF.blit(pos0image, (410, 510))
+        DISPLAYSURF.blit(pos1image, (450, 510))
+        DISPLAYSURF.blit(pos2image, (490, 510))
+        DISPLAYSURF.blit(pos3image, (528, 510))
+        DISPLAYSURF.blit(pos4image, (568, 510))
+        DISPLAYSURF.blit(inventory, (402, 502))
         pygame.display.flip()
 
 
