@@ -22,10 +22,10 @@ The game will be created in python using the pygame library.
 - Tile Textures
 - SFX
 
-### Phase I
+### Phase I - COMPLETE
 - Create a basic playable character - Done 
 - Create a basic tiled prison map - Done
-- Create a basic working UI
+- Create a basic working UI - Done
 - Create a basic AI for guards - Done
 - Create basic prison objects - Done
 
