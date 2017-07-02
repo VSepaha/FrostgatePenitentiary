@@ -15,6 +15,7 @@ pos2 = 1
 pos3 = 1
 pos4 = 1
 pygame.init()
+index = 4
 
 class GUI:
     def __init__(self):
@@ -124,24 +125,41 @@ while True:
 
                 else:
                         print('No inventory space')
+
             if event.key == pygame.K_k:
                 if inv[4] == nothing_object:
                     #the image is called None.png so it should work later
-                    if inv[3] == nothing_object:
-                        if inv[2] == nothing_object:
-                            if inv[1] == nothing_object:
-                                if inv[0] == nothing_object:
-                                    print('Nothing to drop!')
-                                else: 
-                                    inv[0] = nothing_object
-                            else:
-                                inv[1] = nothing_object
+                    # while index >= 0:
+
+                    #     if inv[index] == 0:
+                    #         index -= 1
+                    #         continue
+                    #     else:
+                    #         inv[index] = nothing_object
+                    #         index -= 1
+                    #         break
+                    for item in inv:
+                        if item == nothing_object:
+                            continue
                         else:
-                            inv[2] = nothing_object
-                    else:
-                        inv[3] = nothing_object
-                else:
-                    inv[4] = nothing_object
+                            item = nothing_object
+                            break
+
+                #     if inv[3] == nothing_object:
+                #         if inv[2] == nothing_object:
+                #             if inv[1] == nothing_object:
+                #                 if inv[0] == nothing_object:
+                #                     print('Nothing to drop!')
+                #                 else: 
+                #                     inv[0] = nothing_object
+                #             else:
+                #                 inv[1] = nothing_object
+                #         else:
+                #             inv[2] = nothing_object
+                #     else:
+                #         inv[3] = nothing_object
+                # else:
+                #     inv[4] = nothing_object
             if event.key == pygame.K_l:
                 print(inv)
 
