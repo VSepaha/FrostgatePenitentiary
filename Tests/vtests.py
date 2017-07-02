@@ -62,6 +62,9 @@ world.fill(BLACK) # Fill Map Surface Black
 # pressed variables
 interactPressed = False
 
+# We only want to render the entire map once
+game_map.render(world)
+
 # Main game loop
 while True:
 	DISPLAYSURF.fill(BLACK)
@@ -91,8 +94,8 @@ while True:
 	# Guard start its patrol
 	guard.run_patrol(PATROL)
 
-	# render the game map onto the world
-	game_map.render(world)
+	# # render the game map onto the world
+	game_map.update_tiles(world)
 
 	# Display every item in the game at its position
 	for item in objects_group:
