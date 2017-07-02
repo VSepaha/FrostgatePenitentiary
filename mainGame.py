@@ -3,7 +3,7 @@ from pygame.locals import *
 from PrisonMap import *
 from Guard import *
 from Actor import *
-from Object import *
+fraaom Object import *
 from GUI import *
 
 sys.path.insert(0, 'Settings') # This add the system path
