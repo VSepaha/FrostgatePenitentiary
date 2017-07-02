@@ -13,6 +13,8 @@ class PrisonMap:
 			'W' :  pygame.image.load('../Resources/Tiles/water.png'), 
 			'D' :  pygame.image.load('../Resources/Tiles/dirt.png'),
 			'P' :  pygame.image.load('../Resources/Tiles/prisonwall.png'),
+			'B' :  pygame.image.load('../Resources/Tiles/prisonbars.png'),
+			'E' :  pygame.image.load('../Resources/Tiles/bed.png'),
 			' ' :  pygame.image.load('../Resources/Tiles/base.png')
 		}
 
@@ -36,8 +38,11 @@ class PrisonMap:
 		index = 0
 		for i in range (0, MAPHEIGHT):
 			for j in range (0, MAPWIDTH):
-				if self.tile_list[index] == PRISON_WALL:
+				if self.tile_list[index] == TILE_PRISON_WALL:
 					wall = Object("prisonwall", j*TILESIZE, i*TILESIZE, BLOCKING)
+				if self.tile_list[index] == TILE_PRISONBAR:
+					wall = Object("prisonbars", j*TILESIZE, i*TILESIZE, BLOCKING)
+
 				index += 1
 
 	def update_tiles(self, DISPLAYSURF):

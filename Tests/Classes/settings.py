@@ -29,11 +29,12 @@ BLUE = (0,0,255)
 YELLOW =(255,255,0)
 
 # Values for the tiles
-GROUND = 'R'
-GRASS = 'G'
-WATER = 'W'
-DIRT = 'D'
-PRISON_WALL = 'P'
+TILE_GROUND = 'R'
+TILE_GRASS = 'G'
+TILE_WATER = 'W'
+TILE_DIRT = 'D'
+TILE_PRISON_WALL = 'P'
+TILE_PRISONBAR = 'B'
 
 # Directions
 UP = 0

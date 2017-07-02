@@ -9,7 +9,7 @@ class Object(pygame.sprite.Sprite):
             objects_group.add(self)
 
             # image of the object
-            if image == "prisonwall":
+            if image == "prisonwall" or image == "prisonbars":
                   self.image = pygame.image.load('../Resources/Tiles/' + image +'.png')
             else:
                   self.image = pygame.image.load('../Resources/' + image +'.png')

@@ -1,6 +1,5 @@
 import pygame, sys, time
 from pygame.locals import *
-from GUI import *
 
 sys.path.insert(0, 'Classes') # This add the system path
 from PrisonMap import *
@@ -28,8 +27,8 @@ def key_up_events(event):
 route = [
 	(800, 320),
 	(300, 320),
-	(300, 20),
-	(800, 20) 
+	(300, 50),
+	(800, 50) 
 ]
 
 # Instantiate the classes
@@ -37,8 +36,7 @@ game_map = PrisonMap()
 game_map.add_objects()
 
 player = Player(500,300, PLAYER, BLOCKING)
-guard = Guard(800, 20, PRISON_GUARD, BLOCKING, route)
-gui = GUI()
+guard = Guard(800, 50, PRISON_GUARD, BLOCKING, route)
 ball = Object("an_item", 400, 200, OVERLAPPING)
 
 # initialize the collision objects
@@ -96,7 +94,7 @@ while True:
 	# Guard start its patrol
 	guard.run_patrol(PATROL)
 
-	# # render the game map onto the world
+	# render the game map onto the world
 	game_map.update_tiles(world)
 
 	# Display every item in the game at its position
@@ -111,7 +109,7 @@ while True:
 	for actor in actors_group:
 		actor.render(world)
 
-	gui.update(world)
+
 
 	# Render everything onto the display surface
 	DISPLAYSURF.blit(world, player.camera_pos) # Render Map To The Display
