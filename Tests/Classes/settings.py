@@ -56,6 +56,11 @@ CHASE = 2
 BLOCKING = 0
 OVERLAPPING = 1
 
+# Stat values
+STAMINA = 0
+HEALTH = 1
+RAMEN = 2
+
 # actors that are in game
 actors_group = pygame.sprite.Group()
 

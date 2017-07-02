@@ -4,6 +4,7 @@ from PrisonMap import *
 from Guard import *
 from Actor import *
 from Object import *
+from GUI import *
 
 sys.path.insert(0, 'Settings') # This add the system path
 from settings import *
@@ -34,6 +35,7 @@ route = [
 ]
 
 prison_map = PrisonMap()
+gui = GUI()
 player = Actor(prison_map.WIDTH/2, prison_map.HEIGHT/2, PLAYER, BLOCKING)
 guard = Guard(800, 20, PRISON_GUARD, BLOCKING, route)
 ball = Object(400, 400, OVERLAPPING)
@@ -65,6 +67,10 @@ while True:
 		elif event.type == QUIT:
 			pygame.quit()
 			sys.exit()
+		elif event.type == pygame.KEYDOWN:
+			# if k pressed, then item dropped from inv
+			if event.key == pygame.K_k:
+				gui.remove_item()
 
 	# Key pressed events
 	key_pressed = pygame.key.get_pressed()
@@ -90,10 +96,13 @@ while True:
 		# if the player collides with the object and presses a key delete the object from group
 		if player.rect.colliderect(item) and interactPressed:
 			items.remove(item)
+			gui.add_item()
 
 	# Render all the actors in the game
 	for actor in actors:
 		actor.render(DISPLAYSURF)
+
+	gui.update(DISPLAYSURF)
 
 	pygame.display.update()
 	fps_clock.tick(FPS)

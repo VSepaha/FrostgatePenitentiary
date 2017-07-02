@@ -1,5 +1,6 @@
 import pygame, sys, time
 from pygame.locals import *
+from GUI import *
 
 sys.path.insert(0, 'Classes') # This add the system path
 from PrisonMap import *
@@ -37,6 +38,7 @@ game_map.add_objects()
 
 player = Player(500,300, PLAYER, BLOCKING)
 guard = Guard(800, 20, PRISON_GUARD, BLOCKING, route)
+gui = GUI()
 ball = Object("an_item", 400, 200, OVERLAPPING)
 
 # initialize the collision objects
@@ -108,6 +110,8 @@ while True:
 	#display all the actors in the game
 	for actor in actors_group:
 		actor.render(world)
+
+	gui.update(world)
 
 	# Render everything onto the display surface
 	DISPLAYSURF.blit(world, player.camera_pos) # Render Map To The Display
