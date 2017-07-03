@@ -85,5 +85,7 @@ class PrisonMap:
 		for i in range (0, MAPHEIGHT):
 			for j in range (0, MAPWIDTH):
 				DISPLAYSURF.blit(self.textures[self.tile_list[index]],(j*TILESIZE,i*TILESIZE))
+
+				# not working properly right now
 				DISPLAYSURF.blit(self.objects[self.permanent_item_list[index]],(j*TILESIZE,i*TILESIZE))
 				index += 1
