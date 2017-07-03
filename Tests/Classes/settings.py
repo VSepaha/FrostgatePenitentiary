@@ -14,8 +14,8 @@ WIN_HEIGHT = 600
 
 # Map Values
 TILESIZE = 40
-MAPWIDTH = 50
-MAPHEIGHT = 25
+MAPWIDTH =100
+MAPHEIGHT = 100
 
 #General Font
 general_font = pygame.font.SysFont(None,20)
