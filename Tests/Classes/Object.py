@@ -5,14 +5,8 @@ class Object(pygame.sprite.Sprite):
       def __init__(self, image, offset_x, offset_y, collision_type):
             pygame.sprite.Sprite.__init__(self)
 
-            # Add itself to the item group
-            objects_group.add(self)
-
             # image of the object
-            if image == "prisonwall" or image == "prisonbars":
-                  self.image = pygame.image.load('../Resources/Tiles/' + image +'.png')
-            else:
-                  self.image = pygame.image.load('../Resources/' + image +'.png')
+            self.image = pygame.image.load('../Resources/an_item.png')
 
             # Position of the image
             self.rect = self.image.get_rect()

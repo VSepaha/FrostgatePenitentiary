@@ -11,6 +11,11 @@ from settings import *
 
 pygame.init()
 
+# Set up the window and caption
+DISPLAYSURF = pygame.display.set_mode((WIN_WIDTH,WIN_HEIGHT), 0, 32)
+pygame.display.set_caption("Frostgate Penitentiary Test") 
+
+
 def key_up_events(event):
 	if event.key == K_w:
 		player.update(False, UP)
@@ -33,36 +38,34 @@ route = [
 
 # Instantiate the classes
 game_map = PrisonMap()
+# how large the world map will be (Prison dimensions)
+world = pygame.Surface((game_map.WIDTH, game_map.HEIGHT)) # Create Map Surface
+world.fill(BLACK) # Fill Map Surface Black
+# We only want to render the entire map once
+game_map.render(world)
 
 player = Player(500,300, PLAYER, BLOCKING)
 guard = Guard(800, 50, PRISON_GUARD, BLOCKING, route)
 ball = Object("an_item", 400, 200, OVERLAPPING)
+
+items_group.add(ball)
 
 # initialize the collision objects
 # Only add the collisions for blocking objects
 player.collision_list.append(guard)
 guard.collision_list.append(player)
 
-for item in objects_group: # add all items in collision list
+for item in items_group: # add all items in collision list
 	player.collision_list.append(item)
 	guard.collision_list.append(item)
 
-# Used to ensure a maximum fps setting
-fps_clock = pygame.time.Clock()
-
-# Set up the window and caption
-DISPLAYSURF = pygame.display.set_mode((WIN_WIDTH,WIN_HEIGHT), 0, 32)
-pygame.display.set_caption("Frostgate Penitentiary Test") 
-
-# how large the world map will be (Prison dimensions)
-world = pygame.Surface((game_map.WIDTH, game_map.HEIGHT)) # Create Map Surface
-world.fill(BLACK) # Fill Map Surface Black
+for p_object in p_objects_group:
+	player.collision_list.append(p_object)
+	guard.collision_list.append(p_object)
 
 # pressed variables
 interactPressed = False
 
-# We only want to render the entire map once
-game_map.render(world)
 
 # Main game loop
 while True:
@@ -97,18 +100,19 @@ while True:
 	game_map.update_tiles(world)
 
 	# Display every item in the game at its position
-	for item in objects_group:
+	for item in items_group:
 		item.render(world)
 		# if the player collides with the object and presses a key delete the object from group
 		if player.rect.colliderect(item) and interactPressed:
 			print "Picked up", item
-			objects_group.remove(item)
+			items_group.remove(item)
+
+	for objects in p_objects_group:
+		objects.render(world)
 
 	#display all the actors in the game
 	for actor in actors_group:
 		actor.render(world)
-
-
 
 	# Render everything onto the display surface
 	DISPLAYSURF.blit(world, player.camera_pos) # Render Map To The Display

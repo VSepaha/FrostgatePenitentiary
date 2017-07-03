@@ -47,6 +47,8 @@ NA = 4
 PLAYER = "player"
 PRISON_GUARD = "guard"
 WARDEN = "warden"
+KARATE_GUY = "karate"
+PURPLE_BOY = "purpleboy"
 
 # States that the guard can be in 
 PATROL = 0 
@@ -65,5 +67,8 @@ RAMEN = 2
 # actors that are in game
 actors_group = pygame.sprite.Group()
 
-#objects that are in game
-objects_group = pygame.sprite.Group()
+# items that are in game
+items_group = pygame.sprite.Group()
+
+# permanent objects that are in game
+p_objects_group = pygame.sprite.Group()

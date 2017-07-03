@@ -1,5 +1,6 @@
 from Object import *
 from settings import *
+from PermanentObject import *
 
 pygame.init()
 
@@ -17,15 +18,13 @@ class PrisonMap:
 
 		# Permanent objects on the map
 		self.objects = {
-			'W' : pygame.image.load('../Resources/BasicObjects/prisonwall.png'),
-			'P' : pygame.image.load('../Resources/BasicObjects/prisonbars.png'),
-			'B' : pygame.image.load('../Resources/BasicObjects/bed.png'),
-			'T' : pygame.image.load('../Resources/Tiles/base.png'), #toilet
-			'D' : pygame.image.load('../Resources/Tiles/base.png'), #desk
-			'C' : pygame.image.load('../Resources/Tiles/base.png'), #cabinet
-			'O' : pygame.image.load('../Resources/Tiles/base.png'), #door
-			' ' : pygame.image.load('../Resources/Tiles/base.png') #nothing
-
+			'W' : "prisonwall",
+			'P' : "prisonbars",
+			'B' : "bed",
+			'T' : "toilet",
+			'D' : "desk",
+			'C' : "cabinet",
+			'O' : "door",
 		}
 
 		# set the display size of window
@@ -53,7 +52,6 @@ class PrisonMap:
 				return_char = obj_file.read(1)
 			self.permanent_item_list[i] = return_char
 		obj_file.close()
-
 
 	def update_tiles(self, DISPLAYSURF):
 		for actor in actors_group:
@@ -85,7 +83,6 @@ class PrisonMap:
 		for i in range (0, MAPHEIGHT):
 			for j in range (0, MAPWIDTH):
 				DISPLAYSURF.blit(self.textures[self.tile_list[index]],(j*TILESIZE,i*TILESIZE))
-
-				# not working properly right now
-				DISPLAYSURF.blit(self.objects[self.permanent_item_list[index]],(j*TILESIZE,i*TILESIZE))
+				if self.permanent_item_list[index] != ' ' and self.permanent_item_list[index] != '':
+		 			p_object = PermanentObject(self.objects[self.permanent_item_list[index]], j*TILESIZE, i*TILESIZE, BLOCKING)
 				index += 1
