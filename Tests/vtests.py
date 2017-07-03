@@ -25,8 +25,6 @@ def key_up_events(event):
 		player.update(False, LEFT)
 	if event.key == K_d:
 		player.update(False, RIGHT)
-	if event.key == K_e:
-		interactPressed = False
 
 # Route set for the NPC
 route = [
@@ -74,6 +72,8 @@ while True:
 	for event in pygame.event.get():
 		if event.type == KEYUP:
 			key_up_events(event)
+			if event.key == K_e:
+				interactPressed = False
 		elif event.type == QUIT:
 			pygame.quit()
 			sys.exit()

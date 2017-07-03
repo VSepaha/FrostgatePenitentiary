@@ -71,13 +71,8 @@ class PrisonMap:
 			DISPLAYSURF.blit(self.textures[self.tile_list[bottomleft[1]*MAPWIDTH+bottomleft[0]]], (bottomleft[0]*TILESIZE, bottomleft[1]*TILESIZE))
 			DISPLAYSURF.blit(self.textures[self.tile_list[bottomright[1]*MAPWIDTH+bottomright[0]]], (bottomright[0]*TILESIZE, bottomright[1]*TILESIZE))
 			
-			# print ""
-			# print "Player Position = " , topleft
-			# print "Player Position = " , topright
-			# print "Player Position = " , bottomleft
-			# print "Player Position = " , bottomright
-			# print ""
 
+	# Render everything onto the screen, should only be called once
 	def render(self, DISPLAYSURF):
 		index = 0
 		for i in range (0, MAPHEIGHT):

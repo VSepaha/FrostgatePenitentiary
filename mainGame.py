@@ -3,7 +3,7 @@ from pygame.locals import *
 from PrisonMap import *
 from Guard import *
 from Actor import *
-fraaom Object import *
+from Object import *
 from GUI import *
 
 sys.path.insert(0, 'Settings') # This add the system path
@@ -13,7 +13,6 @@ pygame.init()
 
 # handler function for all the key up events
 def key_up_events(event):
-
     if event.key == K_w:
         camera_pos = player.update(False, UP)
     if event.key == K_s:
@@ -22,8 +21,6 @@ def key_up_events(event):
         camera_pos = player.update(False, LEFT)
     if event.key == K_d:
         camera_pos = player.update(False, RIGHT)
-    if event.key == K_e:
-    	interactPressed = False
 
 
 # Route assigned to the guard
@@ -64,6 +61,8 @@ while True:
 	for event in pygame.event.get():
 		if event.type == KEYUP:
 			key_up_events(event)
+			if event.key == K_e:
+				interactPressed = False
 		elif event.type == QUIT:
 			pygame.quit()
 			sys.exit()
