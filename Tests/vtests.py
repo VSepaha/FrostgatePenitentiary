@@ -33,7 +33,6 @@ route = [
 
 # Instantiate the classes
 game_map = PrisonMap()
-game_map.add_objects()
 
 player = Player(500,300, PLAYER, BLOCKING)
 guard = Guard(800, 50, PRISON_GUARD, BLOCKING, route)
