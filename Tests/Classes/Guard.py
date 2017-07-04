@@ -10,7 +10,7 @@ class Guard(Actor):
 		self.route = patrol_route
 		self.route_index = 0
 
-		self.next_point = (0,0)
+		self.next_point = (self.rect.x, self.rect.y)
 		self.ratio = 1
 
 		# To keep track of whether the NPC is moving
@@ -29,9 +29,9 @@ class Guard(Actor):
 		if self.state == PATROL_STATE:
 			self.patrol()
 		if self.state == CHASE_STATE:
-			self.chase(player)
+			self.chase_algorithm(player)
 
-	def move_algorithm(self, location):
+	def move_to_location(self, location):
 		if self.rect.x > location[0]:
 			self.update(True, LEFT)
 		elif self.rect.x < location[0]:
@@ -41,70 +41,56 @@ class Guard(Actor):
 		elif self.rect.y < location[1]:
 			self.update(True, DOWN)
 
-	def chase(self, player):
-		self.speed = 4
-		self.change_timer = 6
+	def chase_algorithm(self, player):
+		self.speed = 3
+		self.change_timer = 7
 
 		# Get the player location
 		player_location = (player.rect.x/TILESIZE, player.rect.y/TILESIZE)
 		self_location = (self.rect.x/TILESIZE, self.rect.y/TILESIZE)
 		# Calculate the x and y tile distances to the player
 		print ""
-		
+
 		x_tile_dist = (player_location[0] - self_location[0])
 		y_tile_dist = (player_location[1] - self_location[1])
 
-		print "self position =", self_location 
-		print "Player position =", player_location
 		print "distance = ", (x_tile_dist, y_tile_dist)
 
-		# Get the ratio of how many tiles that will be moved in one direction
-		#versus how many tiles will be moved in the other direction
-		# If we are on the same y axis, then just move towards the player
-		if abs(y_tile_dist) == abs(x_tile_dist):
-		 	self.next_point = (self.rect.x + TILESIZE, self.rect.y+TILESIZE)
-		if y_tile_dist == 0: # This is working
-			self.ratio = 1
+		# This is what we are going to go with for now
+		if y_tile_dist == 0 and x_tile_dist != 0:
+			print "y = 0"
 			self.next_point = (self.rect.x + (x_tile_dist*TILESIZE), self.rect.y)
-		elif x_tile_dist == 0:
-			self.ratio = 1
-			self.next_point = (self.rect.x, self.rect.y+(y_tile_dist*TILESIZE))
+		elif x_tile_dist == 0 and y_tile_dist != 0:
+			print "x = 0"
+			self.next_point = (self.rect.x, self.rect.y + (y_tile_dist*TILESIZE))
+		# If delta x and delta y are equal
+		elif abs(y_tile_dist) == abs(x_tile_dist) and x_tile_dist != 0:
+		 	print "x = y"
+		 	if x_tile_dist < 0 and y_tile_dist < 0:
+		  		self.next_point = (self.rect.x - TILESIZE, self.rect.y - TILESIZE)
+			if x_tile_dist > 0 and y_tile_dist > 0:
+		 		self.next_point = (self.rect.x + TILESIZE, self.rect.y + TILESIZE)
+			if x_tile_dist < 0 and y_tile_dist > 0:
+				self.next_point = (self.rect.x - TILESIZE, self.rect.y + TILESIZE)
+			if x_tile_dist > 0 and y_tile_dist < 0:
+				self.next_point = (self.rect.x + TILESIZE, self.rect.y - TILESIZE)
 		elif abs(x_tile_dist) > abs(y_tile_dist):
-			print "X is greater"
-			# For some reason this is in the second quadrant
-			# if (x_tile_dist > 0 and y_tile_dist > 0):
-			# 	self.ratio = x_tile_dist/y_tile_dist
-			# 	print "The ratio is", self.ratio
-			# 	next_point = (self.rect.x + (-self.ratio*TILESIZE), self.rect.y - TILESIZE)
-			# if (x_tile_dist > 0 and y_tile_dist < 0):
-			# 	print ""
-
-
-
-		elif abs(y_tile_dist) > abs(x_tile_dist):
-			print "Y is greater"
-		# if abs(x_tile_dist) >= abs(y_tile_dist):
-		# 	if (y_tile_dist != 0):
-		# 		self.ratio = x_tile_dist/y_tile_dist
-		# 		next_point = (self.rect.x + (self.ratio * TILESIZE), self.rect.y + TILESIZE)
-		# 	else:
-		# 		self.ratio = 1
-		# 		next_point = (self.rect.x, self.rect.y + TILESIZE)
-		# elif abs(x_tile_dist) < abs(y_tile_dist):
-		# 	if (x_tile_dist != 0):
-		# 		self.ratio = y_tile_dist/x_tile_dist
-		# 		next_point = (self.rect.x + TILESIZE, self.rect.y + (self.ratio * TILESIZE))
-		# 	else:
-		# 		self.ratio = 1
-		# 		next_point = (self.rect.x + TILESIZE, self.rect.y)
+			if x_tile_dist > 0:
+				self.next_point = (self.rect.x + TILESIZE, self.rect.y)
+			else:
+				self.next_point = (self.rect.x - TILESIZE, self.rect.y)
+		else:
+			if y_tile_dist > 0:
+				self.next_point = (self.rect.x, self.rect.y + TILESIZE)
+			else:
+				self.next_point = (self.rect.x, self.rect.y - TILESIZE)
 
 
 		print "next point = ",self.next_point
-		print self.ratio
 		print ""
 
 		if self.rect.x != self.next_point[0] or self.rect.y != self.next_point[1]:
-			self.move_algorithm(self.next_point)
+			self.move_to_location(self.next_point)
 
 	def patrol(self):
 		self.speed = 2
@@ -114,7 +100,7 @@ class Guard(Actor):
 
 		if self.rect.x != location[0] or self.rect.y != location[1]:
 			self.moving = True
-			self.move_algorithm(location)
+			self.move_to_location(location)
 		else:
 			self.moving = False
 		# If we get to the route location and we are no longer moving,

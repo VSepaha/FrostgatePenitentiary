@@ -13,8 +13,7 @@ pygame.init()
 
 # Set up the window and caption
 DISPLAYSURF = pygame.display.set_mode((WIN_WIDTH,WIN_HEIGHT), 0, 32)
-pygame.display.set_caption("Frostgate Penitentiary Test") 
-
+pygame.display.set_caption("Frostgate Penitentiary Test")
 
 def key_up_events(event):
 	if event.key == K_w:
@@ -31,7 +30,7 @@ route = [
 	(800, 320),
 	(300, 320),
 	(300, 50),
-	(800, 50) 
+	(800, 50)
 ]
 
 # Instantiate the classes
@@ -81,7 +80,7 @@ while True:
 	# The key pressed events
 	key_pressed = pygame.key.get_pressed()
 
-	if key_pressed[K_w]: 
+	if key_pressed[K_w]:
 		player.update(True, UP)
 	elif key_pressed[K_s]:
 		player.update(True, DOWN)
