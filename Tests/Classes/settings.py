@@ -51,9 +51,11 @@ KARATE_GUY = "karate"
 PURPLE_BOY = "purpleboy"
 
 # States that the guard can be in 
-PATROL = 0 
-STAND = 1
-CHASE = 2
+PATROL_STATE = 0 
+STAND_STATE = 1
+CHASE_STATE = 2
+GUARD_STATE = 4
+
 
 # Collision Type
 BLOCKING = 0
