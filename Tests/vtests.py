@@ -5,7 +5,7 @@ sys.path.insert(0, 'Classes') # This add the system path
 from PrisonMap import *
 from Actor import *
 from Player import *
-from Guard import *
+from NPC import *
 from Object import *
 from settings import *
 
@@ -42,7 +42,7 @@ world.fill(BLACK) # Fill Map Surface Black
 game_map.render(world)
 
 player = Player(500,300, PLAYER, BLOCKING)
-guard = Guard(1000, 250, PRISON_GUARD, BLOCKING, route)
+guard = NPC(1000, 250, PRISON_GUARD, BLOCKING, route)
 ball = Object("an_item", 400, 200, OVERLAPPING)
 
 items_group.add(ball)
@@ -93,7 +93,7 @@ while True:
 		interactPressed = True
 
 	# Guard start its patrol
-	guard.run_state(CHASE_STATE, player)
+	guard.run_state(PATROL_STATE, player)
 
 	# render the game map onto the world
 	game_map.update_tiles(world)
