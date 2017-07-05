@@ -23,7 +23,7 @@ class PrisonMap:
 			'B' : "bed",
 			'T' : "toilet",
 			'D' : "desk",
-			'C' : "cabinet",
+			'C' : "cabinet1",
 			'O' : "door",
 			'L' : "library",
 			'J' : "computerdesk"
