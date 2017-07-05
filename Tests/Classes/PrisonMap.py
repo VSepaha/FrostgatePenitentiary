@@ -1,17 +1,17 @@
 from Object import *
 from settings import *
-from PermanentObject import *
+from ImmutableObject import *
 
 pygame.init()
 
 class PrisonMap:
 	def __init__(self):
 
-		# Textures on the map 
+		# Textures on the map
 		self.textures = {
 			'B' :  pygame.image.load('../Resources/Tiles/ground.png'),
 			'G' :  pygame.image.load('../Resources/Tiles/grass.png'),
-			'W' :  pygame.image.load('../Resources/Tiles/water.png'), 
+			'W' :  pygame.image.load('../Resources/Tiles/water.png'),
 			'D' :  pygame.image.load('../Resources/Tiles/dirt.png'),
 			' ' :  pygame.image.load('../Resources/Tiles/base.png')
 		}
@@ -60,7 +60,7 @@ class PrisonMap:
 
 			# Get the tile coordinates for the four corners of the player
 			topleft = (actor.rect.x/TILESIZE, actor.rect.y/TILESIZE)
-			topright = ((actor.rect.x + actor.rect.width)/TILESIZE, actor.rect.y/TILESIZE) 
+			topright = ((actor.rect.x + actor.rect.width)/TILESIZE, actor.rect.y/TILESIZE)
 			bottomleft = (actor.rect.x/TILESIZE, (actor.rect.y + actor.rect.height)/TILESIZE)
 			bottomright = ((actor.rect.x+actor.rect.width)/TILESIZE, (actor.rect.y + actor.rect.height)/TILESIZE)
 
@@ -72,7 +72,7 @@ class PrisonMap:
 			DISPLAYSURF.blit(self.textures[self.tile_list[topright[1]*MAPWIDTH+topright[0]]], (topright[0]*TILESIZE, topright[1]*TILESIZE))
 			DISPLAYSURF.blit(self.textures[self.tile_list[bottomleft[1]*MAPWIDTH+bottomleft[0]]], (bottomleft[0]*TILESIZE, bottomleft[1]*TILESIZE))
 			DISPLAYSURF.blit(self.textures[self.tile_list[bottomright[1]*MAPWIDTH+bottomright[0]]], (bottomright[0]*TILESIZE, bottomright[1]*TILESIZE))
-			
+
 
 	# Render everything onto the screen, should only be called once
 	def render(self, DISPLAYSURF):
@@ -81,5 +81,5 @@ class PrisonMap:
 			for j in range (0, MAPWIDTH):
 				DISPLAYSURF.blit(self.textures[self.tile_list[index]],(j*TILESIZE,i*TILESIZE))
 				if self.permanent_item_list[index] != ' ' and self.permanent_item_list[index] != '':
-		 			p_object = PermanentObject(self.objects[self.permanent_item_list[index]], j*TILESIZE, i*TILESIZE, BLOCKING)
+		 			p_object = ImmutableObject(self.objects[self.permanent_item_list[index]], j*TILESIZE, i*TILESIZE, BLOCKING)
 				index += 1

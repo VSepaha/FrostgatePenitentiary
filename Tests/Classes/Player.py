@@ -1,8 +1,11 @@
 from Actor import *
 
 class Player(Actor):
-	def __init__(self, offset_x, offset_y, actor_type, collision_type):
+	def __init__(self, offset_x, offset_y, actor_type, collision_type, threat_level):
 		Actor.__init__(self, offset_x, offset_y, actor_type, collision_type)
+
+		# The threat level that the player will start from
+		self.threat_level = threat_level
 
 	# Works Nicely
 	def update(self, move, direction):
@@ -45,36 +48,33 @@ class Player(Actor):
 	    for other_object in self.collision_list:
 	        if self.rect.colliderect(other_object) and other_object.collision_type == BLOCKING:
 	            pos_x, pos_y = self.camera_pos
-	            if dx > 0: # Moving right; Hit the left side of the wall
+	            if dx > 0: # Moving right; Hit the left side of the object
 	                self.rect.right = other_object.rect.left
 	                # Code for the camera
 	                if other_object.get_direction() == RIGHT:
-	                    pos_x += 4 - other_object.get_speed()
+	                    pos_x += self.speed - other_object.get_speed()
 	                else:
-	                    pos_x += 4 
-	                ############################
-	            if dx < 0: # Moving left; Hit the right side of the wall
+	                    pos_x += self.speed
+	            if dx < 0: # Moving left; Hit the right side of the object
 	                self.rect.left = other_object.rect.right
 	                # Code for the camera
 	                if other_object.get_direction() == LEFT:
-	                    pos_x -= 4 - other_object.get_speed()
+	                    pos_x -= self.speed - other_object.get_speed()
 	                else:
-	                    pos_x -= 4
-	                ############################
-	            if dy > 0: # Moving down; Hit the top side of the wall
+	                    pos_x -= self.speed
+	            if dy > 0: # Moving down; Hit the top side of the object
 	                self.rect.bottom = other_object.rect.top
 	                # Code for the camera
 	                if other_object.get_direction() == DOWN:
-	                    pos_y += 4 - other_object.get_speed()
+	                    pos_y += self.speed - other_object.get_speed()
 	                else:
-	                    pos_y += 4
-	                ############################
-	            if dy < 0: # Moving up; Hit the bottom side of the wall
+	                    pos_y += self.speed
+	            if dy < 0: # Moving up; Hit the bottom side of the object
 	                self.rect.top = other_object.rect.bottom
 	                if other_object.get_direction() == UP:
-	                    pos_y -= 4 - other_object.get_speed()
+	                    pos_y -= self.speed - other_object.get_speed()
 	                else:
-	                    pos_y -= 4
+	                    pos_y -= self.speed
 	            self.camera_pos = (pos_x, pos_y)
 
 
@@ -83,12 +83,12 @@ class Player(Actor):
 	    pos_x,pos_y = self.camera_pos # Split camara_pos
 
 	    if direction == UP: # Check Key
-	        pos_y += 4 # Move Camara Coord Against Player Rect
+	        pos_y += self.speed # Move Camara Coord Against Player Rect
 	    if direction == RIGHT:
-	        pos_x -= 4
+	        pos_x -= self.speed
 	    if direction == DOWN:
-	        pos_y -= 4
+	        pos_y -= self.speed
 	    if direction == LEFT:
-	        pos_x += 4
+	        pos_x += self.speed
 
 	    self.camera_pos = (pos_x,pos_y) # Return New Camera Pos

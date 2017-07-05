@@ -3,9 +3,8 @@ from pygame.locals import *
 
 sys.path.insert(0, 'Classes') # This add the system path
 from PrisonMap import *
-from Actor import *
 from Player import *
-from NPC import *
+from SmartNPC import *
 from Object import *
 from settings import *
 
@@ -41,8 +40,8 @@ world.fill(BLACK) # Fill Map Surface Black
 # We only want to render the entire map once
 game_map.render(world)
 
-player = Player(500,300, PLAYER, BLOCKING)
-guard = NPC(1000, 250, PRISON_GUARD, BLOCKING, route)
+player = Player(400,300, PLAYER, BLOCKING, 2)
+guard = SmartNPC(100, 250, PRISON_GUARD, BLOCKING, route)
 ball = Object("an_item", 400, 200, OVERLAPPING)
 
 items_group.add(ball)
@@ -93,7 +92,7 @@ while True:
 		interactPressed = True
 
 	# Guard start its patrol
-	guard.run_state(PATROL_STATE, player)
+	guard.run_state(CHASE_STATE, player)
 
 	# render the game map onto the world
 	game_map.update_tiles(world)

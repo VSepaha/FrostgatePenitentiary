@@ -6,7 +6,7 @@ class Object(pygame.sprite.Sprite):
             pygame.sprite.Sprite.__init__(self)
 
             # image of the object
-            self.image = pygame.image.load('../Resources/an_item.png')
+            self.image = pygame.image.load('../Resources/Tiles/base.png')
 
             # Position of the image
             self.rect = self.image.get_rect()
