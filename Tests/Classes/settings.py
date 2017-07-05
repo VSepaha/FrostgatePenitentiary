@@ -50,8 +50,8 @@ WARDEN = "warden"
 KARATE_GUY = "karate"
 PURPLE_BOY = "purpleboy"
 
-# States that the guard can be in 
-PATROL_STATE = 0 
+# States that the guard can be in
+PATROL_STATE = 0
 STAND_STATE = 1
 CHASE_STATE = 2
 GUARD_STATE = 4

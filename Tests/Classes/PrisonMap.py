@@ -1,4 +1,3 @@
-from Object import *
 from settings import *
 from ImmutableObject import *
 
@@ -54,6 +53,7 @@ class PrisonMap:
 				return_char = obj_file.read(1)
 			self.permanent_item_list[i] = return_char
 		obj_file.close()
+
 
 	def update_tiles(self, DISPLAYSURF):
 		for actor in actors_group:

@@ -46,13 +46,13 @@ class SmartNPC(NPC):
 		x_pixel_dist = (player.rect.x - self.rect.x)
 		y_pixel_dist = (player.rect.y - self.rect.y)
 
-		print ""
-		print "player location =", player_location
-		print "self location=", self_location
+		# print ""
+		# print "player location =", player_location
+		# print "self location=", self_location
 
 		# We'll stick with this collision for now
 		if abs(x_pixel_dist) < 40 and abs(y_pixel_dist) < 40:
-			print "player caught"
+			# print "player caught"
 			return
 
 		# This is what we are going to go with for now
@@ -82,7 +82,7 @@ class SmartNPC(NPC):
 				self.next_point = (self.rect.x, self.rect.y - TILESIZE)
 		else:
 			self.next_point = (self.rect.x, self.rect.y)
-			print "player caught"
+			# print "player caught"
 
 
 		if self.rect.x != self.next_point[0] or self.rect.y != self.next_point[1]:

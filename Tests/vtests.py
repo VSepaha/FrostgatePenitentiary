@@ -49,6 +49,7 @@ items_group.add(ball)
 # initialize the collision objects
 # Only add the collisions for blocking objects
 player.collision_list.append(guard)
+player.speed = 20
 guard.collision_list.append(player)
 
 for item in items_group: # add all items in collision list
