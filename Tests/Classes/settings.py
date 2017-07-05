@@ -14,7 +14,7 @@ WIN_HEIGHT = 600
 
 # Map Values
 TILESIZE = 40
-MAPWIDTH = 115
+MAPWIDTH = 120
 MAPHEIGHT = 100
 
 #General Font
