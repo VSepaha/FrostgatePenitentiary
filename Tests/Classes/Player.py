@@ -7,6 +7,9 @@ class Player(Actor):
 		# The threat level that the player will start from
 		self.threat_level = threat_level
 
+		# Health of the player
+		self.health = 100
+
 	# Works Nicely
 	def update(self, move, direction):
 	    self.direction = direction
@@ -92,3 +95,26 @@ class Player(Actor):
 	        pos_x += self.speed
 
 	    self.camera_pos = (pos_x,pos_y) # Return New Camera Pos
+
+	def collided(self, other):
+		delta_x = other.rect.x - self.rect.x
+		delta_y = other.rect.y - self.rect.y
+
+		if abs(delta_x) < TILESIZE and abs(delta_y) < TILESIZE:
+			return True
+		else:
+			return False
+
+
+	def interact(self, flag):
+		if flag:
+			for npc in interactable_group:
+				if self.collided(npc):
+					print "collided with npc"
+					npc.perform_action(self)
+			for item in items_group:
+				if self.collided(item):
+					print "collided with item"
+					item.pickup()
+		else:
+			return

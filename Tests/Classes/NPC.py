@@ -55,3 +55,7 @@ class NPC(Actor):
 				self.route_index += 1
 			elif self.route_index >= route_len-1 and self.moving == False:
 				self.route_index = 0
+
+	def stop(self):
+		self.speed = 0
+		self.update(False, self.direction)

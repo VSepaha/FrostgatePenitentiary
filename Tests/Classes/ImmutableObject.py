@@ -2,10 +2,10 @@ from Object import *
 
 class ImmutableObject(Object):
 	def __init__(self, image, offset_x, offset_y, collision_type):
-		Object.__init__(self, image, offset_x, offset_y, collision_type)
+		Object.__init__(self, offset_x, offset_y, collision_type)
 
 		# Add self in the permanent object group
-		p_objects_group.add(self)
+		imm_objects_group.add(self)
 
 		self.image = pygame.image.load('../Resources/ImmutableObjects/' + image +'.png')
 

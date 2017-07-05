@@ -47,6 +47,7 @@ NA = 4
 PLAYER = "player"
 PRISON_GUARD = "guard"
 WARDEN = "warden"
+NURSE = "nurse"
 KARATE_GUY = "karate"
 PURPLE_BOY = "purpleboy"
 
@@ -69,8 +70,11 @@ RAMEN = 2
 # actors that are in game
 actors_group = pygame.sprite.Group()
 
+# interactable NPCs
+interactable_group = pygame.sprite.Group()
+
 # items that are in game
 items_group = pygame.sprite.Group()
 
 # permanent objects that are in game
-p_objects_group = pygame.sprite.Group()
+imm_objects_group = pygame.sprite.Group()

@@ -2,7 +2,7 @@ import pygame
 from settings import *
 
 class Object(pygame.sprite.Sprite):
-      def __init__(self, image, offset_x, offset_y, collision_type):
+      def __init__(self, offset_x, offset_y, collision_type):
             pygame.sprite.Sprite.__init__(self)
 
             # image of the object

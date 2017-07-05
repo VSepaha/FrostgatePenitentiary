@@ -5,7 +5,9 @@ sys.path.insert(0, 'Classes') # This add the system path
 from PrisonMap import *
 from Player import *
 from SmartNPC import *
-from Object import *
+from Nurse import *
+from Warden import *
+from Item import *
 from settings import *
 
 pygame.init()
@@ -42,21 +44,20 @@ game_map.render(world)
 
 player = Player(400,300, PLAYER, BLOCKING, 2)
 guard = SmartNPC(100, 250, PRISON_GUARD, BLOCKING, route)
-ball = Object("an_item", 400, 200, OVERLAPPING)
-
-items_group.add(ball)
+warden = Warden(100, 100, WARDEN, BLOCKING, route)
+ball = Item("pokeball", 200, 200, OVERLAPPING)
 
 # initialize the collision objects
 # Only add the collisions for blocking objects
 player.collision_list.append(guard)
-player.speed = 20
+player.collision_list.append(warden)
 guard.collision_list.append(player)
 
 for item in items_group: # add all items in collision list
 	player.collision_list.append(item)
 	guard.collision_list.append(item)
 
-for p_object in p_objects_group:
+for p_object in imm_objects_group:
 	player.collision_list.append(p_object)
 	guard.collision_list.append(p_object)
 
@@ -72,7 +73,7 @@ while True:
 		if event.type == KEYUP:
 			key_up_events(event)
 			if event.key == K_e:
-				interactPressed = False
+				player.interact(False)
 		elif event.type == QUIT:
 			pygame.quit()
 			sys.exit()
@@ -88,12 +89,11 @@ while True:
 		player.update(True, LEFT)
 	elif key_pressed[K_d]:
 		player.update(True, RIGHT)
-
 	if key_pressed[K_e]:
-		interactPressed = True
+		player.interact(True)
 
-	# Guard start its patrol
-	guard.run_state(CHASE_STATE, player)
+	# Guard start running its state
+	# guard.run_state(CHASE_STATE, player)
 
 	# render the game map onto the world
 	game_map.update_tiles(world)
@@ -106,7 +106,7 @@ while True:
 			print "Picked up", item
 			items_group.remove(item)
 
-	for objects in p_objects_group:
+	for objects in imm_objects_group:
 		objects.render(world)
 
 	#display all the actors in the game

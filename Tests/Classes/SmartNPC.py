@@ -12,6 +12,7 @@ class SmartNPC(NPC):
 		self.route = patrol_route
 		self.route_index = 0
 
+		# The next waypoint for the NPC
 		self.next_point = (self.rect.x, self.rect.y)
 
 		# To keep track of whether the NPC is moving
@@ -21,7 +22,11 @@ class SmartNPC(NPC):
 		self.speed = 2
 		self.change_timer = 8
 
+		# State of the NPC
 		self.state = None
+
+		# Health of the NPC
+		self.health = 100
 
 	# AI pathfinding algorithm can be improved
 	def run_state(self, state, player):
@@ -52,7 +57,7 @@ class SmartNPC(NPC):
 
 		# We'll stick with this collision for now
 		if abs(x_pixel_dist) < 40 and abs(y_pixel_dist) < 40:
-			# print "player caught"
+			print "player caught"
 			return
 
 		# This is what we are going to go with for now
@@ -82,7 +87,7 @@ class SmartNPC(NPC):
 				self.next_point = (self.rect.x, self.rect.y - TILESIZE)
 		else:
 			self.next_point = (self.rect.x, self.rect.y)
-			# print "player caught"
+			print "player caught"
 
 
 		if self.rect.x != self.next_point[0] or self.rect.y != self.next_point[1]:

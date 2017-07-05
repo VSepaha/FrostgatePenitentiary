@@ -3,7 +3,7 @@ from Object import *
 # Need to figure out system for setting items and their attributes
 class Item(Object):
 	def __init__(self, image, offset_x, offset_y, collision_type):
-		Object.__init__(self, image, offset_x, offset_y, collision_type)
+		Object.__init__(self, offset_x, offset_y, collision_type)
 
 		# Add self in the permanent object group
 		items_group.add(self)
@@ -19,3 +19,6 @@ class Item(Object):
 
 		# Permanent objects should always have blocking collision
 		self.collision_type = collision_type
+
+	def pickup(self):
+		items_group.remove(self)
