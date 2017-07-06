@@ -6,3 +6,6 @@ Formatting for variable:
 
 Formatting for const variables:
 - CONST_VARIABLE
+
+Formatting for classes:
+class NewClass
