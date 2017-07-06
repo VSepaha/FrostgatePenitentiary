@@ -2,8 +2,8 @@ WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
 W                     WC   CWC   CW                                                                                    W
 W                     WB   BWB   BW                                                                                    W
 W                     WT   TWT   TW                                                                                    W
-W           WWWWWWWWWWWWP PWWWP PWW                                                                                    W
-W           WCBT P                W                                                                                    W
+W   R       WWWWWWWWWWWWP PWWWP PWW                                                                                    W
+W   R R     WCBT P                W                                                                                    W
 W           W                                                                                                          W
 W           W    P                                                                                                     W
 W           WCBT P       WWWWW  WWW                                                                                    W
@@ -75,8 +75,8 @@ W           W                      WWW WWW                                      
 W           WWWWWWWWWWWW           W     W                                                                             W
 W           WC CWC CW  W           W     W                                                                             W
 W           WB BWB BW  W           W     W                                                                             W
-W           WT TWT TW  W           W     W                                                                             W
-W           WP PWP PWWWW           W     W                                                                             W
+W           WT TWT TW  W           W    RW                                                                             W
+W           WP PWP PWWWW           WCC RRW                                                                             W
 W           W          W           WWWWWWW                                                                             W
 W           WWW WWW    W                                                                                               W
 W           W     W    W                                                                                               W
