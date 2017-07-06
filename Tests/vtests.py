@@ -1,5 +1,4 @@
-import pygame, sys, time
-import threading
+import pygame, sys, time, threading
 from pygame.locals import *
 
 sys.path.insert(0, 'Classes') # This add the system path
@@ -13,15 +12,32 @@ from settings import *
 
 pygame.init()
 
-class NewThread(threading.Thread):
-	def __init__(self, name):
-		threading.Thread.__init__(self)
-		print "start"
+exitFlag = 0
 
-	def run(self, num):
-		for i in range(0, 10):
-			print num
-			time.sleep(1)
+# This causes the blinking of the press any key
+class new_thread (threading.Thread):
+	def __init__(self, threadID, name, DISPLAYSURF):
+		threading.Thread.__init__(self)
+		self.threadID = threadID
+		self.DISPLAYSURF = DISPLAYSURF
+		self.name = name
+		self.image = pygame.image.load("../Resources/menu_screen.jpg")
+		self.text_image = pygame.image.load("../Resources/text_blink.jpg")
+	def run(self):
+		print "Starting " + self.name
+		self.flash_text(1, self.DISPLAYSURF)
+		print "Exiting " + self.name
+
+	def flash_text(self, delay, DISPLAYSURF):
+		while True:
+			if exitFlag:
+				break
+			DISPLAYSURF.blit(self.image, (0,0))
+			time.sleep(delay)
+			DISPLAYSURF.blit(self.text_image, (0, 400))
+			time.sleep(delay)
+
+
 
 # Taking care of all the key up events
 def key_up_events(event):
@@ -36,19 +52,20 @@ def key_up_events(event):
 
 # This functino will load the menu
 def load_menu(DISPLAYSURF):
-	image = pygame.image.load("../Resources/menu_screen.jpg")
-	text_image = pygame.image.load("../Resources/text_blink.jpg")
-	DISPLAYSURF.blit(image, (0, 0))
+
+	global exitFlag
+	flash = new_thread(1, "flash_thread", DISPLAYSURF)
+
+	flash.start()
 
 	while True:
 		for event in pygame.event.get():
 			if event.type == KEYDOWN:
+				exitFlag = 1
 				return
 			elif event.type == QUIT:
 				pygame.quit()
 				sys.exit()
-
-		DISPLAYSURF.blit(text_image, (0, 400))
 
 		pygame.display.update()
 		fps_clock.tick(FPS)
