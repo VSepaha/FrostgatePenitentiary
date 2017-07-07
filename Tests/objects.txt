@@ -5,9 +5,9 @@ W           WB          BWB          BW                                         
 W           W            W            W                                                                                W
 W           W            W            W                                                                                W
 W           WWWWWWWWPPP PWWWPPPP PPPWWW                                                                                W
-W           WCB T P                                                                                                    W
+W    PPP    WCB T P                                                                                                    W
 W           W                                                                                                          W
-W    PPP    W     P                                                                                                    W
+W           W     P                                                                                                    W
 W           WCB T P                                                                                                    W
 W           WWWWWWW                                                                                                    W
 W           WCB T P                                                                                                    W

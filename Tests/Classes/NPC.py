@@ -1,5 +1,5 @@
 from Actor import *
-import math
+import math, time
 
 # Need to implement collision avoidance
 
@@ -19,7 +19,6 @@ class NPC(Actor):
 		self.astar_index = 0
 
 		#Tile math stuff
-		self.fn = MAPWIDTH*MAPHEIGHT
 		self.next_tile = (0,0)
 
 		# To keep track of whether the NPC is moving
@@ -44,16 +43,34 @@ class NPC(Actor):
 			self.patrol()
 
 	def move_to_location(self, location):
-		if (self.rect.x + self.rect.width)/TILESIZE > location[0]:
-			print "moving left"
-			self.update(True, LEFT)
-		elif self.rect.x/TILESIZE < location[0]:
-			self.update(True, RIGHT)
-		elif (self.rect.y + self.rect.height)/TILESIZE > location[1]:
-			self.update(True, UP)
-		elif self.rect.y/TILESIZE < location[1]:
-			print "moving down"
-			self.update(True, DOWN)
+		if (self.direction==LEFT or self.direction==NA):
+			if (self.rect.x + self.rect.width)/TILESIZE > location[0]:
+				self.update(True, LEFT)
+				return
+			else:
+				self.direction=NA
+
+		if (self.direction==RIGHT or self.direction==NA):
+			if self.rect.x/TILESIZE < location[0]:
+				self.update(True, RIGHT)
+				return
+			else:
+				self.direction=NA
+
+		# Something has to be done here
+		if (self.direction==UP or self.direction==NA):
+			if (self.rect.y + self.rect.height)/TILESIZE > location[1]:
+				self.update(True, UP)
+				return
+			else:
+				self.direction = NA
+
+		if (self.direction==DOWN or self.direction==NA):
+			if self.rect.y/TILESIZE < location[1]:
+				self.update(True, DOWN)
+				return
+			else:
+				self.direction = NA
 
 	# Will be implemnting the a* algorithm
 	def new_patrol(self):
@@ -71,8 +88,10 @@ class NPC(Actor):
 
 		# Getting the next tile to move to
 		self.astar_route.append(self.get_next_tile(destination))
+
 		self.move_to_location(self.astar_route[self.astar_index])
 		self.astar_index += 1
+		time.sleep(0.5)
 
 
 
@@ -88,55 +107,61 @@ class NPC(Actor):
 		# 	print "Next tile =", self.next_tile
 		# 	return self.next_tile
 
+		max_fn = MAPWIDTH*MAPHEIGHT
 		current_fn = 0
 		next_tile = (0,0)
 
-		# Tile to the right
-		right_tile = (self.tile_location[0]+1, self.tile_location[1])
-		if self.game_map.tile_has_object(right_tile) == False and self.not_avoid(right_tile):
-			gn = math.hypot(right_tile[0]-self.tile_location[0], right_tile[1]-self.tile_location[1])
-			hn = math.hypot(right_tile[0]-destination[0], right_tile[1]-destination[1])
-			current_fn = gn + hn
-			if current_fn <= self.fn:
-				self.fn = current_fn
-				next_tile = right_tile
 		# Tile to the left
 		left_tile = (self.tile_location[0]-1, self.tile_location[1])
 		if self.game_map.tile_has_object(left_tile) == False and self.not_avoid(left_tile):
 			gn = math.hypot(left_tile[0]-self.tile_location[0], left_tile[1]-self.tile_location[1])
 			hn = math.hypot(left_tile[0]-destination[0], left_tile[1]-destination[1])
 			current_fn = gn + hn
-			if current_fn <= self.fn:
-				self.fn = current_fn
+			if current_fn <= max_fn:
+				max_fn = current_fn
 				next_tile = left_tile
+		# Tile to the right
+		right_tile = (self.tile_location[0]+1, self.tile_location[1])
+		if self.game_map.tile_has_object(right_tile) == False and self.not_avoid(right_tile):
+			gn = math.hypot(right_tile[0]-self.tile_location[0], right_tile[1]-self.tile_location[1])
+			hn = math.hypot(right_tile[0]-destination[0], right_tile[1]-destination[1])
+			current_fn = gn + hn
+			if current_fn <= max_fn:
+				max_fn = current_fn
+				next_tile = right_tile
 		# Tile above
 		above_tile = (self.tile_location[0], self.tile_location[1]-1)
 		if self.game_map.tile_has_object(above_tile) == False and self.not_avoid(above_tile):
-				gn = math.hypot(above_tile[0]-self.tile_location[0], above_tile[1]-self.tile_location[1])
-				hn = math.hypot(above_tile[0]-destination[0], above_tile[1]-destination[1])
-				current_fn = gn + hn
-				if current_fn <= self.fn:
-					self.fn = current_fn
-					next_tile = above_tile
+			gn = math.hypot(above_tile[0]-self.tile_location[0], above_tile[1]-self.tile_location[1])
+			hn = math.hypot(above_tile[0]-destination[0], above_tile[1]-destination[1])
+			current_fn = gn + hn
+			if current_fn <= max_fn:
+				max_fn = current_fn
+				next_tile = above_tile
 		# Tile below
 		below_tile = (self.tile_location[0], self.tile_location[1]+1)
 		if self.game_map.tile_has_object(below_tile) == False and self.not_avoid(below_tile):
-				gn = math.hypot(below_tile[0]-self.tile_location[0], below_tile[1]-self.tile_location[1])
-				hn = math.hypot(below_tile[0]-destination[0], below_tile[1]-destination[1])
-				current_fn = gn + hn
-				if current_fn <= self.fn:
-					self.fn = current_fn
-					next_tile = below_tile
+			gn = math.hypot(below_tile[0]-self.tile_location[0], below_tile[1]-self.tile_location[1])
+			hn = math.hypot(below_tile[0]-destination[0], below_tile[1]-destination[1])
+			current_fn = gn + hn
+			if current_fn <= max_fn:
+				max_fn = current_fn
+				next_tile = below_tile
 
-		self.next_tile = next_tile
+		if self.next_tile == next_tile:
+			print "Next tile =", self.next_tile
+			return self.next_tile
+		else:
+			self.avoid_route.append(self.next_tile)
+			self.next_tile = next_tile
 
-		print "Next tile =", self.next_tile
-		return self.next_tile
+			print "Next tile =", self.next_tile
+			return self.next_tile
 
 
 	def not_avoid(self, tile):
 		if tile in self.avoid_route:
-			print "Cannot go here"
+			print "Cannot go to", tile
 			return False
 		else:
 			return True

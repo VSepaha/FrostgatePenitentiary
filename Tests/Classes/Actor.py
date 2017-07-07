@@ -62,9 +62,6 @@ class Actor(pygame.sprite.Sprite):
         self.collision_list = []
         self.collision_type = collision_type
 
-        # camera
-        self.camera_pos = (0,0) # Create Camara Starting Position
-
         # The character starts facing downwards
         self.direction = DOWN
 
