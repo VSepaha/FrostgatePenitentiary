@@ -10,6 +10,11 @@ class Player(Actor):
 		# Health of the player
 		self.health = 100
 
+		# Skills that the player has
+		self.strength_level = 1
+		self.intelligence_level = 1
+		self.charisma_level = 1
+
 	# Works Nicely
 	def update(self, move, direction):
 	    self.direction = direction

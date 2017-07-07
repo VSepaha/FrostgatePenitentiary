@@ -4,9 +4,9 @@ from NPC import *
 
 # This is the class that will be used by the NPCs
 class SmartNPC(NPC):
-	def __init__(self, offset_x, offset_y, actor_type, collision_type, patrol_route):
+	def __init__(self, offset_x, offset_y, actor_type, collision_type, patrol_route, game_map):
 		# Don't forget to call the parent class!
-		NPC.__init__(self, offset_x, offset_y, actor_type, collision_type, patrol_route)
+		NPC.__init__(self, offset_x, offset_y, actor_type, collision_type, patrol_route, game_map)
 
 		# Route set for the NPC
 		self.route = patrol_route
@@ -32,7 +32,7 @@ class SmartNPC(NPC):
 	def run_state(self, state, player):
 		self.state = state
 		if self.state == PATROL_STATE:
-			self.patrol()
+			self.new_patrol()
 		if self.state == CHASE_STATE:
 			self.chase_algorithm(player)
 
@@ -91,4 +91,4 @@ class SmartNPC(NPC):
 
 
 		if self.rect.x != self.next_point[0] or self.rect.y != self.next_point[1]:
-			self.move_to_location(self.next_point)
+			self.move(self.next_point)

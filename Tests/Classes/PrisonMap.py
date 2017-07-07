@@ -54,6 +54,15 @@ class PrisonMap:
 			self.permanent_item_list[i] = return_char
 		obj_file.close()
 
+		# List that contains where the objects are located (In tiles)
+		self.object_locations = []
+
+	def tile_has_object(self, location):
+		if location in self.object_locations:
+			print location, "has object"
+			return True
+		else:
+			return False
 
 	def update_tiles(self, DISPLAYSURF):
 		for actor in actors_group:
@@ -81,5 +90,6 @@ class PrisonMap:
 			for j in range (0, MAPWIDTH):
 				DISPLAYSURF.blit(self.textures[self.tile_list[index]],(j*TILESIZE,i*TILESIZE))
 				if self.permanent_item_list[index] != ' ' and self.permanent_item_list[index] != '':
-		 			p_object = ImmutableObject(self.objects[self.permanent_item_list[index]], j*TILESIZE, i*TILESIZE, BLOCKING)
+		 			imm_object = ImmutableObject(self.objects[self.permanent_item_list[index]], j*TILESIZE, i*TILESIZE, BLOCKING)
+					self.object_locations.append((j, i))
 				index += 1

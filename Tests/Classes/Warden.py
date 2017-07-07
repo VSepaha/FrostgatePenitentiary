@@ -2,8 +2,8 @@ from NPC import *
 
 # Basic Nurse class for now
 class Warden(NPC):
-    def __init__(self, offset_x, offset_y, actor_type, collision_type, patrol_route):
-        NPC.__init__(self, offset_x, offset_y, actor_type, collision_type, patrol_route)
+    def __init__(self, offset_x, offset_y, actor_type, collision_type, patrol_route, game_map):
+        NPC.__init__(self, offset_x, offset_y, actor_type, collision_type, patrol_route, game_map)
 
         interactable_group.add(self)
 

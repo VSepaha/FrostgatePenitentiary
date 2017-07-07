@@ -74,6 +74,9 @@ class Actor(pygame.sprite.Sprite):
     def get_direction(self):
         return self.direction
 
+    def get_tile_location(self):
+        return (self.rect.x/TILESIZE, self.rect.y/TILESIZE)
+
     # Works Nicely
     def update(self, move, direction):
         self.direction = direction
