@@ -25,8 +25,7 @@ class PrisonMap:
 			'C' : "cabinet1",
 			'O' : "door",
 			'L' : "library",
-			'J' : "computerdesk",
-			'R' : "crate",
+			'J' : "computerdesk"
 		}
 
 		# set the display size of window
