@@ -110,7 +110,6 @@ class Actor(pygame.sprite.Sprite):
 
         for other_object in self.collision_list:
             if self.rect.colliderect(other_object) and other_object.collision_type == BLOCKING:
-                pos_x, pos_y = self.camera_pos
                 if dx > 0: # Moving right; Hit the left side of the wall
                     self.rect.right = other_object.rect.left
                 if dx < 0: # Moving left; Hit the right side of the wall

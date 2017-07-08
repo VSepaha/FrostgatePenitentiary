@@ -80,10 +80,13 @@ if __name__ == '__main__':
 
 	# For testing purposes of A*
 	# For horizontal tests (420, 300)
-	ball = Item("pokeball", 220, 240, OVERLAPPING)
+	ball = Item("pokeball", 210, 240, OVERLAPPING)
 	# Route set for the NPC
 	route = [
-		(ball.rect.x, ball.rect.y)
+		(400, 200),
+		(210, 240),
+		(100, 200),
+		(200, 440)
 	]
 
 	# Instantiate the classes
@@ -96,7 +99,7 @@ if __name__ == '__main__':
 
 	player = Player(400,400, PLAYER, BLOCKING, 2)
 	# For horizontal tests (120, 300)
-	guard = SmartNPC(220, 440, PRISON_GUARD, BLOCKING, route, game_map)
+	guard = SmartNPC(200, 444, PRISON_GUARD, BLOCKING, route, game_map)
 	warden = Warden(100, 100, WARDEN, BLOCKING, route, game_map)
 
 	# initialize the collision objects

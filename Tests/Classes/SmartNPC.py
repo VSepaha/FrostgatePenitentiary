@@ -32,7 +32,7 @@ class SmartNPC(NPC):
 	def run_state(self, state, player):
 		self.state = state
 		if self.state == PATROL_STATE:
-			self.new_patrol()
+			self.patrol()
 		if self.state == CHASE_STATE:
 			self.chase_algorithm(player)
 
