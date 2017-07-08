@@ -1,201 +1,176 @@
-import pygame, sys
+import pygame, sys, time, threading
 from pygame.locals import *
+
+sys.path.insert(0, 'Classes') # This add the system path
+from PrisonMap import *
+from Player import *
+from SmartNPC import *
+from Nurse import *
+from Warden import *
+from Item import *
+from settings import *
 
 pygame.init()
 
-# FPS Setting
-FPS = 30
+exitFlag = 0
 
-# Height and width of the screen
-HEIGHT = 550
-WIDTH = 900
+# This causes the blinking of the press any key
+class new_thread (threading.Thread):
+    def __init__(self, threadID, name, DISPLAYSURF):
+        threading.Thread.__init__(self)
+        self.threadID = threadID
+        self.DISPLAYSURF = DISPLAYSURF
+        self.name = name
+        self.image = pygame.image.load("../Resources/menu_screen.jpg")
+        self.text_image = pygame.image.load("../Resources/text_blink.jpg")
+    def run(self):
+        print "Starting " + self.name
+        self.flash_text(1, self.DISPLAYSURF)
+        print "Exiting " + self.name
 
-# Colors
-WHITE = (255,255,255)
-BLACK = (0,0,0)
-RED = (255,0,0)
-GREEN = (0,255,0)
-BLUE = (0,0,255)
-YELLOW =(255,255,0)
-
-# Values for the tiles
-GROUND = 'R'
-GRASS = 'G'
-WATER = 'W'
-DIRT = 'D'
-
-# Map Values
-TILESIZE = 40
-MAPWIDTH = 25
-MAPHEIGHT = 15
-
-# Stat values
-STAMINA = 0
-HEALTH = 1
-RAMEN = 2
-
-class Map:
-    def __init__(self):
-
-        # Textures on the map 
-        self.textures = {
-            'R' :  pygame.image.load('../Resources/ground.png'),
-            'G' :  pygame.image.load('../Resources/grass.png'),
-            'W' :  pygame.image.load('../Resources/water.png'), 
-            'D' :  pygame.image.load('../Resources/dirt.png')
-        }
-
-        # set the display size of window
-        self.WIDTH = TILESIZE * MAPWIDTH
-        self.HEIGHT = TILESIZE * MAPHEIGHT
-
-        self.tile_list = [None]*MAPHEIGHT*MAPWIDTH
-
-        file = open('map.txt', 'r')
-        for i in range (0, MAPHEIGHT*MAPWIDTH):
-            return_char = file.read(1)
-            if return_char == '\n' or return_char == '':
-                return_char = file.read(1)
-            self.tile_list[i] = return_char
-        file.close()
+    def flash_text(self, delay, DISPLAYSURF):
+        while True:
+            if exitFlag:
+                break
+            DISPLAYSURF.blit(self.image, (0,0))
+            time.sleep(delay)
+            DISPLAYSURF.blit(self.text_image, (0, 400))
+            time.sleep(delay)
 
 
-    def createMap(self, DISPLAYSURF):
-        index = 0
-        for i in range (0, MAPHEIGHT):
-            for j in range (0, MAPWIDTH):
-                DISPLAYSURF.blit(game_map.textures[self.tile_list[index]],(j*TILESIZE,i*TILESIZE))
-                index += 1
 
-class GUI:
-    def __init__(self):
-        self.health = 100
-        self.stamina = 100
-        self.ramen = 100
-        self.money = 100
-        self.ramen_image = pygame.image.load('ramen.png')
-        self.money_image = pygame.image.load('../Resources/moneybags.png')
+# Taking care of all the key up events
+def key_up_events(event):
+    if event.key == K_w:
+        player.update(False, UP)
+    if event.key == K_s:
+        player.update(False, DOWN)
+    if event.key == K_a:
+        player.update(False, LEFT)
+    if event.key == K_d:
+        player.update(False, RIGHT)
 
-    def decrease_stat(self, stat):
-        if stat == HEALTH:
-            if self.health <= 0:
-                return # Do nothing
-            self.health -= 1
-        elif stat == STAMINA:
-            if self.stamina <= 0:
+# This functino will load the menu
+def load_menu(DISPLAYSURF):
+
+    global exitFlag
+    flash = new_thread(1, "flash_thread", DISPLAYSURF)
+
+    flash.start()
+
+    while True:
+        for event in pygame.event.get():
+            if event.type == KEYDOWN:
+                exitFlag = 1
                 return
-            self.stamina -= 1  
-        else:
-            if self.ramen <= 0:
-                return
-            self.ramen -= 1
+            elif event.type == QUIT:
+                pygame.quit()
+                sys.exit()
+
+        pygame.display.update()
+        fps_clock.tick(FPS)
+
+if __name__ == '__main__':
+
+    # Set up the window and caption
+    DISPLAYSURF = pygame.display.set_mode((WIN_WIDTH,WIN_HEIGHT), 0, 32)
+    pygame.display.set_caption("Frostgate Penitentiary Test")
+
+    load_menu(DISPLAYSURF)
+
+    # For testing purposes of A*
+    # For horizontal tests (420, 300)
+    ball = Item("pokeball", 210, 240, OVERLAPPING)
+    # Route set for the NPC
+    route = [
+        (400, 200),
+        (210, 240),
+        (100, 200),
+        (200, 440)
+    ]
+
+    # Instantiate the classes
+    game_map = PrisonMap()
+    # how large the world map will be (Prison dimensions)
+    world = pygame.Surface((game_map.WIDTH, game_map.HEIGHT)) # Create Map Surface
+    world.fill(BLACK) # Fill Map Surface Black
+    # We only want to render the entire map once
+    game_map.render(world)
+
+    player = Player(400,400, PLAYER, BLOCKING, 2)
+    # For horizontal tests (120, 300)
+    guard = SmartNPC(200, 444, PRISON_GUARD, BLOCKING, route, game_map)
+    warden = Warden(100, 100, WARDEN, BLOCKING, route, game_map)
+
+    # initialize the collision objects
+    # Only add the collisions for blocking objects
+    player.collision_list.append(guard)
+    player.collision_list.append(warden)
+    guard.collision_list.append(player)
+
+    for item in items_group: # add all items in collision list
+        player.collision_list.append(item)
+        guard.collision_list.append(item)
+
+    for p_object in imm_objects_group:
+        player.collision_list.append(p_object)
+        guard.collision_list.append(p_object)
+
+    # pressed variables
+    interactPressed = False
 
 
-    def increase_stat(self, stat):
-        if stat == HEALTH:
-            if self.health >= 100:
-                return
-            self.health += 1
-        elif stat == STAMINA:
-            if self.stamina >= 100:
-                return
-            self.stamina += 1  
-        else:
-            if self.ramen >= 999:
-                return
-            self.ramen += 1
+    # Main game loop
+    while True:
+        DISPLAYSURF.fill(BLACK)
 
-    def get_stat(self, stat):
-        if stat == HEALTH:
-            return self.health
-        if stat == STAMINA:
-            return self.stamina
+        for event in pygame.event.get():
+            if event.type == KEYUP:
+                key_up_events(event)
+                if event.key == K_e:
+                    player.interact(False)
+            elif event.type == QUIT:
+                pygame.quit()
+                sys.exit()
 
-    def display_health(self):
-        #displays 'health'
-        Font1 = pygame.font.SysFont('monaco', 24)
-        healthSurface = Font1.render('Health: {0}%'.format(self.health), True, GREEN)
-        healthRect = healthSurface.get_rect()
-        healthRect.midtop = (200, 20)
-        DISPLAYSURF.blit(healthSurface,healthRect)
-        tint = 255 - (self.health * 2.55)
-        pygame.draw.rect(DISPLAYSURF, (tint, 255 - tint, 0), pygame.Rect(20, 20, self.health, 20))
+        # The key pressed events
+        key_pressed = pygame.key.get_pressed()
 
-    def display_stamina(self):
-        #displays 'stamina'
-        Font2 = pygame.font.SysFont('monaco', 24)
-        stamSurface = Font2.render('Stamina: {0}'.format(self.stamina), True, GREEN)
-        stamRect = stamSurface.get_rect()
-        stamRect.midtop = (192, 45)
-        DISPLAYSURF.blit(stamSurface,stamRect)
-        tint1 = 255 - (self.stamina * 2.55)
-        pygame.draw.rect(DISPLAYSURF, (tint1, 0, 255 - tint1), pygame.Rect(20, 45, self.stamina, 20))
+        if key_pressed[K_w]:
+            player.update(True, UP)
+        elif key_pressed[K_s]:
+            player.update(True, DOWN)
+        elif key_pressed[K_a]:
+            player.update(True, LEFT)
+        elif key_pressed[K_d]:
+            player.update(True, RIGHT)
+        if key_pressed[K_e]:
+            player.interact(True)
 
-    def display_ramen(self):
-        #displays ': (ramen amount)'
-        Font3 = pygame.font.SysFont('monaco', 44)
-        ramSurface = Font3.render(': {0}'.format(self.ramen), True, BLACK)
-        ramRect = ramSurface.get_rect()
-        ramRect.midtop = (930, 23)
-        DISPLAYSURF.blit(ramSurface,ramRect)
-        DISPLAYSURF.blit(self.ramen_image, (830,23))
-    def display_money(self):
-        #displays ': (ramen amount)'
-        Font4 = pygame.font.SysFont('monaco', 44)
-        monSurface = Font4.render(': {0}$'.format(self.money), True, BLACK)
-        monRect = monSurface.get_rect()
-        monRect.midtop = (940, 103)
-        DISPLAYSURF.blit(monSurface,monRect)
-        DISPLAYSURF.blit(self.money_image, (830,93))
+        # Guard start running its state
+        guard.run_state(PATROL_STATE, player)
 
-tester = pygame.image.load('../Resources/player/player_back_0.png')
-inventory = pygame.image.load('../Resources/inventory.png')
+        # render the game map onto the world
+        game_map.update_tiles(world)
 
-game_map = Map()
+        # Display every item in the game at its position
+        for item in items_group:
+            item.render(world)
+            # if the player collides with the object and presses a key delete the object from group
+            if player.rect.colliderect(item) and interactPressed:
+                print "Picked up", item
+                items_group.remove(item)
 
-GUI_display = GUI()
+        for objects in imm_objects_group:
+            objects.render(world)
 
-# Used to ensure a maximum fps setting
-fps_clock = pygame.time.Clock()
+        #display all the actors in the game
+        for actor in actors_group:
+            actor.render(world)
 
-# Set up the window and caption
-DISPLAYSURF = pygame.display.set_mode((game_map.WIDTH, game_map.HEIGHT), 0, 32)
-
-# Main game loop
-while True:
-    game_map.createMap(DISPLAYSURF)
-    DISPLAYSURF.blit(tester, (320, 320))
-    DISPLAYSURF.blit(inventory, (400, 500))
-    for event in pygame.event.get():
-        if event.type == QUIT:
-            pygame.quit()
-            sys.exit()
-
-    key_pressed = pygame.key.get_pressed()
-
-    if key_pressed[pygame.K_x]:
-            GUI_display.decrease_stat(HEALTH)
-    if key_pressed[pygame.K_z]:
-            GUI_display.increase_stat(HEALTH)
-
-    #checks what key is pressed to change heat-- which then decides the size of the rectangle and color
-    if key_pressed[pygame.K_v]:
-        GUI_display.decrease_stat(STAMINA)
-    if key_pressed[pygame.K_c]:
-        GUI_display.increase_stat(STAMINA)
-
-    if key_pressed[pygame.K_n]:
-        GUI_display.decrease_stat(RAMEN)
-    if key_pressed[pygame.K_b]:
-        GUI_display.increase_stat(RAMEN)
+        # Render everything onto the display surface
+        DISPLAYSURF.blit(world, player.camera_pos) # Render Map To The Display
 
 
-    key_pressed = pygame.key.get_pressed()
-
-    GUI_display.display_health()
-    GUI_display.display_stamina()
-    GUI_display.display_ramen()
-    GUI_display.display_money()
-
-    pygame.display.update()
-    fps_clock.tick(FPS)
+        pygame.display.update()
+        fps_clock.tick(FPS)
