@@ -11,7 +11,7 @@ class GUI:
         self.ramen = 100
         self.ramen_image = pygame.image.load('ramen.png')
         self.inventory_image = pygame.image.load('../Resources/inventory.png')
-
+        self.health_stamina_frame = pygame.image.load('../Resources/health_stamina_frame.png')
         self.inv = [nothing_object, nothing_object, nothing_object, nothing_object, nothing_object]
 
 
@@ -62,6 +62,10 @@ class GUI:
                 break
 
     def update(self, DISPLAYSURF):
+        #displays the frame surrounding health & stamina
+
+        DISPLAYSURF.blit(self.health_stamina_frame, (0, 4))
+
         #displays 'health'
         Font1 = pygame.font.SysFont('monaco', 24)
         healthSurface = Font1.render('Health: {0}%'.format(self.health), True, GREEN)
@@ -94,5 +98,5 @@ class GUI:
         for item in self.inv:
             image = pygame.image.load('../Resources/' + item)
             DISPLAYSURF.blit(image, (x_pos,510))
-            x_pos += 40
+            x_pos += 38
 
