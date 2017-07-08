@@ -103,7 +103,6 @@ class NPC(Actor):
 			current_tile = self.came_from[current_tile]
 			self.total_path.append(current_tile)
 		self.total_path.remove(current_tile)
-		print self.total_path
 
 
 	def explore_neighbors(self, current_tile, destination):
@@ -133,7 +132,6 @@ class NPC(Actor):
 			g_dist = math.hypot(current_tile[0]-neighbor[0], current_tile[1]-neighbor[1])
 			tentative_g_score = self.g_score[current_tile] + g_dist
 
-			print tentative_g_score, self.g_score[neighbor]
 			if tentative_g_score >= self.g_score[neighbor]:
 				continue # Not a good path to take
 

@@ -77,6 +77,16 @@ class PrisonMap:
 			DISPLAYSURF.blit(self.textures[self.tile_list[(topleft[1]-1)*MAPWIDTH+topleft[0]]], (topleft[0]*TILESIZE, (topleft[1]-1)*TILESIZE))
 			DISPLAYSURF.blit(self.textures[self.tile_list[(topright[1]-1)*MAPWIDTH+topright[0]]], (topright[0]*TILESIZE, (topright[1]-1)*TILESIZE))
 
+			# Re-blit the objects
+			if self.tile_has_object((topleft[0], topleft[1]-1)):
+				#DISPLAYSURF.blit(self.permanent_item_list[self.objects[(topleft[1]-1)*MAPWIDTH+topleft[0]]], (topleft[0]*TILESIZE, (topleft[1]-1)*TILESIZE))
+				print "Reblit", (topleft[0], topleft[1]-1)
+				# print self.permanent_item_list[self.objects[(topleft[1]-1)*MAPWIDTH+topleft[0]]]
+			if self.tile_has_object((topright[0], topright[1]-1)):
+				#DISPLAYSURF.blit(self.permanent_item_list[self.objects[(topright[1]-1)*MAPWIDTH+topright[0]]], (topright[0]*TILESIZE, (topright[1]-1)*TILESIZE))
+				print "Reblit", (topright[0], topright[1]-1)
+				# print self.permanent_item_list[self.objects[(topright[1]-1)*MAPWIDTH+topright[0]]]
+
 			# Reblit the tiles that are on the actor's top left and right, and bottom left and right
 			DISPLAYSURF.blit(self.textures[self.tile_list[topleft[1]*MAPWIDTH+topleft[0]]], (topleft[0]*TILESIZE, topleft[1]*TILESIZE))
 			DISPLAYSURF.blit(self.textures[self.tile_list[topright[1]*MAPWIDTH+topright[0]]], (topright[0]*TILESIZE, topright[1]*TILESIZE))

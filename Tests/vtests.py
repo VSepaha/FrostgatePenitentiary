@@ -9,6 +9,7 @@ from Nurse import *
 from Warden import *
 from Item import *
 from settings import *
+from GUI import *
 
 pygame.init()
 
@@ -96,6 +97,10 @@ if __name__ == '__main__':
 	world.fill(BLACK) # Fill Map Surface Black
 	# We only want to render the entire map once
 	game_map.render(world)
+	for objects in imm_objects_group:
+		objects.render(world)
+
+	gui = GUI()
 
 	player = Player(400,400, PLAYER, BLOCKING, 2)
 	# For horizontal tests (120, 300)
@@ -161,9 +166,6 @@ if __name__ == '__main__':
 				print "Picked up", item
 				items_group.remove(item)
 
-		for objects in imm_objects_group:
-			objects.render(world)
-
 		#display all the actors in the game
 		for actor in actors_group:
 			actor.render(world)
@@ -171,6 +173,7 @@ if __name__ == '__main__':
 		# Render everything onto the display surface
 		DISPLAYSURF.blit(world, player.camera_pos) # Render Map To The Display
 
+		gui.update(DISPLAYSURF)
 
 		pygame.display.update()
 		fps_clock.tick(FPS)

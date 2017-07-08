@@ -30,12 +30,12 @@ The game will be created in python using the pygame library.
 - Create basic prison objects - Done
 
 ### Phase II
-- Playable character will be able to interact with objects and some NPCs - Done
+- Playable character will be able to interact with objects and some NPCs
 - Create camera movement to move with the player with the player in the center - Done
 - Expand the tiled map to get desired map size and design it for the prison
-- UI will be able to move with the camera and make changes based on interactions
-- Objects will be placed efficiently on the map - Done
-- AI will be much better with better algorithms implemented
+- UI will be able to move with the camera and make changes based on interactions - Done
+- Objects will be placed efficiently on the map
+- AI will be much better with better algorithms implemented - Done
 - New NPC characters - Done
 - Add the skill system with its own UI
 - Map Rendering Efficiency - Done
