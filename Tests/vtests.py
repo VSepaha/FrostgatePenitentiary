@@ -84,9 +84,7 @@ if __name__ == '__main__':
 	ball = Item("pokeball", 210, 240, OVERLAPPING)
 	# Route set for the NPC
 	route = [
-		(400, 200),
 		(210, 240),
-		(100, 200),
 		(200, 440)
 	]
 
