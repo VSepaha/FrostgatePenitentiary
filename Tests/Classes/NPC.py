@@ -12,6 +12,7 @@ class NPC(Actor):
 		# Route set for the NPC
 		self.route = patrol_route
 
+		# indexes for the lists
 		self.route_index = 0
 		self.astar_index = 0
 
@@ -43,11 +44,13 @@ class NPC(Actor):
 		self.speed = 2
 		self.change_timer = 8
 
+		# Current state of the NPC
 		self.state = None
 
 		# The map of the game (used to check for objects on tiles)
 		self.game_map = game_map
 
+		# Check to see if path is done and index is set
 		self.set = False
 		self.set_index = False
 

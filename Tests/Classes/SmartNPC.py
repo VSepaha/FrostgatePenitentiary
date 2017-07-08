@@ -28,13 +28,51 @@ class SmartNPC(NPC):
 		# Health of the NPC
 		self.health = 100
 
+		self.raycast_set = False
+
+		# Sight distances
+		self.sight_distance = 6
+
 	# AI pathfinding algorithm can be improved
 	def run_state(self, state, player):
 		self.state = state
 		if self.state == PATROL_STATE:
 			self.patrol()
-		if self.state == CHASE_STATE:
+		elif self.state == CHASE_STATE:
 			self.chase_algorithm(player)
+		elif self.state == LOCKDOWN_STATE:
+			if self.in_raycast(player) and self.raycast_set == False:
+				self.raycast_set = True
+			if self.raycast_set == True:
+				self.chase_algorithm(player)
+			else:
+				self.state = PATROL_STATE
+
+	def in_raycast(self, player):
+		direction = self.direction
+		if direction == UP:
+			if (self.rect.y/TILESIZE - self.sight_distance) < ((player.rect.y+player.rect.height)/TILESIZE) and player.rect.y < self.rect.y:
+				if player.rect.x/TILESIZE == self.rect.x/TILESIZE or (player.rect.x+player.rect.width)/TILESIZE == self.rect.x/TILESIZE:
+					print "up sight"
+					return True
+		if direction == DOWN:
+			if (self.rect.y/TILESIZE + self.sight_distance) > (player.rect.y/TILESIZE) and player.rect.y > self.rect.y:
+				if player.rect.x/TILESIZE == self.rect.x/TILESIZE or (player.rect.x+player.rect.width)/TILESIZE == self.rect.x/TILESIZE:
+					print "down sight"
+					return True
+		if direction == RIGHT:
+			if (self.rect.x/TILESIZE + self.sight_distance) > ((player.rect.x)/TILESIZE) and player.rect.x > self.rect.x:
+				if player.rect.y/TILESIZE == self.rect.y/TILESIZE or (player.rect.y+player.rect.height)/TILESIZE == self.rect.y/TILESIZE:
+					print "right sight"
+					return True
+		if direction == LEFT:
+			if (self.rect.x/TILESIZE - self.sight_distance) < ((player.rect.x+player.rect.width)/TILESIZE) and player.rect.x < self.rect.x:
+				if player.rect.y/TILESIZE == self.rect.y/TILESIZE or (player.rect.y+player.rect.height)/TILESIZE == self.rect.y/TILESIZE:
+					print "left sight"
+					return True
+
+		print "NO SIGHT"
+		return False
 
 	def chase_algorithm(self, player):
 		self.speed = 3
@@ -51,10 +89,6 @@ class SmartNPC(NPC):
 		x_pixel_dist = (player.rect.x - self.rect.x)
 		y_pixel_dist = (player.rect.y - self.rect.y)
 
-		# print ""
-		# print "player location =", player_location
-		# print "self location=", self_location
-
 		# We'll stick with this collision for now
 		if abs(x_pixel_dist) < 40 and abs(y_pixel_dist) < 40:
 			print "player caught"
@@ -62,33 +96,33 @@ class SmartNPC(NPC):
 
 		# This is what we are going to go with for now
 		if y_tile_dist == 0 and x_tile_dist != 0:
-			self.next_point = (self.rect.x + (x_tile_dist*TILESIZE), self.rect.y)
+			self.next_point = ((self.rect.x + (x_tile_dist*TILESIZE))/TILESIZE, self.rect.y/TILESIZE)
 		elif x_tile_dist == 0 and y_tile_dist != 0:
-			self.next_point = (self.rect.x, self.rect.y + (y_tile_dist*TILESIZE))
+			self.next_point = (self.rect.x/TILESIZE, (self.rect.y + (y_tile_dist*TILESIZE))/TILESIZE)
 		# If delta x and delta y are equal
 		elif abs(y_tile_dist) == abs(x_tile_dist) and x_tile_dist != 0:
 		 	if x_tile_dist < 0 and y_tile_dist < 0:
-		  		self.next_point = (self.rect.x - TILESIZE, self.rect.y - TILESIZE)
+		  		self.next_point = ((self.rect.x - TILESIZE)/TILESIZE, (self.rect.y - TILESIZE)/TILESIZE)
 			if x_tile_dist > 0 and y_tile_dist > 0:
-		 		self.next_point = (self.rect.x + TILESIZE, self.rect.y + TILESIZE)
+		 		self.next_point = ((self.rect.x + TILESIZE)/TILESIZE, (self.rect.y + TILESIZE)/TILESIZE)
 			if x_tile_dist < 0 and y_tile_dist > 0:
-				self.next_point = (self.rect.x - TILESIZE, self.rect.y + TILESIZE)
+				self.next_point = ((self.rect.x - TILESIZE)/TILESIZE, (self.rect.y + TILESIZE)/TILESIZE)
 			if x_tile_dist > 0 and y_tile_dist < 0:
-				self.next_point = (self.rect.x + TILESIZE, self.rect.y - TILESIZE)
+				self.next_point = ((self.rect.x + TILESIZE)/TILESIZE, (self.rect.y - TILESIZE)/TILESIZE)
 		elif abs(x_tile_dist) > abs(y_tile_dist):
 			if x_tile_dist > 0:
-				self.next_point = (self.rect.x + TILESIZE, self.rect.y)
+				self.next_point = ((self.rect.x + TILESIZE)/TILESIZE, self.rect.y/TILESIZE)
 			else:
-				self.next_point = (self.rect.x - TILESIZE, self.rect.y)
+				self.next_point = ((self.rect.x - TILESIZE)/TILESIZE, self.rect.y/TILESIZE)
 		elif abs(x_tile_dist) < abs(y_tile_dist):
 			if y_tile_dist > 0:
-				self.next_point = (self.rect.x, self.rect.y + TILESIZE)
+				self.next_point = (self.rect.x/TILESIZE, (self.rect.y + TILESIZE)/TILESIZE)
 			else:
-				self.next_point = (self.rect.x, self.rect.y - TILESIZE)
+				self.next_point = (self.rect.x/TILESIZE, (self.rect.y - TILESIZE)/TILESIZE)
 		else:
-			self.next_point = (self.rect.x, self.rect.y)
+			self.next_point = (self.rect.x/TILESIZE, self.rect.y/TILESIZE)
 			print "player caught"
 
 
-		if self.rect.x != self.next_point[0] or self.rect.y != self.next_point[1]:
-			self.move(self.next_point)
+		if self.rect.x/TILESIZE != self.next_point[0]/TILESIZE or self.rect.y/TILESIZE != self.next_point[1]/TILESIZE:
+			self.move_to_location(self.next_point)
