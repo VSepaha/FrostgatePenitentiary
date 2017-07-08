@@ -62,9 +62,6 @@ class Actor(pygame.sprite.Sprite):
         self.collision_list = []
         self.collision_type = collision_type
 
-        # camera
-        self.camera_pos = (0,0) # Create Camara Starting Position
-
         # The character starts facing downwards
         self.direction = DOWN
 
@@ -73,6 +70,9 @@ class Actor(pygame.sprite.Sprite):
 
     def get_direction(self):
         return self.direction
+
+    def get_tile_location(self):
+        return (self.rect.x/TILESIZE, self.rect.y/TILESIZE)
 
     # Works Nicely
     def update(self, move, direction):
@@ -110,7 +110,6 @@ class Actor(pygame.sprite.Sprite):
 
         for other_object in self.collision_list:
             if self.rect.colliderect(other_object) and other_object.collision_type == BLOCKING:
-                pos_x, pos_y = self.camera_pos
                 if dx > 0: # Moving right; Hit the left side of the wall
                     self.rect.right = other_object.rect.left
                 if dx < 0: # Moving left; Hit the right side of the wall

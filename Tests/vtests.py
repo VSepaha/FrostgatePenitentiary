@@ -78,12 +78,15 @@ if __name__ == '__main__':
 
 	load_menu(DISPLAYSURF)
 
+	# For testing purposes of A*
+	# For horizontal tests (420, 300)
+	ball = Item("pokeball", 210, 240, OVERLAPPING)
 	# Route set for the NPC
 	route = [
-		(800, 320),
-		(300, 320),
-		(300, 50),
-		(800, 50)
+		(400, 200),
+		(210, 240),
+		(100, 200),
+		(200, 440)
 	]
 
 	# Instantiate the classes
@@ -94,10 +97,10 @@ if __name__ == '__main__':
 	# We only want to render the entire map once
 	game_map.render(world)
 
-	player = Player(400,300, PLAYER, BLOCKING, 2)
-	guard = SmartNPC(100, 250, PRISON_GUARD, BLOCKING, route)
-	warden = Warden(100, 100, WARDEN, BLOCKING, route)
-	ball = Item("pokeball", 200, 200, OVERLAPPING)
+	player = Player(400,400, PLAYER, BLOCKING, 2)
+	# For horizontal tests (120, 300)
+	guard = SmartNPC(200, 444, PRISON_GUARD, BLOCKING, route, game_map)
+	warden = Warden(100, 100, WARDEN, BLOCKING, route, game_map)
 
 	# initialize the collision objects
 	# Only add the collisions for blocking objects
@@ -145,7 +148,7 @@ if __name__ == '__main__':
 			player.interact(True)
 
 		# Guard start running its state
-		# guard.run_state(CHASE_STATE, player)
+		guard.run_state(PATROL_STATE, player)
 
 		# render the game map onto the world
 		game_map.update_tiles(world)

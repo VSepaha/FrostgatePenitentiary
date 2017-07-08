@@ -10,6 +10,14 @@ class Player(Actor):
 		# Health of the player
 		self.health = 100
 
+		# Skills that the player has
+		self.strength_level = 1
+		self.intelligence_level = 1
+		self.charisma_level = 1
+
+		# camera
+		self.camera_pos = (0,0) # Create Camara Starting Position
+
 	# Works Nicely
 	def update(self, move, direction):
 	    self.direction = direction
