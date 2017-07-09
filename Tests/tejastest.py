@@ -136,6 +136,9 @@ if __name__ == '__main__':
             elif event.type == QUIT:
                 pygame.quit()
                 sys.exit()
+        if pygame.mouse.get_pressed()[0] == 402 and pygame.mouse.get_pressed()[1] == 502:
+            print('Tab switching...')
+
 
         # The key pressed events
         key_pressed = pygame.key.get_pressed()

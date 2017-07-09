@@ -16,7 +16,7 @@ class GUI:
         self.ramen_image = pygame.image.load('ramen.png')
         self.inventory_image = pygame.image.load('../Resources/inventory.png')
         self.health_stamina_frame = pygame.image.load('../Resources/health_stamina_frame.png')
-        self.ramen_frame = pygame.image.load('../Resources/ramen_frame.png')
+        self.inventory_frame = pygame.image.load('../Resources/inventory_frame.png')
         self.inv = [nothing_object, nothing_object, nothing_object, nothing_object, nothing_object]
 
     def decrease_stat(self, stat):
@@ -89,11 +89,11 @@ class GUI:
         ramSurface = Font3.render(': {0}'.format(self.ramen), True, BLACK)
         ramRect = ramSurface.get_rect()
         ramRect.midtop = (940, 23)
-        DISPLAYSURF.blit(self.ramen_frame, (830,4))
         DISPLAYSURF.blit(ramSurface,ramRect)
 
 
         # Displays the inventory
+        DISPLAYSURF.blit(self.inventory_frame, (320, 460))
         DISPLAYSURF.blit(self.inventory_image, (402, 502))
         x_pos = 410
         for item in self.inv:
