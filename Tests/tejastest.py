@@ -98,13 +98,13 @@ if __name__ == '__main__':
     for objects in imm_objects_group:
         objects.render(world)
 
-    gui = GUI()
 
     player = Player(400,400, PLAYER, BLOCKING, 2)
     player.speed = 10
     # For horizontal tests (120, 300)
     guard = SmartNPC(200, 444, PRISON_GUARD, BLOCKING, route, game_map)
     warden = Warden(100, 100, WARDEN, BLOCKING, route, game_map)
+    gui = GUI(player)
 
     # initialize the collision objects
     # Only add the collisions for blocking objects
@@ -136,8 +136,10 @@ if __name__ == '__main__':
             elif event.type == QUIT:
                 pygame.quit()
                 sys.exit()
-        if pygame.mouse.get_pressed()[0] == 402 and pygame.mouse.get_pressed()[1] == 502:
-            print('Tab switching...')
+            mpos = pygame.mouse.get_pos()
+            mpress = pygame.mouse.get_pressed()
+            if mpos[0] >= 400 and mpos[1] <= 600 and mpress == True:
+                print "Switching Tab"
 
 
         # The key pressed events
