@@ -19,44 +19,16 @@ class GUI:
         self.ramen_frame = pygame.image.load('../Resources/ramen_frame.png')
         self.inv = [nothing_object, nothing_object, nothing_object, nothing_object, nothing_object]
 
-    def decrease_stat(self, stat):
-        if stat == HEALTH:
-            if self.health <= 0:
-                return # Do nothing
-            self.health -= 1
-        elif stat == STAMINA:
-            if self.stamina <= 0:
-                return
-            self.stamina -= 1
-        else:
-            if self.ramen <= 0:
-                return
-            self.ramen -= 1
-
-    def increase_stat(self, stat):
-        if stat == HEALTH:
-            if self.health >= 100:
-                return
-            self.health += 1
-        elif stat == STAMINA:
-            if self.stamina >= 100:
-                return
-            self.stamina += 1
-        else:
-            if self.ramen >= 999:
-                return
-            self.ramen += 1
-
-    def add_item(self):
+    def add_item(self, item):
         for i in range(0, len(self.inv)):
-            if self.inv[i] == nothing_object:
-                self.inv[i] = item_object
+            if self.inv[i] == None:
+                self.inv[i] = item
                 break
 
-    def remove_item(self):
+    def remove_item(self, item):
         for i in range(len(self.inv)-1, -1, -1):
-            if self.inv[i] == item_object:
-                self.inv[i] = nothing_object
+            if self.inv[i] == item:
+                self.inv[i] = None
                 break
 
     def update(self, DISPLAYSURF):
@@ -89,7 +61,6 @@ class GUI:
         ramSurface = Font3.render(': {0}'.format(self.ramen), True, BLACK)
         ramRect = ramSurface.get_rect()
         ramRect.midtop = (940, 23)
-        DISPLAYSURF.blit(self.ramen_frame, (830,4))
         DISPLAYSURF.blit(ramSurface,ramRect)
 
 

@@ -68,6 +68,11 @@ STAMINA = 0
 HEALTH = 1
 RAMEN = 2
 
+# Skill values
+STRENGTH_SKILL = 0
+INTELLIGENCE_SKILL = 1
+CHARISMA_SKILL = 2
+
 # actors that are in game
 actors_group = pygame.sprite.Group()
 

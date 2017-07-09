@@ -14,9 +14,16 @@ class Player(Actor):
 		self.stamina = 100
 
 		# Skills that the player has
+		self.strength_exp = 0
+		self.intelligence_exp = 0
+		self.charisma_exp = 0
+
 		self.strength_level = 1
 		self.intelligence_level = 1
 		self.charisma_level = 1
+
+		# Inventory list
+		self.inventory = [None]*5
 
 		# camera
 		self.camera_pos = (self.rect.x/4, -self.rect.y/4) # Create Camara Starting Position
@@ -26,6 +33,25 @@ class Player(Actor):
 			return self.health
 		if stat == STAMINA:
 			return self.stamina
+
+	def get_inventory(self):
+		return self.inventory
+
+	def get_skill(self, skill, exp):
+		if exp:
+			if skill == STRENGTH_SKILL:
+				return self.strength_exp
+			elif skill == INTELLIGENCE_SKILL:
+				return self.intelligence_exp
+			elif skill == CHARISMA_SKILL:
+				return self.charisma_exp
+		else:
+			if skill == STRENGTH_SKILL:
+				return self.strength_level
+			elif skill == INTELLIGENCE_SKILL:
+				return self.intelligence_level
+			elif skill == CHARISMA_SKILL:
+				return self.charisma_level
 
 	# Works Nicely
 	def update(self, move, direction):
