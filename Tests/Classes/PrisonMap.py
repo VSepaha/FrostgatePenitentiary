@@ -12,23 +12,38 @@ class PrisonMap:
 			'G' :  pygame.image.load('../Resources/Tiles/grass.png'),
 			'W' :  pygame.image.load('../Resources/Tiles/water.png'),
 			'D' :  pygame.image.load('../Resources/Tiles/dirt.png'),
-			' ' :  pygame.image.load('../Resources/Tiles/base.png')
+			' ' :  pygame.image.load('../Resources/Tiles/base.png'),
+			'M' : pygame.image.load('../resources/Tiles/mat.png'),
 		}
 
 		# Permanent objects on the map
 		self.objects = {
 			'W' : "prisonwall",
 			'P' : "prisonbars",
+			'O' : "prisonbars_side",
 			'B' : "bed",
 			'T' : "toilet",
 			'D' : "desk",
 			'C' : "cabinet1",
-			'O' : "door",
-			'L' : "library",
-			'J' : "computerdesk",
+			'3' : "library1",
+			'4' : "library2",
+			'5' : "library3",
+			'6' : "library4",
+			'J' : "computer1",
+			'K' : "computer2",
+			'L' : "computer3",
+			';' : "computer4",
 			'R' : "crate",
 			'1' : "fencefront",
 			'2' : "fenceside",
+			'0' : "table1",
+			'-' : "table2", 
+			'*' : "microwave",
+			'^' : "refrigerator",
+			'(' : "coffee", 
+			'#' : "firstaidkit",
+			'@' : "benchpress",
+			'!' : "pullup",
 		}
 
 		# set the display size of window
