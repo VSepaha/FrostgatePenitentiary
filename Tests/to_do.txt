@@ -1,0 +1,6 @@
+To do:
+Create a skill system in the inventory_frame which shows:
+- current level
+- blue xp bar
+- xp to next level
+- skills: strength; charisma; intellegence

@@ -12,6 +12,8 @@ class GUI:
         self.health = player.get_stat(HEALTH)
         self.stamina = player.get_stat(STAMINA)
 
+        self.strength = 1
+
         self.ramen = 100
         self.ramen_image = pygame.image.load('ramen.png')
         self.inventory_frame = pygame.image.load('../Resources/inventory_frame.png')
@@ -65,7 +67,9 @@ class GUI:
         ramRect = ramSurface.get_rect()
         ramRect.midtop = (540, 477)
 
-
+        strengthSurf = Font2.render('Strength: {0}'.format(self.strength), True, BLACK)
+        strengthRect = strengthSurf.get_rect()
+        strengthRect.midtop = (402, 500)
         if flag == True:
             DISPLAYSURF.blit(self.inventory_frame_inventory, (320, 460))
         else:
@@ -81,4 +85,6 @@ class GUI:
                 DISPLAYSURF.blit(image, (x_pos,518))
                 #Displays ': (ramen amount)'
                 DISPLAYSURF.blit(ramSurface,ramRect)
+            if flag == False:
+                DISPLAYSURF.blit(strengthSurf,strengthRect)
             x_pos += 38
