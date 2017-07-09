@@ -151,7 +151,7 @@ if __name__ == '__main__':
 			player.interact(True)
 
 		# Guard start running its state
-		guard.run_state(PATROL_STATE, player)
+		guard.run_state(LOCKDOWN_STATE, player)
 
 		# render the game map onto the world
 		game_map.update_tiles(world)
