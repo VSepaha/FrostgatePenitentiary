@@ -31,7 +31,7 @@ class GUI:
                 self.inv[i] = None
                 break
 
-    def update(self, DISPLAYSURF):
+    def update(self, DISPLAYSURF, flag):
         self.health = self.player.get_stat(HEALTH)
         self.stamina = self.player.get_stat(STAMINA)
         #displays the frame surrounding health & stamina
@@ -62,6 +62,11 @@ class GUI:
         ramRect = ramSurface.get_rect()
         ramRect.midtop = (940, 23)
         DISPLAYSURF.blit(ramSurface,ramRect)
+
+        # if flag:
+            # display the inventory
+        # else:
+            # display the skills
 
 
         # Displays the inventory
