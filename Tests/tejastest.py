@@ -101,6 +101,7 @@ if __name__ == '__main__':
     gui = GUI()
 
     player = Player(400,400, PLAYER, BLOCKING, 2)
+    player.speed = 10
     # For horizontal tests (120, 300)
     guard = SmartNPC(200, 444, PRISON_GUARD, BLOCKING, route, game_map)
     warden = Warden(100, 100, WARDEN, BLOCKING, route, game_map)
@@ -151,7 +152,7 @@ if __name__ == '__main__':
             player.interact(True)
 
         # Guard start running its state
-        guard.run_state(PATROL_STATE, player)
+        guard.run_state(LOCKDOWN_STATE, player)
 
         # render the game map onto the world
         game_map.update_tiles(world)
