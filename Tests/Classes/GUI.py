@@ -14,7 +14,7 @@ class GUI:
 
         self.ramen = 100
         self.ramen_image = pygame.image.load('ramen.png')
-        self.inventory_image = pygame.image.load('../Resources/inventory.png')
+        self.inventory_frame = pygame.image.load('../Resources/inventory_frame.png')
         self.health_stamina_frame = pygame.image.load('../Resources/health_stamina_frame.png')
         self.ramen_frame = pygame.image.load('../Resources/ramen_frame.png')
         self.inv = [nothing_object, nothing_object, nothing_object, nothing_object, nothing_object]
@@ -65,7 +65,7 @@ class GUI:
 
 
         # Displays the inventory
-        DISPLAYSURF.blit(self.inventory_image, (402, 502))
+        DISPLAYSURF.blit(self.inventory_frame, (320, 460))
         x_pos = 410
         for item in self.inv:
             image = pygame.image.load('../Resources/' + item)
