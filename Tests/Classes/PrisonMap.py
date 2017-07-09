@@ -44,6 +44,7 @@ class PrisonMap:
 			'#' : "firstaidkit",
 			'@' : "benchpress",
 			'!' : "pullup",
+			'A' : "shower",
 		}
 
 		# set the display size of window

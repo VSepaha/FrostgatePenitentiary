@@ -51,7 +51,7 @@ def key_up_events(event):
     if event.key == K_d:
         player.update(False, RIGHT)
 
-# This functino will load the menu
+# This function will load the menu
 def load_menu(DISPLAYSURF):
 
     global exitFlag
@@ -83,8 +83,9 @@ if __name__ == '__main__':
     # For horizontal tests (420, 300)
     ball = Item("pokeball", 210, 240, OVERLAPPING)
     # Route set for the NPC
+    # (14*40, 8*40),
     route = [
-        (210, 240),
+        (14*TILESIZE, 6*TILESIZE),
         (200, 440)
     ]
 
@@ -98,18 +99,19 @@ if __name__ == '__main__':
     for objects in imm_objects_group:
         objects.render(world)
 
-
     player = Player(400,400, PLAYER, BLOCKING, 2)
-    player.speed = 10
+    gui = GUI(player)
+    player.speed = 20
     # For horizontal tests (120, 300)
     guard = SmartNPC(200, 444, PRISON_GUARD, BLOCKING, route, game_map)
     warden = Warden(100, 100, WARDEN, BLOCKING, route, game_map)
-    gui = GUI(player)
+    nurse = Nurse(52*TILESIZE, 96*TILESIZE, NURSE, BLOCKING, route, game_map)
 
     # initialize the collision objects
     # Only add the collisions for blocking objects
     player.collision_list.append(guard)
     player.collision_list.append(warden)
+    player.collision_list.append(nurse)
     guard.collision_list.append(player)
 
     for item in items_group: # add all items in collision list
@@ -123,6 +125,7 @@ if __name__ == '__main__':
     # pressed variables
     interactPressed = False
 
+    inv_flag = True
 
     # Main game loop
     while True:
@@ -136,11 +139,6 @@ if __name__ == '__main__':
             elif event.type == QUIT:
                 pygame.quit()
                 sys.exit()
-            mpos = pygame.mouse.get_pos()
-            mpress = pygame.mouse.get_pressed()
-            if mpos[0] >= 400 and mpos[1] <= 600 and mpress == True:
-                print "Switching Tab"
-
 
         # The key pressed events
         key_pressed = pygame.key.get_pressed()
@@ -155,9 +153,14 @@ if __name__ == '__main__':
             player.update(True, RIGHT)
         if key_pressed[K_e]:
             player.interact(True)
+        if key_pressed[K_k]:
+#if mouse pressed in skill location
+            inv_flag = False
+        if key_pressed[K_l]:
+            inv_flag = True
 
         # Guard start running its state
-        guard.run_state(LOCKDOWN_STATE, player)
+        guard.run_state(PATROL_STATE, player)
 
         # render the game map onto the world
         game_map.update_tiles(world)
@@ -177,7 +180,7 @@ if __name__ == '__main__':
         # Render everything onto the display surface
         DISPLAYSURF.blit(world, player.camera_pos) # Render Map To The Display
 
-        gui.update(DISPLAYSURF)
+        gui.update(DISPLAYSURF, inv_flag)
 
         pygame.display.update()
         fps_clock.tick(FPS)

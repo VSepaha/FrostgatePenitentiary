@@ -15,6 +15,9 @@ class GUI:
         self.ramen = 100
         self.ramen_image = pygame.image.load('ramen.png')
         self.inventory_frame = pygame.image.load('../Resources/inventory_frame.png')
+        self.inventory_frame_inventory = pygame.image.load('../Resources/inventory_frame_inventory.png')
+        self.inventory_frame_stats = pygame.image.load('../Resources/inventory_frame_stats.png')
+
         self.health_stamina_frame = pygame.image.load('../Resources/health_stamina_frame.png')
         self.ramen_frame = pygame.image.load('../Resources/ramen_frame.png')
         self.inv = [nothing_object, nothing_object, nothing_object, nothing_object, nothing_object]
@@ -56,23 +59,26 @@ class GUI:
         tint1 = 255 - (self.stamina * 2.55)
         pygame.draw.rect(DISPLAYSURF, (tint1, 0, 255 - tint1), pygame.Rect(20, 45, self.stamina, 20))
 
-        #displays ': (ramen amount)'
+        #creates the paramaters for the ramen text
         Font3 = pygame.font.SysFont('monaco', 44)
         ramSurface = Font3.render(': {0}'.format(self.ramen), True, BLACK)
         ramRect = ramSurface.get_rect()
-        ramRect.midtop = (940, 23)
-        DISPLAYSURF.blit(ramSurface,ramRect)
+        ramRect.midtop = (540, 477)
 
-        # if flag:
-            # display the inventory
-        # else:
-            # display the skills
+
+        if flag == True:
+            DISPLAYSURF.blit(self.inventory_frame_inventory, (320, 460))
+        else:
+            DISPLAYSURF.blit(self.inventory_frame_stats, (320, 460))
 
 
         # Displays the inventory
-        DISPLAYSURF.blit(self.inventory_frame, (320, 460))
-        x_pos = 410
+        x_pos = 415
         for item in self.inv:
             image = pygame.image.load('../Resources/' + item)
-            DISPLAYSURF.blit(image, (x_pos,510))
+            if flag == True:
+                #Displays the items
+                DISPLAYSURF.blit(image, (x_pos,518))
+                #Displays ': (ramen amount)'
+                DISPLAYSURF.blit(ramSurface,ramRect)
             x_pos += 38

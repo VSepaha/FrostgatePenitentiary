@@ -2,16 +2,16 @@ WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
 W                     WC   CWC   CW     W   RRW       WT BWT BWT BWT BW      W     W                         W
 W                     WB   BWB   BW     W    RW       WP PWP PWP PWP PW      W     W                         W
 W                     WD   TWD   TW     W     WWWW    W   W   W   W   W      W     W   WWWWWWWWWWWW   WWWWWWWW
-W           WWWWWWWWWWWWP PWWWP PWW     W     W  W    W   W   W   W   W      W     W   WB WB TWB TW   WT BW  W
-W           WCBT O                W     W     W       W       W       W      W     W   W  W   W   WW WW   W  W
-W           W                           WWW WWWWWW    W               W      WWW WWW   WT   PPWP PW   WP PW  W
-W           W    O                                    W               W                WWWW               WWWW
-W           WCBD O       WWWWW  WWW                   WW             WW                WT O               O TW
-W           WWWWWWW      W        W                   WWWWWWWW WWWWWWWW                W      WWW WWW        W
-W           WCBT O         WWWWWW W                          W W                       WB O   W     W     O BW
-W           W            W        W                          W W                       WWWW      W        WWWW
-W           W    O       W        W                                                    WT O   W     W     O BW
-W           WCBD O       WWWWWWWWWW                                                    W      WWW WWW        W
+W           WWWWWWWWWWWWP PWWWP PWW     W     W       W   W   W   W   W      W     W   WB WB TWB TW   WT BW  W
+W           WCBT O                W     W     W       W       W       W      W     W   W  W   W   W   W   W  W
+W           W                           WW  WWWWWW    W               W      WWW  WW   WT   PPWP PW   WP PW  W
+W           W    O                                    W A           A W                WWWW               WWWW
+W           WCBD O       WWWWW  WWW                   W               W                WT O               O TW
+W           WWWWWWW      W        W                   WWWWWWW  WWWWWWWW                W      WW W WW        W
+W           WCBT O          A  A  W                         W  W                       WB O   W  A  W     O BW
+W           W            W  A  A  W                         W  W                       WWWW      A        WWWW
+W           W    O       W  A  A  W                                                    WT O   W  A  W     O BW
+W           WCBD O       WWWWWWWWWW                                                    W      WW W WW        W
 W           WWWWWWW      W                                                             WB O               O TW
 W           WCBT O       W                                                             WWWW               WWWW
 W           W            W                                                             WT O               O BW
@@ -44,8 +44,8 @@ W                   W                           W   0- 0- 0- 0- 0-  W           
 W                   W                           W                   W                           WWWWWWWWWWWWWW
 W                   W                           W                   W                           W 0-   ( (   W
 W                   W                           W   0- 0- 0- 0- 0-  W                           W            W
-W                   W                           W                   W                           W            W
-W                   W                                                                           W            W
+W                   W                           W                   W                           W          A W
+W                   W                                                                                        W
 W                                                   0- 0- 0- 0- 0-                                           W
 W                                               W                   W                           W           CW
 W                                               W                   W                           W     D    CCW
@@ -54,15 +54,15 @@ W                   W                           W    WWWWWWWWWWWWWWWW           
 W                   W                           W    W        W D   W                                        W
 W                   W                           W    W        W    *W                                        W
 W                   W                           W       0- 0-       W                                        W
-W                   W                           W    W        W    ^W                                        W
+W                   W                           W                  ^W                                        W
 W                   W                           W    W        W     W     WWWWWWWWWWWWWWWWWWWWWW             W
 W                   W                           WWWWWWWWWWWWWWWWWWWWW     W                    W             W
 W                   W                                                     W WWWWWWWWWWW        W             W
 W                   W                                                     W WJK       W        W             W
 W                   W                                                     W WL;       W   D    WWW           W
-W                   W                                                     W W         W                      W
-W                   W                                                     W W         W        WWW           W
-W                   W                                                     W W         W   D    W             W
+W                   W                                                     W W                                W
+W                   W                                                     W W                                W
+W                   W                                                     W W         W   D    WWW           W
 W           WWWWWWWWW                                                     W W         W        W             W
 W           W                                                             W WWWWWWWWWWW        W             W
 W           W                                                             W                    W             W
@@ -71,19 +71,19 @@ W           W                                                                   
 W           W                                                                                                W
 W           W                                                                                                W
 W           W                                                           WWWWWW  WWWWWW                       W
-W           W                      WWW WWW                              W            W                       W
+W           W                      WWW  WW                              W            W                       W
 W           WWWWWWWWWWWW           W     W                              W            W                       W
 W           WD BWB DW  W           W     W                              W            W                       W
 W           W   W   W  W           W     W                              W            W                       W
 W           WT BWB TW  W           W    RW                              W            W                       W
 W           WP PWP PWWWW           WCC RRW                                           W                       W
 W           W          W           WWWWWWW                                           W                       W
-W           WWW WWW    W                                                W            W                       W
-W           W     W    W                                                W!           W                       W
-W           W  W                                                        W            W                       W
-W           W  W  W                                                     W!           W                       W
-W           W     W    W           WWWWWWWWWWWW                         WWWWWWWWWWWWWW                       W
-W           WWWWWWW    W           W34343434  W                                                              W
+W           WW W WW    W                                                W            W                       W
+W           W  A  W    W                                                W !          W                       W
+W           W  A  W                                                     W            W                       W
+W           W  A  W                                                     W !          W                       W
+W           W  A  W    W           WWWWWWWWWWWW                         WWWWWWWWWWWWWW                       W
+W           WW W WW    W           W34343434  W                                                              W
 W           W          W           W56565656                                                                 W
 W           W          W           W                                                                         W
 W           W          W           W          W                                                              W
@@ -91,10 +91,10 @@ W           W          W           W  343434  W                                 
 W           W          W           W  565656  W       WWWWWWWWWW                                             W
 W           W      WWWWW           W          W       WB B B B W                                             W
 W           W      O BTW           W          W       W#       W                                             W
-W           W          WWW WWW     W34343434  W       WB B B B W             WWW WWW                         W
+W           W          WWW WWW     W34343434  W       WB B B B W             WWW  WW                         W
 W           W      O BDW     W     W56565656  W  WWWWWW#       W             W     W                         W
 W           WP PWP WWWWW     W     W          W  WJKCCWB B B B               W     W                         W
-W           WD  WD BW  WR          W          W  WL; #W        W             W     W                         W
+W           WD  WD BW  WR          W          W  WL; #W                      W     W                         W
 W           WB BW   W  WRR   W     W  34343434W  W       B B B#W             W     W                         W
-W           W  TWT BW  WRRR  W     W  56565656W  WDD  W        W             W     W                         W
+W           W  TWT BW  WRRR  W     W  56565656W  WDD           W             W     W                         W
 WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
