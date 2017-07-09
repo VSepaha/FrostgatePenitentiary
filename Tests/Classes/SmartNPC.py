@@ -28,6 +28,7 @@ class SmartNPC(NPC):
 		# Health of the NPC
 		self.health = 100
 
+		# If we spotted the player
 		self.raycast_set = False
 
 		# Sight distances
@@ -53,25 +54,19 @@ class SmartNPC(NPC):
 		if direction == UP:
 			if (self.rect.y/TILESIZE - self.sight_distance) < ((player.rect.y+player.rect.height)/TILESIZE) and player.rect.y < self.rect.y:
 				if player.rect.x/TILESIZE == self.rect.x/TILESIZE or (player.rect.x+player.rect.width)/TILESIZE == self.rect.x/TILESIZE:
-					print "up sight"
 					return True
 		if direction == DOWN:
 			if (self.rect.y/TILESIZE + self.sight_distance) > (player.rect.y/TILESIZE) and player.rect.y > self.rect.y:
 				if player.rect.x/TILESIZE == self.rect.x/TILESIZE or (player.rect.x+player.rect.width)/TILESIZE == self.rect.x/TILESIZE:
-					print "down sight"
 					return True
 		if direction == RIGHT:
 			if (self.rect.x/TILESIZE + self.sight_distance) > ((player.rect.x)/TILESIZE) and player.rect.x > self.rect.x:
 				if player.rect.y/TILESIZE == self.rect.y/TILESIZE or (player.rect.y+player.rect.height)/TILESIZE == self.rect.y/TILESIZE:
-					print "right sight"
 					return True
 		if direction == LEFT:
 			if (self.rect.x/TILESIZE - self.sight_distance) < ((player.rect.x+player.rect.width)/TILESIZE) and player.rect.x < self.rect.x:
 				if player.rect.y/TILESIZE == self.rect.y/TILESIZE or (player.rect.y+player.rect.height)/TILESIZE == self.rect.y/TILESIZE:
-					print "left sight"
 					return True
-
-		print "NO SIGHT"
 		return False
 
 	def chase_algorithm(self, player):

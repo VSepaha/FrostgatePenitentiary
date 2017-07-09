@@ -83,8 +83,9 @@ if __name__ == '__main__':
 	# For horizontal tests (420, 300)
 	ball = Item("pokeball", 210, 240, OVERLAPPING)
 	# Route set for the NPC
+	# (14*40, 8*40),
 	route = [
-		(210, 240),
+		(14*TILESIZE, 6*TILESIZE),
 		(200, 440)
 	]
 
@@ -151,7 +152,7 @@ if __name__ == '__main__':
 			player.interact(True)
 
 		# Guard start running its state
-		guard.run_state(LOCKDOWN_STATE, player)
+		guard.run_state(PATROL_STATE, player)
 
 		# render the game map onto the world
 		game_map.update_tiles(world)

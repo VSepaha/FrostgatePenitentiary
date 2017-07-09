@@ -16,7 +16,7 @@ class Player(Actor):
 		self.charisma_level = 1
 
 		# camera
-		self.camera_pos = (0,0) # Create Camara Starting Position
+		self.camera_pos = (self.rect.x/4, -self.rect.y/4) # Create Camara Starting Position
 
 	# Works Nicely
 	def update(self, move, direction):

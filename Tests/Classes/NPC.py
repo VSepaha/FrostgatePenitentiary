@@ -19,21 +19,6 @@ class NPC(Actor):
 		# Tile location of self
 		self.tile_location = (self.rect.x/TILESIZE, self.rect.y/TILESIZE)
 
-		# Set of nodes already evaluated
-		self.closed_set = []
-		# Set of currently discovered nodes, not evaluated yet
-		self.open_set = [self.tile_location]
-		# Contain the most efficient previous steps
-		self.came_from = {}
-		# cost from going from start to node
-		self.g_score = {
-			self.tile_location : 0
-		}
-		# total current cost from getting start to finish
-		self.f_score = {}
-		# final
-		total_path = []
-
 		#Tile math stuff
 		self.next_tile = (0,0)
 
@@ -90,6 +75,7 @@ class NPC(Actor):
 					current_tile = node
 
 			if current_tile == destination:
+				print "Path found"
 				self.reconstruct_path(current_tile)
 				return
 
