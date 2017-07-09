@@ -8,7 +8,10 @@ class Player(Actor):
 		self.threat_level = threat_level
 
 		# Health of the player
-		self.health = 100
+		self.health = 50
+
+		# Stamina of the player
+		self.stamina = 100
 
 		# Skills that the player has
 		self.strength_level = 1
@@ -18,75 +21,82 @@ class Player(Actor):
 		# camera
 		self.camera_pos = (self.rect.x/4, -self.rect.y/4) # Create Camara Starting Position
 
+	def get_stat(self, stat):
+		if stat == HEALTH:
+			return self.health
+		if stat == STAMINA:
+			return self.stamina
+
 	# Works Nicely
 	def update(self, move, direction):
-	    self.direction = direction
-	    if move == True:
-	        self.count += 1
-	        if self.count % self.change_timer == 0:
-	            self.index += 1
-	        if self.index >= len(self.direction_map[direction]):
-	            self.index = 1
-	        self.current_image = self.direction_map[direction][self.index]
-	        if direction == UP:
-	            self.move(0, -self.speed)
-	            self.move_camera(UP)
-	        if direction == DOWN:
-	            self.move(0, self.speed)
-	            self.move_camera(DOWN)
-	        if direction == LEFT:
-	            self.move(-self.speed, 0)
-	            self.move_camera(LEFT)
-	        if direction == RIGHT:
-	            self.move(self.speed, 0)
-	            self.move_camera(RIGHT)
-	    else:
-	        self.index = 0
-	        self.count = 0
-	        self.current_image = self.direction_map[direction][self.index]
+		self.direction = direction
+		if move == True:
+			self.count += 1
+			if self.count % self.change_timer == 0:
+				self.index += 1
+			if self.index >= len(self.direction_map[direction]):
+				self.index = 1
+			self.current_image = self.direction_map[direction][self.index]
+			if direction == UP:
+				self.move(0, -self.speed)
+				self.move_camera(UP)
+			if direction == DOWN:
+				self.move(0, self.speed)
+				self.move_camera(DOWN)
+			if direction == LEFT:
+				self.move(-self.speed, 0)
+				self.move_camera(LEFT)
+			if direction == RIGHT:
+				self.move(self.speed, 0)
+				self.move_camera(RIGHT)
+		else:
+			self.index = 0
+			self.count = 0
+			self.current_image = self.direction_map[direction][self.index]
 
 	def move(self, dx, dy):
-	    if dx != 0:
-	        self.move_single_axis(dx, 0)
-	    if dy != 0:
-	        self.move_single_axis(0, dy)
+		if dx != 0:
+			self.move_single_axis(dx, 0)
+		if dy != 0:
+			self.move_single_axis(0, dy)
 
 	def move_single_axis(self, dx, dy):
-	    # Move the rect
-	    self.rect.x += dx
-	    self.rect.y += dy
+		# Move the rect
+		self.rect.x += dx
+		self.rect.y += dy
 
-	    for other_object in self.collision_list:
-	        if self.rect.colliderect(other_object) and other_object.collision_type == BLOCKING:
-	            pos_x, pos_y = self.camera_pos
-	            if dx > 0: # Moving right; Hit the left side of the object
-	                self.rect.right = other_object.rect.left
-	                # Code for the camera
-	                if other_object.get_direction() == RIGHT:
-	                    pos_x += self.speed - other_object.get_speed()
-	                else:
-	                    pos_x += self.speed
-	            if dx < 0: # Moving left; Hit the right side of the object
-	                self.rect.left = other_object.rect.right
-	                # Code for the camera
-	                if other_object.get_direction() == LEFT:
-	                    pos_x -= self.speed - other_object.get_speed()
-	                else:
-	                    pos_x -= self.speed
-	            if dy > 0: # Moving down; Hit the top side of the object
-	                self.rect.bottom = other_object.rect.top
-	                # Code for the camera
-	                if other_object.get_direction() == DOWN:
-	                    pos_y += self.speed - other_object.get_speed()
-	                else:
-	                    pos_y += self.speed
-	            if dy < 0: # Moving up; Hit the bottom side of the object
-	                self.rect.top = other_object.rect.bottom
-	                if other_object.get_direction() == UP:
-	                    pos_y -= self.speed - other_object.get_speed()
-	                else:
-	                    pos_y -= self.speed
-	            self.camera_pos = (pos_x, pos_y)
+		for other_object in self.collision_list:
+			if self.rect.colliderect(other_object) and other_object.collision_type == BLOCKING:
+				pos_x, pos_y = self.camera_pos
+				if dx > 0: # Moving right; Hit the left side of the object
+					self.rect.right = other_object.rect.left
+					# Code for the camera
+					if other_object.get_direction() == RIGHT:
+						pos_x += self.speed - other_object.get_speed()
+					else:
+						pos_x += self.speed
+				if dx < 0: # Moving left; Hit the right side of the object
+					self.rect.left = other_object.rect.right
+					# Code for the camera
+					if other_object.get_direction() == LEFT:
+						pos_x -= self.speed - other_object.get_speed()
+					else:
+						pos_x -= self.speed
+				if dy > 0: # Moving down; Hit the top side of the object
+					self.rect.bottom = other_object.rect.top
+					# Code for the camera
+					if other_object.get_direction() == DOWN:
+						pos_y += self.speed - other_object.get_speed()
+					else:
+						pos_y += self.speed
+				if dy < 0: # Moving up; Hit the bottom side of the object
+					self.rect.top = other_object.rect.bottom
+					if other_object.get_direction() == UP:
+						pos_y -= self.speed - other_object.get_speed()
+					else:
+						pos_y -= self.speed
+
+				self.camera_pos = (pos_x, pos_y)
 
 
 	def move_camera(self, direction):

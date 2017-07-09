@@ -99,17 +99,19 @@ if __name__ == '__main__':
 	for objects in imm_objects_group:
 		objects.render(world)
 
-	gui = GUI()
-
 	player = Player(400,400, PLAYER, BLOCKING, 2)
+	gui = GUI(player)
+	player.speed = 10
 	# For horizontal tests (120, 300)
 	guard = SmartNPC(200, 444, PRISON_GUARD, BLOCKING, route, game_map)
 	warden = Warden(100, 100, WARDEN, BLOCKING, route, game_map)
+	nurse = Nurse(52*TILESIZE, 96*TILESIZE, NURSE, BLOCKING, route, game_map)
 
 	# initialize the collision objects
 	# Only add the collisions for blocking objects
 	player.collision_list.append(guard)
 	player.collision_list.append(warden)
+	player.collision_list.append(nurse)
 	guard.collision_list.append(player)
 
 	for item in items_group: # add all items in collision list

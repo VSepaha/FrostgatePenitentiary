@@ -5,15 +5,18 @@ nothing_object = "nothing.png"
 item_object = "an_item.png"
 
 class GUI:
-    def __init__(self):
-        self.health = 100
-        self.stamina = 100
+    def __init__(self, player):
+
+        self.player = player
+
+        self.health = player.get_stat(HEALTH)
+        self.stamina = player.get_stat(STAMINA)
+
         self.ramen = 100
         self.ramen_image = pygame.image.load('ramen.png')
         self.inventory_image = pygame.image.load('../Resources/inventory.png')
         self.health_stamina_frame = pygame.image.load('../Resources/health_stamina_frame.png')
         self.inv = [nothing_object, nothing_object, nothing_object, nothing_object, nothing_object]
-
 
     def decrease_stat(self, stat):
         if stat == HEALTH:
@@ -23,7 +26,7 @@ class GUI:
         elif stat == STAMINA:
             if self.stamina <= 0:
                 return
-            self.stamina -= 1  
+            self.stamina -= 1
         else:
             if self.ramen <= 0:
                 return
@@ -37,17 +40,11 @@ class GUI:
         elif stat == STAMINA:
             if self.stamina >= 100:
                 return
-            self.stamina += 1  
+            self.stamina += 1
         else:
             if self.ramen >= 999:
                 return
             self.ramen += 1
-
-    def get_stat(self, stat):
-        if stat == HEALTH:
-            return self.health
-        if stat == STAMINA:
-            return self.stamina
 
     def add_item(self):
         for i in range(0, len(self.inv)):
@@ -62,6 +59,8 @@ class GUI:
                 break
 
     def update(self, DISPLAYSURF):
+        self.health = self.player.get_stat(HEALTH)
+        self.stamina = self.player.get_stat(STAMINA)
         #displays the frame surrounding health & stamina
 
         DISPLAYSURF.blit(self.health_stamina_frame, (0, 4))
@@ -99,4 +98,3 @@ class GUI:
             image = pygame.image.load('../Resources/' + item)
             DISPLAYSURF.blit(image, (x_pos,510))
             x_pos += 38
-
