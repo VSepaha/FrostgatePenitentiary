@@ -154,10 +154,10 @@ if __name__ == '__main__':
 		if key_pressed[K_e]:
 			player.interact(True)
 
-		# if mouse pressed in skill location
-			# inv_flag = False
-		# if mouse pressed in inv location:
-			# inv_flag = True
+		if key_pressed[K_k]:
+			inv_flag = False
+		if key_pressed[K_l]:
+			inv_flag = True
 
 		# Guard start running its state
 		guard.run_state(PATROL_STATE, player)

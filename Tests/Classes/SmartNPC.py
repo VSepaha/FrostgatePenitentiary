@@ -1,8 +1,6 @@
 from NPC import *
 
-# Need to implement collision avoidance
-
-# This is the class that will be used by the NPCs
+# Need to implement collision avoidance during chase
 class SmartNPC(NPC):
 	def __init__(self, offset_x, offset_y, actor_type, collision_type, patrol_route, game_map):
 		# Don't forget to call the parent class!
