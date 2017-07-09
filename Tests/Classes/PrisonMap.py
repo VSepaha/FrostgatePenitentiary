@@ -13,7 +13,7 @@ class PrisonMap:
 			'W' :  pygame.image.load('../Resources/Tiles/water.png'),
 			'D' :  pygame.image.load('../Resources/Tiles/dirt.png'),
 			' ' :  pygame.image.load('../Resources/Tiles/base.png'),
-			'M' : pygame.image.load('../resources/Tiles/mat.png'),
+			'M' : pygame.image.load('../Resources/Tiles/mat.png'),
 		}
 
 		# Permanent objects on the map
