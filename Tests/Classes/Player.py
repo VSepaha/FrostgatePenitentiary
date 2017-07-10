@@ -22,6 +22,9 @@ class Player(Actor):
 		self.intelligence_level = 1
 		self.charisma_level = 1
 
+		# Amount of currency that the player has
+		self.currency = 1
+
 		# Inventory list
 		self.inventory = [None]*5
 
@@ -36,6 +39,15 @@ class Player(Actor):
 
 	def get_inventory(self):
 		return self.inventory
+
+	def get_ramen(self):
+		return self.currency
+
+	def add_item(self, item):
+		for i in range(0, len(self.inventory)):
+			if self.inventory[i] == None:
+				self.inventory[i] = item
+				break
 
 	def get_skill(self, skill, exp):
 		if exp:
