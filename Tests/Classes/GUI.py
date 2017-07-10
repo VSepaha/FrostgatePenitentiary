@@ -90,10 +90,7 @@ class GUI:
         charSurf = Font4.render('Charisma: {0}'.format(self.charisma), True, BLACK)
         charRect = charSurf.get_rect()
         charRect.midtop = (402, 547)
-        if flag == True:
-            DISPLAYSURF.blit(self.inventory_frame_inventory, (320, 460))
-        else:
-            DISPLAYSURF.blit(self.inventory_frame_stats, (320, 460))
+
 
 
         # Displays the inventory
@@ -101,11 +98,13 @@ class GUI:
         for item in self.inv:
             image = pygame.image.load('../Resources/' + item)
             if flag == True:
+                DISPLAYSURF.blit(self.inventory_frame_inventory, (320, 460))
                 #Displays the items
                 DISPLAYSURF.blit(image, (x_pos,518))
                 #Displays ': (ramen amount)'
                 DISPLAYSURF.blit(ramSurface,ramRect)
             if flag == False:
+                DISPLAYSURF.blit(self.inventory_frame_stats, (320, 460))
                 DISPLAYSURF.blit(strengthSurf,strengthRect)
                 DISPLAYSURF.blit(intelSurf,intelRect)
                 DISPLAYSURF.blit(charSurf, charRect)
