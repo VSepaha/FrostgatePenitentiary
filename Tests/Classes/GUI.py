@@ -7,12 +7,22 @@ item_object = "an_item.png"
 class GUI:
     def __init__(self, player):
 
+        self.falsexpflag = False
+        self.truexpflag = True
+
         self.player = player
 
         self.health = player.get_stat(HEALTH)
         self.stamina = player.get_stat(STAMINA)
 
-        self.strength = 1
+        self.strength = player.get_skill(STRENGTH_SKILL, self.falsexpflag)
+        self.strength_exp = player.get_skill(STRENGTH_SKILL, self.truexpflag)
+
+        self.intelligence = player.get_skill(INTELLIGENCE_SKILL, self.falsexpflag)
+        self.intelligence_exp = player.get_skill(INTELLIGENCE_SKILL, self.truexpflag)
+
+        self.charisma = player.get_skill(CHARISMA_SKILL, self.falsexpflag)
+        self.charisma_exp = player.get_skill(CHARISMA_SKILL, self.truexpflag)
 
         self.ramen = 100
         self.ramen_image = pygame.image.load('ramen.png')
@@ -67,9 +77,19 @@ class GUI:
         ramRect = ramSurface.get_rect()
         ramRect.midtop = (540, 477)
 
-        strengthSurf = Font2.render('Strength: {0}'.format(self.strength), True, BLACK)
+        Font4 = pygame.font.SysFont('monaco', 18)
+
+        strengthSurf = Font4.render('Strength: {0}'.format(self.strength), True, BLACK)
         strengthRect = strengthSurf.get_rect()
-        strengthRect.midtop = (402, 500)
+        strengthRect.midtop = (402, 480)
+
+        intelSurf = Font4.render('Intelligence: {0}'.format(self.intelligence), True, BLACK)
+        intelRect = strengthSurf.get_rect()
+        intelRect.midtop = (402, 511)
+
+        charSurf = Font4.render('Charisma: {0}'.format(self.charisma), True, BLACK)
+        charRect = charSurf.get_rect()
+        charRect.midtop = (402, 547)
         if flag == True:
             DISPLAYSURF.blit(self.inventory_frame_inventory, (320, 460))
         else:
@@ -87,4 +107,10 @@ class GUI:
                 DISPLAYSURF.blit(ramSurface,ramRect)
             if flag == False:
                 DISPLAYSURF.blit(strengthSurf,strengthRect)
+                DISPLAYSURF.blit(intelSurf,intelRect)
+                DISPLAYSURF.blit(charSurf, charRect)
+                pygame.draw.rect(DISPLAYSURF, BLUE, pygame.Rect(440, 475, self.strength_exp, 20))
+                pygame.draw.rect(DISPLAYSURF, BLUE, pygame.Rect(454, 506, self.intelligence_exp, 20))
+                pygame.draw.rect(DISPLAYSURF, BLUE, pygame.Rect(440, 542, self.charisma_exp, 20))
+
             x_pos += 38

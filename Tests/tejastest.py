@@ -153,11 +153,18 @@ if __name__ == '__main__':
             player.update(True, RIGHT)
         if key_pressed[K_e]:
             player.interact(True)
-#if mouse pressed in skill location
+#if keys 2 and 1 pressed, change the flag triggering change in inventory tab
         if key_pressed[K_2]:
             inv_flag = False
         if key_pressed[K_1]:
             inv_flag = True
+
+        if key_pressed[K_z]:
+            strength_exp += 100
+        if key_pressed[K_x]:
+            intelligence_exp += 100
+        if key_pressed[K_c]:
+            charisma_exp += 100
 
         # Guard start running its state
         guard.run_state(PATROL_STATE, player)
