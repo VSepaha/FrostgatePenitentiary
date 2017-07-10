@@ -39,3 +39,15 @@ The game will be created in python using the pygame library.
 - New NPC characters - Done
 - Add the skill system with its own UI
 - Map Rendering Efficiency - Done
+
+### Phase III
+- Excellent AI will be created to perform actions and react to player
+- All NPCs will be implemented and player will be interact with each
+- All items and interactables will be added into the game for the player to use
+- Map will be improved to look better
+- Testing for bugs and providing fixes
+- Implemented save states for the game
+- Create and implement better menu screen
+- Add text screen to the UI tabs
+- Possibly add Reputation bar for player reputation
+- Plan out basic story line for the player
