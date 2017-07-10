@@ -8,6 +8,7 @@ from SmartNPC import *
 from Nurse import *
 from Warden import *
 from Item import *
+from InteractableObject import *
 from settings import *
 from GUI import *
 
@@ -99,6 +100,12 @@ if __name__ == '__main__':
 	for objects in imm_objects_group:
 		objects.render(world)
 
+	door_images = []
+	door_images.append("door")
+	door_images.append("opendoor")
+
+	door = InteractableObject(door_images, 61*TILESIZE, 11*TILESIZE, BLOCKING, "DOOR")
+
 	player = Player(400,400, PLAYER, BLOCKING, 2)
 	gui = GUI(player)
 	player.speed = 20
@@ -111,6 +118,7 @@ if __name__ == '__main__':
 	# Only add the collisions for blocking objects
 	player.collision_list.append(guard)
 	player.collision_list.append(warden)
+	player.collision_list.append(door)
 	player.collision_list.append(nurse)
 	guard.collision_list.append(player)
 
@@ -136,6 +144,10 @@ if __name__ == '__main__':
 				key_up_events(event)
 				if event.key == K_e:
 					player.interact(False)
+			if event.type == KEYDOWN:
+				if event.key == K_e:
+					player.interact(True)
+
 			elif event.type == QUIT:
 				pygame.quit()
 				sys.exit()
@@ -151,8 +163,8 @@ if __name__ == '__main__':
 			player.update(True, LEFT)
 		elif key_pressed[K_d]:
 			player.update(True, RIGHT)
-		if key_pressed[K_e]:
-			player.interact(True)
+		# if key_pressed[K_e]:
+		# 	player.interact(True)
 
 		if key_pressed[K_k]:
 			inv_flag = False
@@ -164,6 +176,8 @@ if __name__ == '__main__':
 
 		# render the game map onto the world
 		game_map.update_tiles(world)
+
+		door.render(world)
 
 		# Display every item in the game at its position
 		for item in items_group:

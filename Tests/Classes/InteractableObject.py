@@ -1,27 +1,41 @@
 from Object import *
 
 class InteractableObject(Object):
-      def __init__(self, image, offset_x, offset_y, collision_type):
-            Object.__init__(self, offset_x, offset_y, collision_type)
+    def __init__(self, images, offset_x, offset_y, collision_type, obj):
+        Object.__init__(self, offset_x, offset_y, collision_type)
 
-            # image of the object
-            self.image = pygame.image.load('../Resources/InteractableObjects/' + image +'.png')
+        interactable_group.add(self)
 
-            # Position of the image
-            self.rect = self.image.get_rect()
-            self.rect.x = offset_x
-            self.rect.y = offset_y
+        # image of the object
+        self.images = []
+        for image in images:
+            self.images.append(pygame.image.load('../Resources/InteractableObjects/' + image +'.png'))
 
-            self.collision_type = collision_type
+        self.displacement = 0
 
-            self.speed = 0
-            self.direction = NA
+        if obj == "DOOR":
+            offset = TILESIZE
 
-      def get_speed(self):
-            return self.speed
 
-      def get_direction(self):
-            return self.direction
+        self.collision_type = collision_type
 
-      def render(self, display):
-            display.blit(self.image,(self.rect.x,self.rect.y))
+        self.index = 0
+        self.current_image = self.images[self.index]
+
+        # Position of the image
+        self.rect = self.current_image.get_rect()
+        self.rect.x = offset_x
+        self.rect.y = offset_y
+
+
+    def perform_action(self, player):
+        if self.index == 1:
+            self.index = 0
+            self.collision_type = BLOCKING
+        else:
+            self.index = 1
+            self.collision_type = OVERLAPPING
+        self.current_image = self.images[self.index]
+
+    def render(self, DISPLAYSURF):
+        DISPLAYSURF.blit(self.current_image, (self.rect.x, self.rect.y))
