@@ -7,22 +7,19 @@ item_object = "an_item.png"
 class GUI:
     def __init__(self, player):
 
-        self.falsexpflag = False
-        self.truexpflag = True
-
         self.player = player
 
         self.health = player.get_stat(HEALTH)
         self.stamina = player.get_stat(STAMINA)
 
-        self.strength = player.get_skill(STRENGTH_SKILL, self.falsexpflag)
-        self.strength_exp = player.get_skill(STRENGTH_SKILL, self.truexpflag)
+        self.strength = player.get_skill(STRENGTH_SKILL, False)
+        self.strength_exp = player.get_skill(STRENGTH_SKILL, True)
 
-        self.intelligence = player.get_skill(INTELLIGENCE_SKILL, self.falsexpflag)
-        self.intelligence_exp = player.get_skill(INTELLIGENCE_SKILL, self.truexpflag)
+        self.intelligence = player.get_skill(INTELLIGENCE_SKILL, False)
+        self.intelligence_exp = player.get_skill(INTELLIGENCE_SKILL, True)
 
-        self.charisma = player.get_skill(CHARISMA_SKILL, self.falsexpflag)
-        self.charisma_exp = player.get_skill(CHARISMA_SKILL, self.truexpflag)
+        self.charisma = player.get_skill(CHARISMA_SKILL, False)
+        self.charisma_exp = player.get_skill(CHARISMA_SKILL, True)
 
         self.ramen = 100
         self.ramen_image = pygame.image.load('ramen.png')
@@ -38,6 +35,15 @@ class GUI:
         self.health = self.player.get_stat(HEALTH)
         self.stamina = self.player.get_stat(STAMINA)
         #displays the frame surrounding health & stamina
+
+        self.strength = self.player.get_skill(STRENGTH_SKILL, False)
+        self.strength_exp = self.player.get_skill(STRENGTH_SKILL, True)
+
+        self.intelligence = self.player.get_skill(INTELLIGENCE_SKILL, False)
+        self.intelligence_exp = self.player.get_skill(INTELLIGENCE_SKILL, True)
+
+        self.charisma = self.player.get_skill(CHARISMA_SKILL, False)
+        self.charisma_exp = self.player.get_skill(CHARISMA_SKILL, True)
 
         DISPLAYSURF.blit(self.health_stamina_frame, (0, 4))
 

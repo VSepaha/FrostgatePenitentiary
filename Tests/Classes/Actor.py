@@ -80,6 +80,7 @@ class Actor(pygame.sprite.Sprite):
         if move == True:
             self.count += 1
             if self.count % self.change_timer == 0:
+                self.count = 1
                 self.index += 1
             if self.index >= len(self.direction_map[direction]):
                 self.index = 1

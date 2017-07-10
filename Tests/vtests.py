@@ -108,7 +108,7 @@ if __name__ == '__main__':
 
 	player = Player(400,400, PLAYER, BLOCKING, 2)
 	gui = GUI(player)
-	player.speed = 20
+	# player.speed = 20
 	# For horizontal tests (120, 300)
 	guard = SmartNPC(200, 444, PRISON_GUARD, BLOCKING, route, game_map)
 	warden = Warden(100, 100, WARDEN, BLOCKING, route, game_map)

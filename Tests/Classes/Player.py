@@ -31,6 +31,37 @@ class Player(Actor):
 		# camera
 		self.camera_pos = (self.rect.x/4, -self.rect.y/4) # Create Camara Starting Position
 
+	def increase_exp(self, skill, amount):
+		if skill == STRENGTH_SKILL:
+			self.strength_exp += amount
+			exp_to_level = self.amount_to_increase_level(skill, self.strength_level)
+			if self.strength_exp >= exp_to_level:
+				self.strength_level += 1
+				self.strength_exp = self.strength_exp - exp_to_level
+		if skill == INTELLIGENCE_SKILL:
+				self.intelligence_exp += amount
+				exp_to_level = self.amount_to_increase_level(skill, self.intelligence_level)
+				if self.intelligence_exp >= exp_to_level:
+					self.intelligence_level += 1
+					self.intelligence_exp = self.intelligence_exp - exp_to_level
+		if skill == CHARISMA_SKILL:
+			self.charisma_exp += amount
+			exp_to_level = self.amount_to_increase_level(skill, self.charisma_level)
+			if self.charisma_exp >= exp_to_level:
+				self.charisma_level += 1
+				self.charisma_exp = self.charisma_exp - exp_to_level
+
+	def amount_to_increase_level(self, skill, level):
+		if skill == STRENGTH_SKILL:
+			current_exp = self.strength_exp
+		if skill == INTELLIGENCE_SKILL:
+			current_exp = self.intelligence_exp
+		if skill == CHARISMA_SKILL:
+			current_exp = self.charisma_exp
+
+		next_level_exp = level**2 * level + 100
+		return next_level_exp
+
 	def get_stat(self, stat):
 		if stat == HEALTH:
 			return self.health

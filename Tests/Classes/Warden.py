@@ -13,6 +13,7 @@ class Warden(NPC):
 
     def perform_action(self, other):
         print "Stopping route"
+        other.increase_exp(STRENGTH_SKILL, 5)
         print "Threat level might change for", other
 
     def decrease_threat(self, other):
