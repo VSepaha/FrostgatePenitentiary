@@ -39,8 +39,6 @@ class new_thread (threading.Thread):
 			DISPLAYSURF.blit(self.text_image, (0, 400))
 			time.sleep(delay)
 
-
-
 # Taking care of all the key up events
 def key_up_events(event):
 	if event.key == K_w:
