@@ -159,12 +159,12 @@ if __name__ == '__main__':
         if key_pressed[K_1]:
             inv_flag = True
 
-        if key_pressed[K_z]:
-            strength_exp += 100
-        if key_pressed[K_x]:
-            intelligence_exp += 100
-        if key_pressed[K_c]:
-            charisma_exp += 100
+        # if key_pressed[K_z]:
+        #     strength_exp += 100
+        # if key_pressed[K_x]:
+        #     intelligence_exp += 100
+        # if key_pressed[K_c]:
+        #     charisma_exp += 100
 
         # Guard start running its state
         guard.run_state(PATROL_STATE, player)
