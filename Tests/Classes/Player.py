@@ -144,7 +144,7 @@ class Player(Actor):
 		delta_x = other.rect.x - self.rect.x
 		delta_y = other.rect.y - self.rect.y
 
-		if abs(delta_x) < TILESIZE and abs(delta_y) < TILESIZE:
+		if abs(delta_x) < TILESIZE+5 and abs(delta_y) < TILESIZE+5:
 			return True
 		else:
 			return False
@@ -152,10 +152,10 @@ class Player(Actor):
 
 	def interact(self, flag):
 		if flag:
-			for npc in interactable_group:
-				if self.collided(npc):
-					print "collided with npc"
-					npc.perform_action(self)
+			for interaction in interactable_group:
+				if self.collided(interaction):
+					print "action performed"
+					interaction.perform_action(self)
 			for item in items_group:
 				if self.collided(item):
 					print "collided with item"
