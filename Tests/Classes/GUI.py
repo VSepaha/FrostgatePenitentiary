@@ -34,18 +34,6 @@ class GUI:
         self.ramen_frame = pygame.image.load('../Resources/ramen_frame.png')
         self.inv = [nothing_object, nothing_object, nothing_object, nothing_object, nothing_object]
 
-    def add_item(self, item):
-        for i in range(0, len(self.inv)):
-            if self.inv[i] == None:
-                self.inv[i] = item
-                break
-
-    def remove_item(self, item):
-        for i in range(len(self.inv)-1, -1, -1):
-            if self.inv[i] == item:
-                self.inv[i] = None
-                break
-
     def update(self, DISPLAYSURF, flag):
         self.health = self.player.get_stat(HEALTH)
         self.stamina = self.player.get_stat(STAMINA)
@@ -77,20 +65,30 @@ class GUI:
         ramRect = ramSurface.get_rect()
         ramRect.midtop = (540, 477)
 
-        Font4 = pygame.font.SysFont('monaco', 18)
+        Font4 = pygame.font.SysFont('monaco', 22)
 
         strengthSurf = Font4.render('Strength: {0}'.format(self.strength), True, BLACK)
         strengthRect = strengthSurf.get_rect()
-        strengthRect.midtop = (402, 480)
+        strengthRect.midtop = (400, 480)
 
         intelSurf = Font4.render('Intelligence: {0}'.format(self.intelligence), True, BLACK)
         intelRect = strengthSurf.get_rect()
-        intelRect.midtop = (402, 511)
+        intelRect.midtop = (400, 511)
 
         charSurf = Font4.render('Charisma: {0}'.format(self.charisma), True, BLACK)
         charRect = charSurf.get_rect()
-        charRect.midtop = (402, 547)
+        charRect.midtop = (400, 547)
 
+        if flag == True:
+            DISPLAYSURF.blit(self.inventory_frame_inventory, (320, 460))
+        else:
+            DISPLAYSURF.blit(self.inventory_frame_stats, (320, 460))
+            DISPLAYSURF.blit(strengthSurf,strengthRect)
+            DISPLAYSURF.blit(intelSurf,intelRect)
+            DISPLAYSURF.blit(charSurf, charRect)
+            pygame.draw.rect(DISPLAYSURF, BLUE, pygame.Rect(450, 480, self.strength_exp, 20))
+            pygame.draw.rect(DISPLAYSURF, BLUE, pygame.Rect(470, 510, self.intelligence_exp, 20))
+            pygame.draw.rect(DISPLAYSURF, BLUE, pygame.Rect(450, 545, self.charisma_exp, 20))
 
 
         # Displays the inventory
@@ -98,18 +96,9 @@ class GUI:
         for item in self.inv:
             image = pygame.image.load('../Resources/' + item)
             if flag == True:
-                DISPLAYSURF.blit(self.inventory_frame_inventory, (320, 460))
                 #Displays the items
                 DISPLAYSURF.blit(image, (x_pos,518))
                 #Displays ': (ramen amount)'
                 DISPLAYSURF.blit(ramSurface,ramRect)
-            if flag == False:
-                DISPLAYSURF.blit(self.inventory_frame_stats, (320, 460))
-                DISPLAYSURF.blit(strengthSurf,strengthRect)
-                DISPLAYSURF.blit(intelSurf,intelRect)
-                DISPLAYSURF.blit(charSurf, charRect)
-                pygame.draw.rect(DISPLAYSURF, BLUE, pygame.Rect(440, 475, self.strength_exp, 20))
-                pygame.draw.rect(DISPLAYSURF, BLUE, pygame.Rect(454, 506, self.intelligence_exp, 20))
-                pygame.draw.rect(DISPLAYSURF, BLUE, pygame.Rect(440, 542, self.charisma_exp, 20))
 
             x_pos += 38
