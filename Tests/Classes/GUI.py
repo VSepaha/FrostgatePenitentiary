@@ -9,17 +9,6 @@ class GUI:
 
         self.player = player
 
-        self.health = player.get_stat(HEALTH)
-        self.stamina = player.get_stat(STAMINA)
-
-        self.strength = player.get_skill(STRENGTH_SKILL, False)
-        self.strength_exp = player.get_skill(STRENGTH_SKILL, True)
-
-        self.intelligence = player.get_skill(INTELLIGENCE_SKILL, False)
-        self.intelligence_exp = player.get_skill(INTELLIGENCE_SKILL, True)
-
-        self.charisma = player.get_skill(CHARISMA_SKILL, False)
-        self.charisma_exp = player.get_skill(CHARISMA_SKILL, True)
 
         self.ramen = 100
         self.ramen_image = pygame.image.load('ramen.png')
@@ -38,12 +27,19 @@ class GUI:
 
         self.strength = self.player.get_skill(STRENGTH_SKILL, False)
         self.strength_exp = self.player.get_skill(STRENGTH_SKILL, True)
+        self.strength_bar_1 = (self.strength_exp)/float(self.player.amount_to_increase_level(STRENGTH_SKILL, self.strength))
+        self.strength_bar = self.strength_bar_1*100
 
         self.intelligence = self.player.get_skill(INTELLIGENCE_SKILL, False)
         self.intelligence_exp = self.player.get_skill(INTELLIGENCE_SKILL, True)
+        self.intel_bar_1 = (self.intelligence_exp)/float(self.player.amount_to_increase_level(INTELLIGENCE_SKILL, self.intelligence))
+        self.intel_bar = self.intel_bar_1*100
+
 
         self.charisma = self.player.get_skill(CHARISMA_SKILL, False)
         self.charisma_exp = self.player.get_skill(CHARISMA_SKILL, True)
+        self.charisma_bar_1 = (self.charisma_exp)/float(self.player.amount_to_increase_level(CHARISMA_SKILL, self.charisma))
+        self.charisma_bar = self.charisma_bar_1*100
 
         DISPLAYSURF.blit(self.health_stamina_frame, (0, 4))
 
@@ -92,9 +88,9 @@ class GUI:
             DISPLAYSURF.blit(strengthSurf,strengthRect)
             DISPLAYSURF.blit(intelSurf,intelRect)
             DISPLAYSURF.blit(charSurf, charRect)
-            pygame.draw.rect(DISPLAYSURF, BLUE, pygame.Rect(450, 480, self.strength_exp, 20))
-            pygame.draw.rect(DISPLAYSURF, BLUE, pygame.Rect(470, 510, self.intelligence_exp, 20))
-            pygame.draw.rect(DISPLAYSURF, BLUE, pygame.Rect(450, 545, self.charisma_exp, 20))
+            pygame.draw.rect(DISPLAYSURF, BLUE, pygame.Rect(450, 480, self.strength_bar, 20))
+            pygame.draw.rect(DISPLAYSURF, BLUE, pygame.Rect(470, 510, self.intelligence_bar, 20))
+            pygame.draw.rect(DISPLAYSURF, BLUE, pygame.Rect(450, 545, self.charisma_bar, 20))
 
 
         # Displays the inventory
