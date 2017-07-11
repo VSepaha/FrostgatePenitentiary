@@ -35,16 +35,14 @@ class GUI:
                 self.inventory_index = 0
             else:
                 self.inventory_index += 1
-        else:
-            print "Switch tabs to change inventory spot"
+
     def decrease_index(self, flag):
         if flag == True:
             if self.inventory_index <= 0:
                 self.inventory_index = 4
             else:
                 self.inventory_index -= 1
-        else:
-            print "Switch tabs to change inventory spot"
+                
     def get_inv_index(self):
         return self.inventory_index
 
