@@ -29,17 +29,22 @@ class GUI:
         self.ramen_frame = pygame.image.load('../Resources/ramen_frame.png')
         self.inv = [nothing_object, nothing_object, nothing_object, nothing_object, nothing_object]
 
-    def increase_index(self):
-        if self.inventory_index >= 4:
-            self.inventory_index = 0
+    def increase_index(self, flag):
+        if flag == True:
+            if self.inventory_index >= 4:
+                self.inventory_index = 0
+            else:
+                self.inventory_index += 1
         else:
-            self.inventory_index += 1
-    def decrease_index(self):
+            print "Switch tabs to change inventory spot"
+    def decrease_index(self, flag):
+        if flag == True:
             if self.inventory_index <= 0:
                 self.inventory_index = 4
             else:
                 self.inventory_index -= 1
-
+        else:
+            print "Switch tabs to change inventory spot"
     def get_inv_index(self):
         return self.inventory_index
 
