@@ -10,15 +10,36 @@ class GUI:
         self.player = player
 
 
+
         self.ramen = 100
         self.ramen_image = pygame.image.load('ramen.png')
-        self.inventory_frame = pygame.image.load('../Resources/inventory_frame.png')
-        self.inventory_frame_inventory = pygame.image.load('../Resources/inventory_frame_inventory.png')
-        self.inventory_frame_stats = pygame.image.load('../Resources/inventory_frame_stats.png')
+
+        self.inventory_frame = pygame.image.load('../Resources/Inventory/inventory_frame.png')
+        self.inventory_frame_inventory = pygame.image.load('../Resources/Inventory/inventory_frame_inventory.png')
+        self.inventory_frame_stats = pygame.image.load('../Resources/Inventory/inventory_frame_stats.png')
+
+        self.inventory0 = pygame.image.load('../Resources/Inventory/inventory_position_0.png')
+        self.inventory1 = pygame.image.load('../Resources/Inventory/inventory_position_1.png')
+        self.inventory2 = pygame.image.load('../Resources/Inventory/inventory_position_2.png')
+        self.inventory3 = pygame.image.load('../Resources/Inventory/inventory_position_3.png')
+        self.inventory4 = pygame.image.load('../Resources/Inventory/inventory_position_4.png')
+
+        self.inventory_index = 0
+        self.inventory_list = [self.inventory0, self.inventory1, self.inventory2, self.inventory3, self.inventory4]
 
         self.health_stamina_frame = pygame.image.load('../Resources/health_stamina_frame.png')
         self.ramen_frame = pygame.image.load('../Resources/ramen_frame.png')
         self.inv = [nothing_object, nothing_object, nothing_object, nothing_object, nothing_object]
+    def increase_index(self):
+        if self.inventory_index >= 4:
+            self.inventory_index = 0
+        else:
+            self.inventory_index += 1
+    def decrease_index(self):
+            if self.inventory_index <= 0:
+                self.inventory_index = 4
+            else:
+                self.inventory_index -= 1
 
     def update(self, DISPLAYSURF, flag):
         self.health = self.player.get_stat(HEALTH)
@@ -40,7 +61,6 @@ class GUI:
         self.charisma_exp = self.player.get_skill(CHARISMA_SKILL, True)
         self.charisma_bar_1 = (self.charisma_exp)/float(self.player.amount_to_increase_level(CHARISMA_SKILL, self.charisma))
         self.charisma_bar = self.charisma_bar_1*100
-
         DISPLAYSURF.blit(self.health_stamina_frame, (0, 4))
 
         #displays 'health'
@@ -82,14 +102,14 @@ class GUI:
         charRect.midtop = (400, 547)
 
         if flag == True:
-            DISPLAYSURF.blit(self.inventory_frame_inventory, (320, 460))
+            DISPLAYSURF.blit(self.inventory_list[self.inventory_index], (320, 460))
         else:
             DISPLAYSURF.blit(self.inventory_frame_stats, (320, 460))
             DISPLAYSURF.blit(strengthSurf,strengthRect)
             DISPLAYSURF.blit(intelSurf,intelRect)
             DISPLAYSURF.blit(charSurf, charRect)
             pygame.draw.rect(DISPLAYSURF, BLUE, pygame.Rect(450, 480, self.strength_bar, 20))
-            pygame.draw.rect(DISPLAYSURF, BLUE, pygame.Rect(470, 510, self.intelligence_bar, 20))
+            pygame.draw.rect(DISPLAYSURF, BLUE, pygame.Rect(470, 510, self.intel_bar, 20))
             pygame.draw.rect(DISPLAYSURF, BLUE, pygame.Rect(450, 545, self.charisma_bar, 20))
 
 
