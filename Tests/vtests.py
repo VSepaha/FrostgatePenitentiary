@@ -128,9 +128,6 @@ if __name__ == '__main__':
 		player.collision_list.append(p_object)
 		guard.collision_list.append(p_object)
 
-	# pressed variables
-	interactPressed = False
-
 	inv_flag = True
 
 	# Main game loop
@@ -142,11 +139,11 @@ if __name__ == '__main__':
 				key_up_events(event)
 				if event.key == K_e:
 					player.interact(False)
-					interactPressed = False
+				elif event.key == K_q:
+					player.drop_item(gui.get_inv_index())
 			if event.type == KEYDOWN:
 				if event.key == K_e:
 					player.interact(True)
-					interactPressed = True
 				if event.key == K_RIGHT:
 					gui.increase_index()
 				elif event.key == K_LEFT:
@@ -184,10 +181,6 @@ if __name__ == '__main__':
 		# Display every item in the game at its position
 		for item in items_group:
 			item.render(world)
-			# if the player collides with the object and presses a key delete the object from group
-			if player.rect.colliderect(item) and interactPressed:
-				print "Picked up", item
-				player.add_item(item)
 
 		#display all the actors in the game
 		for actor in actors_group:

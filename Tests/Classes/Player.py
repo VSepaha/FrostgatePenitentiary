@@ -8,7 +8,7 @@ class Player(Actor):
 		self.threat_level = threat_level
 
 		# Health of the player
-		self.health = 50
+		self.health = 75
 
 		# Stamina of the player
 		self.stamina = 100
@@ -81,10 +81,15 @@ class Player(Actor):
 				self.inventory[i] = item
 				items_group.remove(item)
 				break
+		print self.inventory
 
 	def drop_item(self, index):
-		print "Item dropped"
-		self.inventory[index] == None
+		if self.inventory[index] != None:
+			print "Item dropped"
+			item  = self.inventory[index]
+			items_group.add(item)
+			self.inventory[index] = None
+			print self.inventory
 
 	def get_skill(self, skill, exp):
 		if exp:
@@ -205,5 +210,8 @@ class Player(Actor):
 				if self.collided(interaction):
 					print "action performed"
 					interaction.perform_action(self)
-		else:
-			return
+			for item in items_group:
+				if self.collided(item):
+					print "got item"
+					self.add_item(item)
+					items_group.remove(item)
