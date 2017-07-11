@@ -145,9 +145,9 @@ if __name__ == '__main__':
 				if event.key == K_e:
 					player.interact(True)
 				if event.key == K_RIGHT:
-					gui.increase_index()
+					gui.increase_index(inv_flag)
 				elif event.key == K_LEFT:
-					gui.decrease_index()
+					gui.decrease_index(inv_flag)
 
 			elif event.type == QUIT:
 				pygame.quit()
