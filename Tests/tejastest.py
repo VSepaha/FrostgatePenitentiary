@@ -167,9 +167,9 @@ if __name__ == '__main__':
                 # if key_pressed[K_e]:
                 #       player.interact(True)
 
-                if key_pressed[K_k]:
+                if key_pressed[K_2]:
                         inv_flag = False
-                if key_pressed[K_l]:
+                if key_pressed[K_1]:
                         inv_flag = True
 
                 # Guard start running its state
