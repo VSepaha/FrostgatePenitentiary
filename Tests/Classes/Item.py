@@ -19,6 +19,3 @@ class Item(Object):
 
 		# Permanent objects should always have blocking collision
 		self.collision_type = collision_type
-
-	def pickup(self):
-		items_group.remove(self)

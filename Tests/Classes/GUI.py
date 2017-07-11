@@ -9,8 +9,6 @@ class GUI:
 
         self.player = player
 
-
-
         self.ramen = 100
         self.ramen_image = pygame.image.load('ramen.png')
 
@@ -30,6 +28,7 @@ class GUI:
         self.health_stamina_frame = pygame.image.load('../Resources/health_stamina_frame.png')
         self.ramen_frame = pygame.image.load('../Resources/ramen_frame.png')
         self.inv = [nothing_object, nothing_object, nothing_object, nothing_object, nothing_object]
+
     def increase_index(self):
         if self.inventory_index >= 4:
             self.inventory_index = 0
@@ -40,6 +39,9 @@ class GUI:
                 self.inventory_index = 4
             else:
                 self.inventory_index -= 1
+
+    def get_inv_index(self):
+        return self.inventory_index
 
     def update(self, DISPLAYSURF, flag):
         self.health = self.player.get_stat(HEALTH)

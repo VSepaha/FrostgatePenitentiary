@@ -77,8 +77,14 @@ class Player(Actor):
 	def add_item(self, item):
 		for i in range(0, len(self.inventory)):
 			if self.inventory[i] == None:
+				print "Item added"
 				self.inventory[i] = item
+				items_group.remove(item)
 				break
+
+	def drop_item(self, index):
+		print "Item dropped"
+		self.inventory[index] == None
 
 	def get_skill(self, skill, exp):
 		if exp:
@@ -199,9 +205,5 @@ class Player(Actor):
 				if self.collided(interaction):
 					print "action performed"
 					interaction.perform_action(self)
-			for item in items_group:
-				if self.collided(item):
-					print "collided with item"
-					item.pickup()
 		else:
 			return

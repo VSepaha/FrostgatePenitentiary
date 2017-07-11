@@ -142,9 +142,15 @@ if __name__ == '__main__':
 				key_up_events(event)
 				if event.key == K_e:
 					player.interact(False)
+					interactPressed = False
 			if event.type == KEYDOWN:
 				if event.key == K_e:
 					player.interact(True)
+					interactPressed = True
+				if event.key == K_RIGHT:
+					gui.increase_index()
+				elif event.key == K_LEFT:
+					gui.decrease_index()
 
 			elif event.type == QUIT:
 				pygame.quit()
@@ -161,12 +167,10 @@ if __name__ == '__main__':
 			player.update(True, LEFT)
 		elif key_pressed[K_d]:
 			player.update(True, RIGHT)
-		# if key_pressed[K_e]:
-		# 	player.interact(True)
 
-		if key_pressed[K_k]:
+		if key_pressed[K_2]:
 			inv_flag = False
-		if key_pressed[K_l]:
+		if key_pressed[K_1]:
 			inv_flag = True
 
 		# Guard start running its state
@@ -183,7 +187,7 @@ if __name__ == '__main__':
 			# if the player collides with the object and presses a key delete the object from group
 			if player.rect.colliderect(item) and interactPressed:
 				print "Picked up", item
-				items_group.remove(item)
+				player.add_item(item)
 
 		#display all the actors in the game
 		for actor in actors_group:
