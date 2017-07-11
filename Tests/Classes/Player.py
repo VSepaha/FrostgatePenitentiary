@@ -87,6 +87,8 @@ class Player(Actor):
 		if self.inventory[index] != None:
 			print "Item dropped"
 			item  = self.inventory[index]
+			item.rect.x = self.rect.x
+			item.rect.y = self.rect.y
 			items_group.add(item)
 			self.inventory[index] = None
 			print self.inventory
