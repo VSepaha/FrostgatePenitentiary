@@ -29,8 +29,8 @@ The game will be created in python using the pygame library.
 - Create a basic AI for guards - Done
 - Create basic prison objects - Done
 
-### Phase II
-- Playable character will be able to interact with objects and some NPCs
+### Phase II 
+- Playable character will be able to interact with objects and some NPCs - Done
 - Create camera movement to move with the player with the player in the center - Done
 - Expand the tiled map to get desired map size and design it for the prison - Done
 - UI will be able to move with the camera and make changes based on interactions - Done

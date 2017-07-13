@@ -27,7 +27,6 @@ class GUI:
 
         self.health_stamina_frame = pygame.image.load('../Resources/health_stamina_frame.png')
         self.ramen_frame = pygame.image.load('../Resources/ramen_frame.png')
-        self.inv = [nothing_object, nothing_object, nothing_object, nothing_object, nothing_object]
 
     def increase_index(self, flag):
         if flag == True:
@@ -42,7 +41,7 @@ class GUI:
                 self.inventory_index = 4
             else:
                 self.inventory_index -= 1
-                
+
     def get_inv_index(self):
         return self.inventory_index
 
@@ -50,6 +49,7 @@ class GUI:
         self.health = self.player.get_stat(HEALTH)
         self.stamina = self.player.get_stat(STAMINA)
         #displays the frame surrounding health & stamina
+        self.inv = self.player.get_inventory()
 
         self.strength = self.player.get_skill(STRENGTH_SKILL, False)
         self.strength_exp = self.player.get_skill(STRENGTH_SKILL, True)
@@ -108,6 +108,8 @@ class GUI:
 
         if flag == True:
             DISPLAYSURF.blit(self.inventory_list[self.inventory_index], (320, 460))
+            #Displays ': (ramen amount)'
+            DISPLAYSURF.blit(ramSurface,ramRect)
         else:
             DISPLAYSURF.blit(self.inventory_frame_stats, (320, 460))
             DISPLAYSURF.blit(strengthSurf,strengthRect)
@@ -117,15 +119,12 @@ class GUI:
             pygame.draw.rect(DISPLAYSURF, BLUE, pygame.Rect(470, 510, self.intel_bar, 20))
             pygame.draw.rect(DISPLAYSURF, BLUE, pygame.Rect(450, 545, self.charisma_bar, 20))
 
-
-        # Displays the inventory
+    #    Displays the inventory
         x_pos = 415
         for item in self.inv:
-            image = pygame.image.load('../Resources/' + item)
-            if flag == True:
+            if item != None:
+                image = item.image
+            if flag == True and item != None:
                 #Displays the items
-                DISPLAYSURF.blit(image, (x_pos,518))
-                #Displays ': (ramen amount)'
-                DISPLAYSURF.blit(ramSurface,ramRect)
-
+                DISPLAYSURF.blit(image, (x_pos,520))
             x_pos += 38
