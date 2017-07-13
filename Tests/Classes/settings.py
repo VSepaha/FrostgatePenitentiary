@@ -68,6 +68,13 @@ STAMINA = 0
 HEALTH = 1
 RAMEN = 2
 
+#Tab values
+inv_tab = 0
+
+INVENTORY_TAB = 0
+STATS_TAB = 1
+CHAT_TAB = 2
+
 # Skill values
 STRENGTH_SKILL = 0
 INTELLIGENCE_SKILL = 1

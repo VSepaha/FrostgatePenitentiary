@@ -12,15 +12,16 @@ class GUI:
         self.ramen = 100
         self.ramen_image = pygame.image.load('ramen.png')
 
-        self.inventory_frame = pygame.image.load('../Resources/Inventory/inventory_frame.png')
-        self.inventory_frame_inventory = pygame.image.load('../Resources/Inventory/inventory_frame_inventory.png')
-        self.inventory_frame_stats = pygame.image.load('../Resources/Inventory/inventory_frame_stats.png')
+        self.inventory_frame = pygame.image.load('../Resources/inventory3/inventory_frame.png')
+        self.inventory_frame_inventory = pygame.image.load('../Resources/inventory3/inventory_frame_inventory.png')
+        self.inventory_frame_stats = pygame.image.load('../Resources/inventory3/inventory_frame_stats.png')
+        self.inventory_frame_chat = pygame.image.load('../Resources/inventory3/inventory_frame_chat.png')
 
-        self.inventory0 = pygame.image.load('../Resources/Inventory/inventory_position_0.png')
-        self.inventory1 = pygame.image.load('../Resources/Inventory/inventory_position_1.png')
-        self.inventory2 = pygame.image.load('../Resources/Inventory/inventory_position_2.png')
-        self.inventory3 = pygame.image.load('../Resources/Inventory/inventory_position_3.png')
-        self.inventory4 = pygame.image.load('../Resources/Inventory/inventory_position_4.png')
+        self.inventory0 = pygame.image.load('../Resources/Inventory3/inventory_position_0.png')
+        self.inventory1 = pygame.image.load('../Resources/inventory3/inventory_position_1.png')
+        self.inventory2 = pygame.image.load('../Resources/inventory3/inventory_position_2.png')
+        self.inventory3 = pygame.image.load('../Resources/inventory3/inventory_position_3.png')
+        self.inventory4 = pygame.image.load('../Resources/inventory3/inventory_position_4.png')
 
         self.inventory_index = 0
         self.inventory_list = [self.inventory0, self.inventory1, self.inventory2, self.inventory3, self.inventory4]
@@ -28,15 +29,15 @@ class GUI:
         self.health_stamina_frame = pygame.image.load('../Resources/health_stamina_frame.png')
         self.ramen_frame = pygame.image.load('../Resources/ramen_frame.png')
 
-    def increase_index(self, flag):
-        if flag == True:
+    def increase_index(self, tab):
+        if tab == INVENTORY_TAB:
             if self.inventory_index >= 4:
                 self.inventory_index = 0
             else:
                 self.inventory_index += 1
 
-    def decrease_index(self, flag):
-        if flag == True:
+    def decrease_index(self, tab):
+        if tab == INVENTORY_TAB:
             if self.inventory_index <= 0:
                 self.inventory_index = 4
             else:
@@ -45,7 +46,7 @@ class GUI:
     def get_inv_index(self):
         return self.inventory_index
 
-    def update(self, DISPLAYSURF, flag):
+    def update(self, DISPLAYSURF, tab):
         self.health = self.player.get_stat(HEALTH)
         self.stamina = self.player.get_stat(STAMINA)
         #displays the frame surrounding health & stamina
@@ -106,11 +107,11 @@ class GUI:
         charRect = charSurf.get_rect()
         charRect.midtop = (400, 547)
 
-        if flag == True:
+        if tab == INVENTORY_TAB:
             DISPLAYSURF.blit(self.inventory_list[self.inventory_index], (320, 460))
             #Displays ': (ramen amount)'
             DISPLAYSURF.blit(ramSurface,ramRect)
-        else:
+        elif tab == STATS_TAB:
             DISPLAYSURF.blit(self.inventory_frame_stats, (320, 460))
             DISPLAYSURF.blit(strengthSurf,strengthRect)
             DISPLAYSURF.blit(intelSurf,intelRect)
@@ -118,13 +119,15 @@ class GUI:
             pygame.draw.rect(DISPLAYSURF, BLUE, pygame.Rect(450, 480, self.strength_bar, 20))
             pygame.draw.rect(DISPLAYSURF, BLUE, pygame.Rect(470, 510, self.intel_bar, 20))
             pygame.draw.rect(DISPLAYSURF, BLUE, pygame.Rect(450, 545, self.charisma_bar, 20))
+        elif tab == CHAT_TAB:
+            DISPLAYSURF.blit(self.inventory_frame_chat, (320, 460))
 
     #    Displays the inventory
         x_pos = 415
         for item in self.inv:
             if item != None:
                 image = item.image
-            if flag == True and item != None:
+            if tab == INVENTORY_TAB and item != None:
                 #Displays the items
                 DISPLAYSURF.blit(image, (x_pos,520))
             x_pos += 38

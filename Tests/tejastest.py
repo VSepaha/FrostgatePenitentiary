@@ -145,9 +145,9 @@ if __name__ == '__main__':
 				if event.key == K_e:
 					player.interact(True)
 				if event.key == K_RIGHT:
-					gui.increase_index(inv_flag)
+					gui.increase_index(inv_tab)
 				elif event.key == K_LEFT:
-					gui.decrease_index(inv_flag)
+					gui.decrease_index(inv_tab)
 
 			elif event.type == QUIT:
 				pygame.quit()
@@ -165,10 +165,12 @@ if __name__ == '__main__':
 		elif key_pressed[K_d]:
 			player.update(True, RIGHT)
 
+		if key_pressed[K_3]:
+			inv_tab = CHAT_TAB
 		if key_pressed[K_2]:
-			inv_flag = False
+			inv_tab = STATS_TAB
 		if key_pressed[K_1]:
-			inv_flag = True
+			inv_tab = INVENTORY_TAB
 
 		# Guard start running its state
 		guard.run_state(PATROL_STATE, player)
@@ -189,7 +191,7 @@ if __name__ == '__main__':
 		# Render everything onto the display surface
 		DISPLAYSURF.blit(world, player.camera_pos) # Render Map To The Display
 
-		gui.update(DISPLAYSURF, inv_flag)
+		gui.update(DISPLAYSURF, inv_tab)
 
 		pygame.display.update()
 		fps_clock.tick(FPS)
