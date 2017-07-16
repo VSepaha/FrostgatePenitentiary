@@ -11,6 +11,7 @@ The game will be created in python using the pygame library.
 - The player and the AI will have Health and Stamina
 - The player will get to set skill levels at the beginning of the game
 - The player will be allow to advance skill levels in game
+- The player will be able to save his/her game progress
 
 ## Skills
 - Strength
@@ -50,4 +51,5 @@ The game will be created in python using the pygame library.
 - Create and implement better menu screen
 - Add text screen to the UI tabs
 - Possibly add Reputation bar for player reputation
+- Create a combat system
 - Plan out basic story line for the player

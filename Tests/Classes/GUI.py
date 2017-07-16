@@ -12,16 +12,16 @@ class GUI:
         self.ramen = 100
         self.ramen_image = pygame.image.load('ramen.png')
 
-        self.inventory_frame = pygame.image.load('../Resources/inventory3/inventory_frame.png')
-        self.inventory_frame_inventory = pygame.image.load('../Resources/inventory3/inventory_frame_inventory.png')
-        self.inventory_frame_stats = pygame.image.load('../Resources/inventory3/inventory_frame_stats.png')
-        self.inventory_frame_chat = pygame.image.load('../Resources/inventory3/inventory_frame_chat.png')
+        self.inventory_frame = pygame.image.load('../Resources/Inventory3/inventory_frame.png')
+        self.inventory_frame_inventory = pygame.image.load('../Resources/Inventory3/inventory_frame_inventory.png')
+        self.inventory_frame_stats = pygame.image.load('../Resources/Inventory3/inventory_frame_stats.png')
+        self.inventory_frame_chat = pygame.image.load('../Resources/Inventory3/inventory_frame_chat.png')
 
         self.inventory0 = pygame.image.load('../Resources/Inventory3/inventory_position_0.png')
-        self.inventory1 = pygame.image.load('../Resources/inventory3/inventory_position_1.png')
-        self.inventory2 = pygame.image.load('../Resources/inventory3/inventory_position_2.png')
-        self.inventory3 = pygame.image.load('../Resources/inventory3/inventory_position_3.png')
-        self.inventory4 = pygame.image.load('../Resources/inventory3/inventory_position_4.png')
+        self.inventory1 = pygame.image.load('../Resources/Inventory3/inventory_position_1.png')
+        self.inventory2 = pygame.image.load('../Resources/Inventory3/inventory_position_2.png')
+        self.inventory3 = pygame.image.load('../Resources/Inventory3/inventory_position_3.png')
+        self.inventory4 = pygame.image.load('../Resources/Inventory3/inventory_position_4.png')
 
         self.inventory_index = 0
         self.inventory_list = [self.inventory0, self.inventory1, self.inventory2, self.inventory3, self.inventory4]
