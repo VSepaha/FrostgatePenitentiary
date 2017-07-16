@@ -129,7 +129,8 @@ if __name__ == '__main__':
 		guard.collision_list.append(p_object)
 
 	inv_flag = True
-
+	player.speed = 20
+	player.health = 25
 	# Main game loop
 	while True:
 		DISPLAYSURF.fill(BLACK)

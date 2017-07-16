@@ -8,11 +8,25 @@ class Nurse(NPC):
         interactable_group.add(self)
         self.health_boost = 25
 
+        self.final_time = 0
+        self.time_set = True
         self.speed = 0
+        self.increment = 20
+
+    def set_final_time(self):
+        if self.time_set == False:
+            self.time_set = True
+            self.final_time = time.clock() + self.increment
 
     def perform_action(self, other):
         # Stop its route here
-        if other.health <= 100 - self.health_boost:
-            other.health = other.health + self.health_boost
+        self.set_final_time()
+
+        if self.final_time - time.clock() <= 0:
+            self.time_set = False
+            if other.health <= 100 - self.health_boost:
+                other.health = other.health + self.health_boost
+            else:
+                other.health = 100
         else:
-            other.health = 100
+            print "Please come back in",int(((self.final_time - time.clock())/1)), "seconds"
