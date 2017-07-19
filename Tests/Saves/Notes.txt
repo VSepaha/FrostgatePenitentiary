@@ -1,0 +1,2 @@
+The most common method of saving and loading configurations options is by using a text file.
+It is also common for loading and saving the player progress.
