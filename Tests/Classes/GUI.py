@@ -12,8 +12,21 @@ class GUI:
         self.ramen = self.player.currency
         self.ramen_image = pygame.image.load('ramen.png')
 
+<<<<<<< HEAD
         self.previous_tab_0 = INVENTORY_TAB
         self.previous_tab_1 = CHAT_TAB
+=======
+        self.inventory_frame = pygame.image.load('../Resources/Inventory3/inventory_frame.png')
+        self.inventory_frame_inventory = pygame.image.load('../Resources/Inventory3/inventory_frame_inventory.png')
+        self.inventory_frame_stats = pygame.image.load('../Resources/Inventory3/inventory_frame_stats.png')
+        self.inventory_frame_chat = pygame.image.load('../Resources/Inventory3/inventory_frame_chat.png')
+
+        self.inventory0 = pygame.image.load('../Resources/Inventory3/inventory_position_0.png')
+        self.inventory1 = pygame.image.load('../Resources/Inventory3/inventory_position_1.png')
+        self.inventory2 = pygame.image.load('../Resources/Inventory3/inventory_position_2.png')
+        self.inventory3 = pygame.image.load('../Resources/Inventory3/inventory_position_3.png')
+        self.inventory4 = pygame.image.load('../Resources/Inventory3/inventory_position_4.png')
+>>>>>>> d31e952b1247633870be74ab5a7ab574e1ebd881
 
         self.inventory_frame = pygame.image.load('../Resources/Inventory/inventory_frame.png')
 
