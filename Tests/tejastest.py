@@ -69,6 +69,9 @@ def load_menu(DISPLAYSURF):
 
 		pygame.display.update()
 		fps_clock.tick(FPS)
+def save_game():
+		shelfFile = shelve.open('../savedGameTrial')
+		shelfFile['health'] = player.health
 
 if __name__ == '__main__':
 
@@ -130,7 +133,6 @@ if __name__ == '__main__':
 
 	inv_flag = True
 	player.speed = 20
-	player.health = 25
 	# Main game loop
 	while True:
 		DISPLAYSURF.fill(BLACK)
@@ -145,10 +147,12 @@ if __name__ == '__main__':
 			if event.type == KEYDOWN:
 				if event.key == K_e:
 					player.interact(True)
+				if event.key == K_o:
+					save_game()
 				if event.key == K_RIGHT:
-					gui.increase_index(inv_tab)
+					gui.increase_index(tab1)
 				elif event.key == K_LEFT:
-					gui.decrease_index(inv_tab)
+					gui.decrease_index(tab1)
 
 			elif event.type == QUIT:
 				pygame.quit()
@@ -166,12 +170,17 @@ if __name__ == '__main__':
 		elif key_pressed[K_d]:
 			player.update(True, RIGHT)
 
+		if key_pressed[K_5]:
+			tab1 = EMPTY_TAB
+			tab2 = EMPTY_TAB
+		if key_pressed[K_4]:
+			tab2 = REPUTATION_TAB
 		if key_pressed[K_3]:
-			inv_tab = CHAT_TAB
+			tab2 = CHAT_TAB
 		if key_pressed[K_2]:
-			inv_tab = STATS_TAB
+			tab1 = STATS_TAB
 		if key_pressed[K_1]:
-			inv_tab = INVENTORY_TAB
+			tab1 = INVENTORY_TAB
 
 		# Guard start running its state
 		guard.run_state(PATROL_STATE, player)
@@ -192,7 +201,7 @@ if __name__ == '__main__':
 		# Render everything onto the display surface
 		DISPLAYSURF.blit(world, player.camera_pos) # Render Map To The Display
 
-		gui.update(DISPLAYSURF, inv_tab)
+		gui.update(DISPLAYSURF, tab1, tab2)
 
 		pygame.display.update()
 		fps_clock.tick(FPS)

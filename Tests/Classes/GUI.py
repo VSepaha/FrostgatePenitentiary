@@ -9,21 +9,35 @@ class GUI:
 
         self.player = player
 
-        self.ramen = 100
+        self.ramen = self.player.currency
         self.ramen_image = pygame.image.load('ramen.png')
 
-        self.inventory_frame = pygame.image.load('../Resources/Inventory/inventory_frame.png')
-        self.inventory_frame_inventory = pygame.image.load('../Resources/Inventory/inventory_frame_inventory.png')
-        self.inventory_frame_stats = pygame.image.load('../Resources/Inventory/inventory_frame_stats.png')
+        self.previous_tab_0 = INVENTORY_TAB
+        self.previous_tab_1 = CHAT_TAB
 
-        self.inventory0 = pygame.image.load('../Resources/Inventory/inventory_position_0.png')
-        self.inventory1 = pygame.image.load('../Resources/Inventory/inventory_position_1.png')
-        self.inventory2 = pygame.image.load('../Resources/Inventory/inventory_position_2.png')
-        self.inventory3 = pygame.image.load('../Resources/Inventory/inventory_position_3.png')
-        self.inventory4 = pygame.image.load('../Resources/Inventory/inventory_position_4.png')
+        self.inventory_frame = pygame.image.load('../Resources/Inventory/inventory_frame.png')
+
+        self.inventory_frame_inventory_chat = pygame.image.load('../Resources/Inventory/inventory_frame_inventory_chat.png')
+        self.inventory_frame_inventory_reputation = pygame.image.load('../Resources/Inventory/inventory_frame_inventory_reputation.png')
+
+        self.inventory_frame_stats_chat = pygame.image.load('../Resources/Inventory/inventory_frame_stats_chat.png')
+        self.inventory_frame_stats_reputation = pygame.image.load('../Resources/Inventory/inventory_frame_stats_reputation.png')
+
+
+        self.inventory_reputation_0 = pygame.image.load('../Resources/Inventory/inventory_reputation_position_0.png')
+        self.inventory_reputation_1 = pygame.image.load('../Resources/Inventory/inventory_reputation_position_1.png')
+        self.inventory_reputation_2 = pygame.image.load('../Resources/Inventory/inventory_reputation_position_2.png')
+        self.inventory_reputation_3 = pygame.image.load('../Resources/Inventory/inventory_reputation_position_3.png')
+        self.inventory_reputation_4 = pygame.image.load('../Resources/Inventory/inventory_reputation_position_4.png')
+
+        self.inventory_chat_0 = pygame.image.load('../Resources/Inventory/inventory_chat_position_0.png')
+        self.inventory_chat_1 = pygame.image.load('../Resources/Inventory/inventory_chat_position_1.png')
+        self.inventory_chat_2 = pygame.image.load('../Resources/Inventory/inventory_chat_position_2.png')
+        self.inventory_chat_3 = pygame.image.load('../Resources/Inventory/inventory_chat_position_3.png')
+        self.inventory_chat_4 = pygame.image.load('../Resources/Inventory/inventory_chat_position_4.png')
+
 
         self.inventory_index = 0
-        self.inventory_list = [self.inventory0, self.inventory1, self.inventory2, self.inventory3, self.inventory4]
 
         self.health_stamina_frame = pygame.image.load('../Resources/health_stamina_frame.png')
         self.ramen_frame = pygame.image.load('../Resources/ramen_frame.png')
@@ -45,7 +59,16 @@ class GUI:
     def get_inv_index(self):
         return self.inventory_index
 
-    def update(self, DISPLAYSURF, tab):
+    def update(self, DISPLAYSURF, tab, tab1):
+        if tab == NOTHING_TAB:
+            tab = previous_tab_0
+        else:
+            previous_tab_0 = tab
+
+        if tab1 == NOTHING_TAB:
+            tab1 = previous_tab_1
+        else:
+            previous_tab_1 = tab1
         self.health = self.player.get_stat(HEALTH)
         self.stamina = self.player.get_stat(STAMINA)
         #displays the frame surrounding health & stamina
@@ -134,11 +157,19 @@ class GUI:
         charRect.midtop = (90, 557)
 
         if tab == INVENTORY_TAB:
+            if tab1 == CHAT_TAB:
+                self.inventory_list = [self.inventory_chat_0, self.inventory_chat_1, self.inventory_chat_2, self.inventory_chat_3, self.inventory_chat_4]
+            elif tab1 == REPUTATION_TAB:
+                self.inventory_list = [self.inventory_reputation_0, self.inventory_reputation_1, self.inventory_reputation_2, self.inventory_reputation_3, self.inventory_reputation_4]
             DISPLAYSURF.blit(self.inventory_list[self.inventory_index], (0, 439))
             #Displays ': (ramen amount)'
             DISPLAYSURF.blit(ramSurface,ramRect)
         elif tab == STATS_TAB:
-            DISPLAYSURF.blit(self.inventory_frame_stats, (0, 439))
+            if tab1 == CHAT_TAB:
+                DISPLAYSURF.blit(self.inventory_frame_stats_chat, (0, 439))
+            elif tab1 == REPUTATION_TAB:
+                DISPLAYSURF.blit(self.inventory_frame_stats_reputation, (0, 439))
+
             DISPLAYSURF.blit(strengthSurf,strengthRect)
             DISPLAYSURF.blit(intelSurf,intelRect)
             DISPLAYSURF.blit(charSurf, charRect)
@@ -148,11 +179,11 @@ class GUI:
 
 
     #    Displays the inventory
-        x_pos = 415
+        x_pos = 105
         for item in self.inv:
             if item != None:
                 image = item.image
             if tab == INVENTORY_TAB and item != None:
                 #Displays the items
-                DISPLAYSURF.blit(image, (x_pos,520))
+                DISPLAYSURF.blit(image, (x_pos,534))
             x_pos += 38

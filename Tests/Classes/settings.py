@@ -1,4 +1,4 @@
-import pygame, sys
+import pygame, sys, shelve
 
 pygame.init()
 
@@ -69,16 +69,26 @@ HEALTH = 1
 RAMEN = 2
 
 #Tab values
-inv_tab = 0
+tab1 = 0
+
+NOTHING_TAB = 10
+EMPTY_TAB = 2
 
 INVENTORY_TAB = 0
 STATS_TAB = 1
-CHAT_TAB = 2
+
+tab2 = 0
+
+CHAT_TAB = 0
+REPUTATION_TAB = 1
+
 
 # Skill values
 STRENGTH_SKILL = 0
 INTELLIGENCE_SKILL = 1
 CHARISMA_SKILL = 2
+
+
 
 # actors that are in game
 actors_group = pygame.sprite.Group()
