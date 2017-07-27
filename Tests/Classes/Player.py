@@ -12,22 +12,26 @@ class Player(Actor):
 		self.health = shelfFile ['health']
 
 		# Stamina of the player
-		self.stamina = 100
+		shelfFile = shelve.open('Saves/savedGameTrial')
+		self.stamina = shelfFile ['stamina']
 
 		# Skills that the player has
-		self.strength_exp = 0
-		self.intelligence_exp = 0
-		self.charisma_exp = 0
-
-		self.strength_level = 1
-		self.intelligence_level = 1
-		self.charisma_level = 1
+		shelfFile = shelve.open('Saves/savedGameTrial')
+		self.strength_exp = shelfFile ['strength_exp']
+		self.intelligence_exp = shelfFile ['intelligence_exp']
+		self.charisma_exp = shelfFile ['charisma_exp']
+		shelfFile = shelve.open('Saves/savedGameTrial')
+		self.strength_level = shelfFile ['strength_level']
+		self.intelligence_level = shelfFile ['intelligence_level']
+		self.charisma_level = shelfFile ['charisma_level']
 
 		# Amount of currency that the player has
-		self.currency = 1
+		shelfFile = shelve.open('Saves/savedGameTrial')
+		self.currency = shelfFile ['currency']
 
 		# Inventory list
-		self.inventory = [None]*5
+		shelfFile = shelve.open('Saves/savedGameTrial')
+		self.inventory = shelfFile ['inventory']
 
 		# camera
 		self.camera_pos = (0, 0) # Create Camara Starting Position

@@ -72,8 +72,23 @@ def load_menu(DISPLAYSURF):
 def save_game():
 		shelfFile = shelve.open('Saves/savedGameTrial')
 		shelfFile['health'] = player.health
+		shelfFile['stamina'] = player.stamina
+
+		shelfFile['currency'] = player.currency
+
 		shelfFile['playerPosition_x'] = player.rect.x
 		shelfFile['playerPosition_y'] = player.rect.y
+
+		shelfFile['strength_exp'] = player.strength_exp
+		shelfFile['strength_level'] = player.strength_level
+
+		shelfFile['intelligence_exp'] = player.intelligence_exp
+		shelfFile['intelligence_level'] = player.intelligence_level
+
+		shelfFile['charisma_exp'] = player.charisma_exp
+		shelfFile['charisma_level'] = player.charisma_level
+
+		shelfFile['inventory'] = player.inventory
 
 if __name__ == '__main__':
 
