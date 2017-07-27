@@ -34,7 +34,7 @@ class Player(Actor):
 		self.inventory = shelfFile ['inventory']
 
 		# camera
-		self.camera_pos = (0, 0) # Create Camara Starting Position
+		self.camera_pos = (-self.rect.x + WIN_WIDTH/2, -self.rect.y + WIN_HEIGHT/2) # Create Camara Starting Position
 
 	def increase_exp(self, skill, amount):
 		if skill == STRENGTH_SKILL:
