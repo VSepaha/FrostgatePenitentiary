@@ -75,6 +75,7 @@ class Player(Actor):
 		if stat == STAMINA:
 			return self.stamina
 
+
 	def get_inventory(self):
 		return self.inventory
 
@@ -115,6 +116,9 @@ class Player(Actor):
 				return self.intelligence_level
 			elif skill == CHARISMA_SKILL:
 				return self.charisma_level
+
+	def get_position(self):
+		return (self.rect.x, self.rect.y)
 
 	# Works Nicely
 	def update(self, move, direction):

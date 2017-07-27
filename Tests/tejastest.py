@@ -11,6 +11,7 @@ from Item import *
 from InteractableObject import *
 from settings import *
 from GUI import *
+from Save import *
 
 pygame.init()
 
@@ -69,28 +70,7 @@ def load_menu(DISPLAYSURF):
 
 		pygame.display.update()
 		fps_clock.tick(FPS)
-def save_game():
-		shelfFile = shelve.open('Saves/savedGameTrial')
-		shelfFile['health'] = player.health
-		shelfFile['stamina'] = player.stamina
 
-		shelfFile['currency'] = player.currency
-
-		shelfFile['playerPosition_x'] = player.rect.x
-		shelfFile['playerPosition_y'] = player.rect.y
-
-		shelfFile['strength_exp'] = player.strength_exp
-		shelfFile['strength_level'] = player.strength_level
-
-		shelfFile['intelligence_exp'] = player.intelligence_exp
-		shelfFile['intelligence_level'] = player.intelligence_level
-
-		shelfFile['charisma_exp'] = player.charisma_exp
-		shelfFile['charisma_level'] = player.charisma_level
-
-		shelfFile['inventory'] = player.inventory
-
-		shelfFile['test'] = player.test_list
 if __name__ == '__main__':
 
 	# Set up the window and caption
@@ -126,8 +106,12 @@ if __name__ == '__main__':
 	door = InteractableObject(door_images, 61*TILESIZE, 11*TILESIZE, BLOCKING, "DOOR")
 	shelfFile = shelve.open('Saves/savedGameTrial')
 	playerStart_x = shelfFile ['playerPosition_x']
+	print playerStart_x
 	playerStart_y = shelfFile ['playerPosition_y']
+	print playerStart_y
 	player = Player(playerStart_x,playerStart_y, PLAYER, BLOCKING, 2)
+	save = Save(player)
+
 	#player = Player(400,400, PLAYER, BLOCKING, 2)
 	gui = GUI(player)
 	player.speed = 20
@@ -167,8 +151,6 @@ if __name__ == '__main__':
 			if event.type == KEYDOWN:
 				if event.key == K_e:
 					player.interact(True)
-				if event.key == K_o:
-					save_game()
 				if event.key == K_RIGHT:
 					gui.increase_index(tab1)
 				elif event.key == K_LEFT:
@@ -189,6 +171,10 @@ if __name__ == '__main__':
 			player.update(True, LEFT)
 		elif key_pressed[K_d]:
 			player.update(True, RIGHT)
+
+		if key_pressed[K_o]:
+			save.save_game()
+			print "Saved"
 
 		if key_pressed[K_i]:
 			player.move_camera(UP)
