@@ -114,7 +114,7 @@ if __name__ == '__main__':
 	player = Player(400,400, PLAYER, BLOCKING, 2)
 	#player = Player(400,400, PLAYER, BLOCKING, 2)
 	gui = GUI(player)
-	# player.speed = 20
+	player.speed = 20
 	# For horizontal tests (120, 300)
 	guard = SmartNPC(200, 444, PRISON_GUARD, BLOCKING, route, game_map)
 	warden = Warden(100, 100, WARDEN, BLOCKING, route, game_map)
@@ -137,7 +137,6 @@ if __name__ == '__main__':
 		guard.collision_list.append(p_object)
 
 	inv_flag = True
-	player.speed = 20
 	# Main game loop
 	while True:
 		DISPLAYSURF.fill(BLACK)
@@ -174,6 +173,15 @@ if __name__ == '__main__':
 			player.update(True, LEFT)
 		elif key_pressed[K_d]:
 			player.update(True, RIGHT)
+
+		if key_pressed[K_i]:
+			player.move_camera(UP)
+		elif key_pressed[K_k]:
+			player.move_camera(DOWN)
+		elif key_pressed[K_j]:
+			player.move_camera(LEFT)
+		elif key_pressed[K_l]:
+			player.move_camera(RIGHT)
 
 		if key_pressed[K_5]:
 			tab1 = EMPTY_TAB
