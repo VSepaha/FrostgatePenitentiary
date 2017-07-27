@@ -11,6 +11,7 @@ from Item import *
 from InteractableObject import *
 from settings import *
 from GUI import *
+from Save import *
 
 pygame.init()
 
@@ -103,10 +104,15 @@ if __name__ == '__main__':
 	door_images.append("opendoor")
 
 	door = InteractableObject(door_images, 61*TILESIZE, 11*TILESIZE, BLOCKING, "DOOR")
+	shelfFile = shelve.open('Saves/savedGameTrial')
+	playerStart_x = shelfFile ['playerPosition_x']
+	playerStart_y = shelfFile ['playerPosition_y']
+	player = Player(playerStart_x,playerStart_y, PLAYER, BLOCKING, 2)
+	save = Save(player)
 
-	player = Player(400,400, PLAYER, BLOCKING, 2)
+	#player = Player(400,400, PLAYER, BLOCKING, 2)
 	gui = GUI(player)
-	# player.speed = 20
+	player.speed = 20
 	# For horizontal tests (120, 300)
 	guard = SmartNPC(200, 444, PRISON_GUARD, BLOCKING, route, game_map)
 	warden = Warden(100, 100, WARDEN, BLOCKING, route, game_map)
@@ -129,7 +135,6 @@ if __name__ == '__main__':
 		guard.collision_list.append(p_object)
 
 	inv_flag = True
-
 	# Main game loop
 	while True:
 		DISPLAYSURF.fill(BLACK)
@@ -145,9 +150,9 @@ if __name__ == '__main__':
 				if event.key == K_e:
 					player.interact(True)
 				if event.key == K_RIGHT:
-					gui.increase_index(inv_flag)
+					gui.increase_index(tab1)
 				elif event.key == K_LEFT:
-					gui.decrease_index(inv_flag)
+					gui.decrease_index(tab1)
 
 			elif event.type == QUIT:
 				pygame.quit()
@@ -165,10 +170,30 @@ if __name__ == '__main__':
 		elif key_pressed[K_d]:
 			player.update(True, RIGHT)
 
+		if key_pressed[K_o]:
+			save.save_game()
+			print "Saved"
+
+		if key_pressed[K_i]:
+			player.move_camera(UP)
+		elif key_pressed[K_k]:
+			player.move_camera(DOWN)
+		elif key_pressed[K_j]:
+			player.move_camera(LEFT)
+		elif key_pressed[K_l]:
+			player.move_camera(RIGHT)
+
+		if key_pressed[K_5]:
+			tab1 = EMPTY_TAB
+			tab2 = EMPTY_TAB
+		if key_pressed[K_4]:
+			tab2 = REPUTATION_TAB
+		if key_pressed[K_3]:
+			tab2 = CHAT_TAB
 		if key_pressed[K_2]:
-			inv_flag = False
+			tab1 = STATS_TAB
 		if key_pressed[K_1]:
-			inv_flag = True
+			tab1 = INVENTORY_TAB
 
 		# Guard start running its state
 		guard.run_state(PATROL_STATE, player)
@@ -189,7 +214,7 @@ if __name__ == '__main__':
 		# Render everything onto the display surface
 		DISPLAYSURF.blit(world, player.camera_pos) # Render Map To The Display
 
-		gui.update(DISPLAYSURF, inv_flag)
+		gui.update(DISPLAYSURF, tab1, tab2)
 
 		pygame.display.update()
 		fps_clock.tick(FPS)

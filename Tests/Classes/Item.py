@@ -8,6 +8,8 @@ class Item(Object):
 		# Add self in the permanent object group
 		items_group.add(self)
 
+		self.name = image
+
 		# Need to implement variables here
 
 		self.image = pygame.image.load('../Resources/Items/' + image +'.png')

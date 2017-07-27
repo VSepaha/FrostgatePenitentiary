@@ -8,33 +8,28 @@ class Player(Actor):
 		self.threat_level = threat_level
 
 		# Health of the player
-		shelfFile = shelve.open('Saves/savedGameTrial')
-		self.health = shelfFile ['health']
+		self.health = 100
 
 		# Stamina of the player
-		shelfFile = shelve.open('Saves/savedGameTrial')
-		self.stamina = shelfFile ['stamina']
+		self.stamina = 100
 
 		# Skills that the player has
-		shelfFile = shelve.open('Saves/savedGameTrial')
-		self.strength_exp = shelfFile ['strength_exp']
-		self.intelligence_exp = shelfFile ['intelligence_exp']
-		self.charisma_exp = shelfFile ['charisma_exp']
-		shelfFile = shelve.open('Saves/savedGameTrial')
-		self.strength_level = shelfFile ['strength_level']
-		self.intelligence_level = shelfFile ['intelligence_level']
-		self.charisma_level = shelfFile ['charisma_level']
+		self.strength_exp = 0
+		self.intelligence_exp = 0
+		self.charisma_exp = 0
+
+		self.strength_level = 1
+		self.intelligence_level = 1
+		self.charisma_level = 1
 
 		# Amount of currency that the player has
-		shelfFile = shelve.open('Saves/savedGameTrial')
-		self.currency = shelfFile ['currency']
+		self.currency = 1
 
 		# Inventory list
-		shelfFile = shelve.open('Saves/savedGameTrial')
-		self.inventory = shelfFile ['inventory']
+		self.inventory = [None]*5
+		# Inv of name
+		self.named_inv = [None]*5
 
-		shelfFile = shelve.open('Saves/savedGameTrial')
-		self.test_list = shelfFile ['test']
 		# camera
 		self.camera_pos = (-self.rect.x + WIN_WIDTH/2, -self.rect.y + WIN_HEIGHT/2) # Create Camara Starting Position
 
@@ -75,9 +70,11 @@ class Player(Actor):
 		if stat == STAMINA:
 			return self.stamina
 
-
 	def get_inventory(self):
 		return self.inventory
+
+	def get_name_inventory(self):
+		return self.named_inv
 
 	def get_ramen(self):
 		return self.currency
@@ -85,8 +82,9 @@ class Player(Actor):
 	def add_item(self, item):
 		for i in range(0, len(self.inventory)):
 			if self.inventory[i] == None:
-				print "Item added"
+				print "Item added:", item.name
 				self.inventory[i] = item
+				self.named_inv[i] = item.name
 				items_group.remove(item)
 				break
 		print self.inventory
@@ -94,11 +92,12 @@ class Player(Actor):
 	def drop_item(self, index):
 		if self.inventory[index] != None:
 			print "Item dropped"
-			item  = self.inventory[index]
+			item = self.inventory[index]
 			item.rect.x = self.rect.x
 			item.rect.y = self.rect.y
 			items_group.add(item)
 			self.inventory[index] = None
+			self.named_inv[index] = None
 			print self.inventory
 
 	def get_skill(self, skill, exp):
