@@ -108,10 +108,10 @@ if __name__ == '__main__':
 	door_images.append("opendoor")
 
 	door = InteractableObject(door_images, 61*TILESIZE, 11*TILESIZE, BLOCKING, "DOOR")
-	#shelfFile = shelve.open('Saves/savedGameTrial')
-	#playerStart_x = shelfFile ['playerPosition_x']
-	#playerStart_y = shelfFile ['playerPosition_y']
-	player = Player(400,400, PLAYER, BLOCKING, 2)
+	shelfFile = shelve.open('Saves/savedGameTrial')
+	playerStart_x = shelfFile ['playerPosition_x']
+	playerStart_y = shelfFile ['playerPosition_y']
+	player = Player(playerStart_x,playerStart_y, PLAYER, BLOCKING, 2)
 	#player = Player(400,400, PLAYER, BLOCKING, 2)
 	gui = GUI(player)
 	player.speed = 20
