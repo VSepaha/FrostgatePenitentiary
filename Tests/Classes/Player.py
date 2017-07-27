@@ -30,7 +30,7 @@ class Player(Actor):
 		self.inventory = [None]*5
 
 		# camera
-		self.camera_pos = (self.rect.x/4, -self.rect.y/4) # Create Camara Starting Position
+		self.camera_pos = (0, 0) # Create Camara Starting Position
 
 	def increase_exp(self, skill, amount):
 		if skill == STRENGTH_SKILL:
