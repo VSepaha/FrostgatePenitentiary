@@ -33,6 +33,8 @@ class Player(Actor):
 		shelfFile = shelve.open('Saves/savedGameTrial')
 		self.inventory = shelfFile ['inventory']
 
+		shelfFile = shelve.open('Saves/savedGameTrial')
+		self.test_list = shelfFile ['test']
 		# camera
 		self.camera_pos = (-self.rect.x + WIN_WIDTH/2, -self.rect.y + WIN_HEIGHT/2) # Create Camara Starting Position
 

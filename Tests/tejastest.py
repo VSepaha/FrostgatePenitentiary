@@ -90,6 +90,7 @@ def save_game():
 
 		shelfFile['inventory'] = player.inventory
 
+		shelfFile['test'] = player.test_list
 if __name__ == '__main__':
 
 	# Set up the window and caption
