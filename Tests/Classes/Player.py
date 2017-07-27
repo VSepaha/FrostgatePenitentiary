@@ -8,7 +8,8 @@ class Player(Actor):
 		self.threat_level = threat_level
 
 		# Health of the player
-		self.health = 75
+		shelfFile = shelve.open('Saves/savedGameTrial')
+		self.health = shelfFile ['health']
 
 		# Stamina of the player
 		self.stamina = 100

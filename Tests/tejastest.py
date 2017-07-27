@@ -70,8 +70,10 @@ def load_menu(DISPLAYSURF):
 		pygame.display.update()
 		fps_clock.tick(FPS)
 def save_game():
-		shelfFile = shelve.open('../savedGameTrial')
+		shelfFile = shelve.open('Saves/savedGameTrial')
 		shelfFile['health'] = player.health
+		shelfFile['playerPosition_x'] = player.rect.x
+		shelfFile['playerPosition_y'] = player.rect.y
 
 if __name__ == '__main__':
 
@@ -106,8 +108,11 @@ if __name__ == '__main__':
 	door_images.append("opendoor")
 
 	door = InteractableObject(door_images, 61*TILESIZE, 11*TILESIZE, BLOCKING, "DOOR")
-
+	#shelfFile = shelve.open('Saves/savedGameTrial')
+	#playerStart_x = shelfFile ['playerPosition_x']
+	#playerStart_y = shelfFile ['playerPosition_y']
 	player = Player(400,400, PLAYER, BLOCKING, 2)
+	#player = Player(400,400, PLAYER, BLOCKING, 2)
 	gui = GUI(player)
 	# player.speed = 20
 	# For horizontal tests (120, 300)
