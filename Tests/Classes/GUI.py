@@ -142,7 +142,7 @@ class GUI:
             #8 - You are feared by most of the lower levels and your gang, and will NOT be messed with
             #9 - You can potentially lead your gang, and ALL the gangs want you
             #10 - You are feared by the entire prison and even guards- who will not always
-          #Guards will grant favors based on your gang reputation+
+          #Guards Level Bar
 
 
 

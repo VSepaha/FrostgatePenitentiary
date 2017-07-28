@@ -1,0 +1,20 @@
+100
+100
+1
+388
+2984
+0
+1
+0
+1
+0
+1
+None
+None
+None
+None
+None
+<Player sprite(in 1 groups)>
+<SmartNPC sprite(in 1 groups)>
+<Nurse sprite(in 2 groups)>
+<Warden sprite(in 2 groups)>
