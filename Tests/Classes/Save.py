@@ -35,12 +35,12 @@ class Save:
         save = open('values.txt', 'w')
         save.write(str(self.player.get_stat(HEALTH))+'\n')
         save.write(str(self.player.get_stat(STAMINA))+'\n')
-        
+
         save.write(str(self.player.get_ramen())+'\n')
 
         save.write(str(player_pos[0])+'\n')
         save.write(str(player_pos[1])+'\n')
-        
+
 
 
         save.write(str(self.player.get_skill(STRENGTH_SKILL, True))+'\n')
@@ -51,12 +51,18 @@ class Save:
 
         save.write(str(self.player.get_skill(CHARISMA_SKILL, True))+'\n')
         save.write(str(self.player.get_skill(CHARISMA_SKILL, False))+'\n')
-        
+
         for item in inventory:
             save.write(str(item)+'\n')
 
         for actor in actors_group:
             save.write(str(actor)+'\n')
 
-        
+        for interactable in interactable_group:
+            save.write(str(interactable)+'\n')
 
+        for items in items_group:
+            save.write(str(item)+'\n')
+
+        for objects in imm_objects_group:
+            save.write(str(objects)+'\n')
